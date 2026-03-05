@@ -1,0 +1,462 @@
+/* imports */
+@import "./font.css";
+@import "./tokens/colors.css";
+@import "./tokens/radius.css";
+@import "./tokens/shadow.css";
+@import "./tokens/zIndex.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+
+    /* Reset */
+    * {
+        @apply box-border p-0 m-0;
+    }
+
+    html {
+        @apply scroll-smooth;
+    }
+
+    body {
+        @apply overflow-x-hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-bold;
+    }
+
+
+
+
+
+    button {
+        @apply capitalize;
+    }
+}
+
+@layer components {
+    .section-shell {
+        @apply py-section-y-sm md:py-section-y;
+    }
+
+    .section-shell-soft {
+        @apply py-section-y-sm md:py-section-y;
+    }
+
+    .shell-container {
+        @apply max-w-6xl px-4 mx-auto sm:px-6 lg:px-8;
+    }
+
+    .card-base {
+        @apply flex flex-col p-4 border bg-bg-surface rounded-card border-border-subtle shadow-soft md:p-5 gap-card-gap;
+    }
+}
+
+@layer utilities {
+    .no-scrollbar::-webkit-scrollbar {
+        display: none !important;
+    }
+
+    .no-scrollbar {
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+}
+
+/* scroll behavior fallback (لو حابب تسيبه) */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Animations */
+@keyframes spin-slow {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes bounce-slow {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes title-pop {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    60% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-8px);
+    }
+}
+
+.animate-spin-slow {
+    animation: spin-slow 6s linear infinite;
+}
+
+.animate-bounce-slow {
+    animation: bounce-slow 5s ease-in-out infinite;
+}
+
+.animate-title-pop {
+    animation: title-pop 0.8s ease-out;
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+
+.control-btn {
+    @apply flex items-center justify-center border rounded-full h-9 w-9 border-border-subtle bg-bg-surface text-text-main hover:bg-primary-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-primary;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Animated Gradient Background                                                */
+/* -------------------------------------------------------------------------- */
+
+.animated-bg {
+    background: linear-gradient(120deg,
+            #E6F2F1,
+            #F6FBFA,
+            #E6F2F1);
+    background-size: 200% 200%;
+    animation: gradient-shift 18s ease-in-out infinite;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .animated-bg {
+        animation: none;
+    }
+
+    .animate-float {
+        animation: none;
+    }
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Subtle floating card */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Error Page Animated Background                                              */
+/* -------------------------------------------------------------------------- */
+
+.error-animated-bg {
+    background: linear-gradient(120deg,
+            #E6F2F1,
+            #F6FBFA,
+            #E6F2F1);
+    background-size: 200% 200%;
+    animation: error-gradient 20s ease-in-out infinite;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .error-animated-bg {
+        animation: none;
+    }
+}
+
+@keyframes error-gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes scale-pulse {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.9);
+        opacity: 0.6;
+    }
+}
+
+@keyframes spin-slow {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-fade-out {
+    animation: fade-out 2.6s ease forwards;
+}
+
+.animate-scale-pulse {
+    animation: scale-pulse 1.6s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+    animation: spin-slow 2.4s linear infinite;
+}
+
+
+/* ============================= */
+/* ===== Intro Scene =========== */
+/* ============================= */
+
+.intro-gradient {
+    background: radial-gradient(circle at 30% 30%,
+            rgba(66, 201, 111, 0.12),
+            transparent 60%),
+        linear-gradient(120deg,
+            #e6f2f1,
+            #f6fbfa,
+            #e6f2f1);
+    background-size: 200% 200%;
+    animation: intro-gradient-move 6s ease-in-out infinite;
+}
+
+@keyframes intro-gradient-move {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* ============================= */
+/* Floating particles (super light) */
+/* ============================= */
+
+.intro-particles {
+    background-image:
+        radial-gradient(circle, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+    background-size: 24px 24px;
+    animation: intro-particles-float 8s linear infinite;
+}
+
+@keyframes intro-particles-float {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: 0 -120px;
+    }
+}
+
+/* ============================= */
+/* Halo pulse */
+/* ============================= */
+
+.intro-halo {
+    width: 260px;
+    height: 260px;
+    border-radius: 999px;
+    background: radial-gradient(circle,
+            rgba(66, 201, 111, 0.25),
+            rgba(66, 201, 111, 0.05),
+            transparent 70%);
+    animation: intro-halo-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes intro-halo-pulse {
+    0% {
+        transform: scale(0.85);
+        opacity: 0.6;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.85);
+        opacity: 0.6;
+    }
+}
+
+/* ============================= */
+/* Core shape */
+/* ============================= */
+
+.intro-core {
+    width: 96px;
+    height: 96px;
+    border-radius: 24px;
+    background: linear-gradient(135deg,
+            #038262,
+            #42c96f);
+    animation: intro-core-rotate 3s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.intro-core-inner {
+    width: 24px;
+    height: 24px;
+    border-radius: 999px;
+    background: white;
+    animation: intro-core-pop 1.2s ease-out;
+}
+
+@keyframes intro-core-rotate {
+    0% {
+        transform: rotate(0deg) scale(0.9);
+    }
+
+    50% {
+        transform: rotate(90deg) scale(1);
+    }
+
+    100% {
+        transform: rotate(180deg) scale(0.9);
+    }
+}
+
+@keyframes intro-core-pop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    70% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* ============================= */
+/* Exit */
+/* ============================= */
+
+.intro-fade-out {
+    animation: intro-exit 3.2s ease forwards;
+}
+
+@keyframes intro-exit {
+    0% {
+        opacity: 1;
+    }
+
+    75% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Reduced motion احترامًا */
+@media (prefers-reduced-motion: reduce) {
+
+    .intro-gradient,
+    .intro-particles,
+    .intro-halo,
+    .intro-core {
+        animation: none;
+    }
+}

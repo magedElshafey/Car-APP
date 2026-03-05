@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+
+# ===============================
+# ❌ منع الداشبورد نهائيًا
+# ===============================
+Disallow: https://dashboard.wisefollowup.com/
+Disallow: /dashboard
+Disallow: /dashboard/
+
+# ===============================
+# ❌ صفحات مش SEO
+# ===============================
+Disallow: /search
+Disallow: /search-advanced
+Disallow: /submit-review
+
+# منع أي query params
+Disallow: /*?
+
+# ===============================
+# ✅ Sitemap
+# ===============================
+Sitemap: https://wisefollowup.com/sitemap.xml

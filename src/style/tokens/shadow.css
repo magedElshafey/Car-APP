@@ -1,0 +1,12 @@
+:root {
+  /* Neutral elevations */
+  --shadow-xs: 0 1px 2px rgb(0 0 0 / 0.08);
+  --shadow-sm: 0 2px 8px rgb(0 0 0 / 0.10);
+  --shadow-md: 0 8px 24px rgb(0 0 0 / 0.14);
+  --shadow-lg: 0 16px 40px rgb(0 0 0 / 0.18);
+  --shadow-xl: 0 24px 64px rgb(0 0 0 / 0.22);
+
+  /* Brand glow (اختياري للعناصر المهمة) */
+  --shadow-primary-glow: 0 10px 30px rgb(var(--primary) / 0.25);
+  --shadow-accent-glow: 0 10px 30px rgb(var(--accent) / 0.22);
+}

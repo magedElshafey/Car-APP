@@ -1,0 +1,31 @@
+export const apiUrl: string = "https://dashboard.wisefollowup.com/api/v1/";
+export const baseUrl: string = "https://wisefollowup.com";
+export const apiRoutes = {
+  about: "about",
+  cities: "cities",
+  leaflets: "leaflets",
+  setting: "settings",
+  blogs: "blogs",
+  reviews: "reviews",
+  search: "products/search",
+  contactSettings: "settings/contact",
+  counties: "/counties",
+  countries: "/countries", orgTypes: "/organization-types", organizations: "/organizations", departments: "departments", years: "/leaflets/years-stats",
+  policies: "policies-pages",
+  privacy: `policies-pages/privacy-policy`,
+  cookies: "policies-pages/cookies-policy",
+  terms: "policies-pages/terms-of-use",
+  disclaimer: "policies-pages/medical-disclaimer",
+  news_letter: "newsletter/subscribe",
+  simpleBlogs: "blogs",
+  advancedSearch: "leaflets/advanced-search",
+  contacts: "contacts",
+  hero: "content/home-intro",
+  trust: "content/home-trust",
+  categories: "categories",
+  vision: "content/about-vision",
+  aboutHero: "content/about-intro",
+  founders: "content/about-founders", aboutInfo: "content/about-wise-info",
+  leafletDesc: "content/leaflets-disclaimer",
+  report: "leaflets/report"
+};
