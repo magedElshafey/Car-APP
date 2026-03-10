@@ -13,9 +13,9 @@ const CopyRight: React.FC = () => {
             className="font-medium underline text-primary"
             target="_blank"
             rel="noopener noreferrer"
-            href="https://medwisely.com/"
+            href="https://qutell.com"
           >
-            medwisely
+            Qutell Technology
           </a>
           . {t("All rights reserved")}.
         </p>

@@ -8,6 +8,7 @@ export default {
     extend: {
       colors: {
         primary: "rgb(var(--primary) / <alpha-value>)",
+        gray: "rgb(var(--gray) / <alpha-value>)",
         "primary-hover": "rgb(var(--primary-hover) / <alpha-value>)",
         "primary-pressed": "rgb(var(--primary-pressed) / <alpha-value>)",
 

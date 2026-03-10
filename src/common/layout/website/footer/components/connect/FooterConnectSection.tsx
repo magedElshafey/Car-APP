@@ -2,7 +2,6 @@ import React, { useId, useMemo } from "react";
 import useNewsLetterLogic from "../../newsletter/logic/useNewsLetterLogic";
 import { useTranslation } from "react-i18next";
 import i18n from "@/lib/i18n/i18n";
-import { Link } from "react-router-dom";
 import { useWebsiteSettings } from "@/store/WebsiteSettingsProvider";
 import { SOCIAL_META, SocialKey } from "../../types/footer.social";
 
@@ -10,9 +9,7 @@ type FooterConnectSectionProps = {
   buyMeCoffeeUrl?: string;
 };
 
-const FooterConnectSection: React.FC<FooterConnectSectionProps> = ({
-  buyMeCoffeeUrl = "https://ko-fi.com/wisefollowup",
-}) => {
+const FooterConnectSection: React.FC<FooterConnectSectionProps> = () => {
   const emailId = useId();
   const { settings, isLoading } = useWebsiteSettings();
   const { t } = useTranslation();
@@ -43,7 +40,7 @@ const FooterConnectSection: React.FC<FooterConnectSectionProps> = ({
           ...SOCIAL_META[key],
         };
       })
-      .filter(isNotNull); // ✅ TypeScript فهم خلاص
+      .filter(isNotNull);
   }, [settings]);
 
   const hasSocial = isLoading || socialLinks.length > 0;
@@ -51,11 +48,11 @@ const FooterConnectSection: React.FC<FooterConnectSectionProps> = ({
   return (
     <section
       aria-label="Stay connected"
-      className="mt-6 grid gap-3 md:grid-cols-3"
+      className="grid gap-3 mt-6 md:grid-cols-2"
     >
       {/* ================= NEWSLETTER ================= */}
-      <div className="rounded-card border border-border-subtle bg-bg-page p-4 sm:p-5 shadow-soft">
-        <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">
+      <div className="p-4 border rounded-card border-border-subtle bg-bg-page sm:p-5 shadow-soft">
+        <p className="text-xs font-semibold tracking-wide uppercase text-text-muted">
           {t("Newsletter")}
         </p>
 
@@ -63,7 +60,7 @@ const FooterConnectSection: React.FC<FooterConnectSectionProps> = ({
           {t("Stay in the loop")}
         </h3>
 
-        <p className="mt-1 text-xs text-text-muted leading-relaxed">
+        <p className="mt-1 text-xs leading-relaxed text-text-muted">
           {t(
             "Occasional updates when we publish new leaflets or tools. No spam.",
           )}
@@ -116,7 +113,7 @@ const FooterConnectSection: React.FC<FooterConnectSectionProps> = ({
           </div>
 
           {showError && (
-            <span role="alert" className="text-xs text-red-600 mt-1 block">
+            <span role="alert" className="block mt-1 text-xs text-red-600">
               {t("Please enter a valid email")}
             </span>
           )}
@@ -125,8 +122,8 @@ const FooterConnectSection: React.FC<FooterConnectSectionProps> = ({
 
       {/* ================= SOCIAL ================= */}
       {hasSocial && (
-        <div className="rounded-card border border-border-subtle bg-bg-page p-4 sm:p-5 shadow-soft">
-          <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">
+        <div className="p-4 border rounded-card border-border-subtle bg-bg-page sm:p-5 shadow-soft">
+          <p className="text-xs font-semibold tracking-wide uppercase text-text-muted">
             {t("Social")}
           </p>
 
@@ -134,11 +131,11 @@ const FooterConnectSection: React.FC<FooterConnectSectionProps> = ({
             {t("Follow Wise Follow Up")}
           </h3>
 
-          <p className="mt-1 text-xs text-text-muted leading-relaxed">
+          <p className="mt-1 text-xs leading-relaxed text-text-muted">
             {t("New leaflets, updates, and improvements.")}
           </p>
 
-          <ul className="mt-3 grid grid-cols-3 gap-2">
+          <ul className="grid grid-cols-3 gap-2 mt-3">
             {isLoading
               ? Array.from({ length: 3 }).map((_, i) => (
                   <li
@@ -154,13 +151,7 @@ const FooterConnectSection: React.FC<FooterConnectSectionProps> = ({
                       target="_blank"
                       rel="noreferrer"
                       aria-label={s.label}
-                      className="
-                        inline-flex h-9 w-full items-center justify-center gap-2
-                        rounded-pill border border-border-subtle bg-bg-surface
-                        text-xs text-text-muted
-                        hover:bg-primary-soft hover:text-primary
-                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary
-                      "
+                      className="inline-flex items-center justify-center w-full gap-2 text-xs border h-9 rounded-pill border-border-subtle bg-bg-surface text-text-muted hover:bg-primary-soft hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                     >
                       <s.Icon className="text-sm" aria-hidden />
                       <span className="sr-only">{s.label}</span>
@@ -170,53 +161,6 @@ const FooterConnectSection: React.FC<FooterConnectSectionProps> = ({
           </ul>
         </div>
       )}
-
-      {/* ================= SUPPORT ================= */}
-      <div className="rounded-card border border-border-subtle bg-bg-page p-4 sm:p-5 shadow-soft">
-        <p className="text-xs font-semibold uppercase tracking-wide text-text-muted">
-          {t("Support")}
-        </p>
-
-        <h3 className="mt-2 text-sm font-semibold text-text-main">
-          {t("Help us keep it free")}
-        </h3>
-
-        <p className="mt-1 text-xs text-text-muted leading-relaxed">
-          {t(
-            "If you find the leaflets helpful, you can support maintenance and updates.",
-          )}
-        </p>
-
-        <a
-          href={buyMeCoffeeUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="
-            mt-3 inline-flex h-10 w-full items-center justify-center gap-2
-            rounded-pill bg-primary px-4
-            text-sm font-semibold text-white
-            shadow-soft hover:brightness-110
-            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary
-          "
-        >
-          <span aria-hidden>☕</span>
-          {t("Buy us a Kofi")}
-        </a>
-
-        <p className="mt-2 text-[11px] text-text-muted">
-          {t("Prefer email?")}{" "}
-          <Link
-            to="/contact-us"
-            className="
-              text-primary hover:underline
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary
-            "
-          >
-            {t("Contact us")}
-          </Link>
-          .
-        </p>
-      </div>
     </section>
   );
 };

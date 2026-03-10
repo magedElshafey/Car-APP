@@ -1,36 +1,48 @@
 import React from "react";
-import BrandBlock from "./components/brand-block/BrandBlock";
 import FooterLinkGroup from "./components/footer-links/FooterLinkGroup";
-import SafetyNote from "./components/note/SafetyNote";
 import CopyRight from "./components/copyrights/CopyRight";
 import FooterConnectSection from "./components/connect/FooterConnectSection";
 import { FooterLinkGroup as FooterLinkGroupT } from "./types/footer.types";
 
 const LINK_GROUPS: FooterLinkGroupT[] = [
   {
-    id: "explore",
-    title: "Explore",
-    links: [
-      { label: "All patient leaflets", href: "/leaflets" },
-      {
-        label: "Eye conditions",
-        href: "/leaflets?filter-search=eye conditions",
-      },
-      {
-        label: "Procedures & surgery",
-        href: "/leaflets?filter-search=procedures",
-      },
-      { label: "Medications", href: "/leaflets?filter-search=medications" },
-    ],
-  },
-  {
     id: "site-map",
     title: "Site Map",
     links: [
-      { label: "About Wise Follow Up", href: "/about" },
+      { label: "home", href: "/" },
       { label: "Contact us", href: "/contact-us" },
-      { label: "Blogs", href: "/blogs" },
-      { label: "Share your experience", href: "/submit-review" },
+      { label: "terms and conditions", href: "/terms" },
+      { label: "privacy policy", href: "/privacy-policy" },
+    ],
+  },
+  {
+    id: "new-cars",
+    title: "New cars",
+    links: [
+      { label: "New cars in egypt", href: "/new-cars?filter=egypt" },
+      {
+        label: "new cars in saudi arabia",
+        href: "/new-cars?filter=saudi",
+      },
+      {
+        label: "New cars in Qatar",
+        href: "/new-cars?filter=Qatar",
+      },
+    ],
+  },
+  {
+    id: "used-cars",
+    title: "used cars",
+    links: [
+      { label: "used cars in egypt", href: "/used-cars?filter=egypt" },
+      {
+        label: "used cars in saudi arabia",
+        href: "/used-cars?filter=saudi",
+      },
+      {
+        label: "used cars in Qatar",
+        href: "/used-cars?filter=Qatar",
+      },
     ],
   },
 ];
@@ -41,23 +53,15 @@ const Footer: React.FC = () => {
       className="mt-10 border-t border-border-subtle bg-bg-surface"
       aria-label="Site footer"
     >
-      <div className="containerr py-8 md:py-10 lg:py-12 space-y-8">
-        {/* Top */}
-        <div className="grid gap-8 lg:grid-cols-[1.3fr_1fr] items-start">
-          <BrandBlock />
-
-          <nav
-            aria-label="Footer navigation"
-            className="grid gap-6 sm:grid-cols-2"
-          >
-            {LINK_GROUPS.map((group) => (
-              <FooterLinkGroup key={group.id} group={group} />
-            ))}
-          </nav>
-        </div>
-
-        {/* Safety */}
-        <SafetyNote />
+      <div className="py-8 space-y-8 app-container md:py-10 lg:py-12">
+        <nav
+          aria-label="Footer navigation"
+          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
+        >
+          {LINK_GROUPS.map((group) => (
+            <FooterLinkGroup key={group.id} group={group} />
+          ))}
+        </nav>
 
         {/* Connect */}
         <FooterConnectSection />

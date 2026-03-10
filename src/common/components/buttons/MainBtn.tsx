@@ -15,7 +15,10 @@ const baseClasses = `
   text-sm font-semibold
   focus-visible:outline-none
   focus-visible:ring-2
-  focus-visible:ring-offset-2
+  focus-visible:ring-offset-2 duration-200
+   hover:brightness-110
+    active:brightness-90
+  rounded-md
 `;
 
 const variantClasses: Record<ButtonVariant, string> = {
@@ -23,8 +26,7 @@ const variantClasses: Record<ButtonVariant, string> = {
     bg-primary text-white
     px-5 py-2.5
     shadow-soft
-    hover:brightness-110
-    focus-visible:ring-primary
+  focus-visible:ring-primary
     focus-visible:ring-offset-bg-page
   `,
   ghost: `
@@ -35,13 +37,16 @@ const variantClasses: Record<ButtonVariant, string> = {
     focus-visible:ring-offset-bg-page
   `,
   outline: `
-    border border-border-subtle
-    text-text-main
-    bg-bg-surface
+    border border-border
+    text-white
+   bg-accent
+   hover:bg-accent-hover
+   active:bg-accent-pressed
     px-4 py-2
     hover:bg-bg-page
     focus-visible:ring-primary
     focus-visible:ring-offset-bg-page
+   
   `,
 };
 

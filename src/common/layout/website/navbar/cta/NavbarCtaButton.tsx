@@ -4,12 +4,12 @@ import { useTranslation } from "react-i18next";
 const NavbarCtaButton: React.FC = () => {
   const { t } = useTranslation();
   return (
-    <Link to="/leaflets">
+    <Link to="/sell-your-car">
       <MainBtn
         variant="primary"
-        className="text-xs sm:text-sm px-4 py-2 sm:px-5 sm:py-2.5"
+        className="text-xs sm:text-sm px-4 py-2 sm:px-5 sm:py-2.5 !rounded-md"
       >
-        {t("Browse leaflets")}
+        {t("Selling my car")}
       </MainBtn>
     </Link>
   );

@@ -41,7 +41,7 @@
     }
 }
 
-@layer components {
+/* @layer components {
     .section-shell {
         @apply py-section-y-sm md:py-section-y;
     }
@@ -57,7 +57,7 @@
     .card-base {
         @apply flex flex-col p-4 border bg-bg-surface rounded-card border-border-subtle shadow-soft md:p-5 gap-card-gap;
     }
-}
+} */
 
 @layer utilities {
     .no-scrollbar::-webkit-scrollbar {
@@ -67,6 +67,11 @@
     .no-scrollbar {
         scrollbar-width: none;
         -ms-overflow-style: none;
+    }
+
+    .app-container {
+        @apply w-full px-4 mx-auto sm:px-6 lg:px-8;
+        max-width: 1280px;
     }
 }
 
@@ -143,9 +148,9 @@ html {
 }
 
 
-.control-btn {
+/* .control-btn {
     @apply flex items-center justify-center border rounded-full h-9 w-9 border-border-subtle bg-bg-surface text-text-main hover:bg-primary-soft focus:outline-none focus-visible:ring-2 focus-visible:ring-primary;
-}
+} */
 
 /* -------------------------------------------------------------------------- */
 /* Animated Gradient Background                                                */
