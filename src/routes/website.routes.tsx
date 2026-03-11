@@ -45,5 +45,14 @@ export const websiteRoutes: RouteObject = {
         queryKey: [apiRoutes.blogs],
       },
     },
+    {
+      path: "/car-browse",
+      element: lazyLoad(
+        () => import("../features/browse/pages/car-browse"),
+      ),
+      handle: {
+        breadcrumb: "browse"
+      }
+    },
   ],
 };
