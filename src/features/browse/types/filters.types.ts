@@ -1,6 +1,12 @@
-export interface Filters {
-    brand: string;
-}
+export const stringFilterKeys = [
+    "brand"
+] as const;
+
+type StringFilters = {
+    [key in typeof stringFilterKeys[number]]: string;
+} 
+
+export type Filters = StringFilters; 
 
 export interface FiltersContextType {
     states: Partial<Filters>;

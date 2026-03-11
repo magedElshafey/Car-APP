@@ -1,4 +1,4 @@
-export const apiUrl: string = "https://dashboard.wisefollowup.com/api/v1/";
+export const apiUrl: string = "https://q-car.dev.qutell.net/api/site";
 export const baseUrl: string = "https://wisefollowup.com";
 export const apiRoutes = {
   about: "about",
@@ -27,5 +27,6 @@ export const apiRoutes = {
   aboutHero: "content/about-intro",
   founders: "content/about-founders", aboutInfo: "content/about-wise-info",
   leafletDesc: "content/leaflets-disclaimer",
-  report: "leaflets/report"
+  report: "leaflets/report",
+  brands: "/car-brands"
 };

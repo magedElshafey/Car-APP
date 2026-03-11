@@ -97,7 +97,7 @@ export const FilterItemMenuContainer: FC<PropsWithChildren<{searchable?: boolean
         <SearchContext.Provider value={{
             value: deferredSearch
         }}>
-            <div className={`filter-item-menu space-y-2 overflow-y-auto border-b border-b-stone-300 transition-all duration-200 ${isOpen ? "max-h-96" : "max-h-0"}`}>
+            <div className={`filter-item-menu space-y-2 overflow-y-auto border-b border-b-stone-300 transition-all duration-200 ${isOpen ? "max-h-96 pb-2" : "max-h-0"}`}>
                 {
                     searchable && (
                         <div className="group/search border rounded-md border-stone-200 focus-within:border-blue-500 p-1 flex items-center">
