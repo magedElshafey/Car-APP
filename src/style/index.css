@@ -465,3 +465,12 @@ html {
         animation: none;
     }
 }
+
+.filter-item-menu {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.filter-item-menu::-webkit-scrollbar {
+  display: none;
+}
