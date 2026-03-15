@@ -3,7 +3,10 @@ export const stringFilterKeys = [
 ] as const;
 
 type StringFilters = {
-    [key in typeof stringFilterKeys[number]]: string;
+    [key in typeof stringFilterKeys[number]]: {
+        label?: string;
+        value: string;
+    };
 } 
 
 export type Filters = StringFilters; 

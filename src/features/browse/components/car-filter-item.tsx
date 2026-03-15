@@ -4,11 +4,16 @@ import useFilters from "../hooks/use-filters";
 import { FaAngleDown } from "react-icons/fa";
 import { DEBOUNCE_DELAY } from "../config";
 import { HiMagnifyingGlass } from "react-icons/hi2";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { useTranslation } from "react-i18next";
 
 interface FilterItemContextType {
     isOpen: boolean;
     toggle: () => void;
-    filterValue?: string;
+    filterValue?: {
+        label?: string;
+        value: string;
+    };
     filterKey?: string;
 }
 
@@ -58,17 +63,22 @@ const FilterItem: FC<PropsWithChildren<FilterItemProps>> & { Header: typeof Filt
 
 interface FilterItemHeaderProps {
     title: string;
+    showLabel?: boolean;
 }
 
 export const FilterItemHeader: FC<FilterItemHeaderProps> = ({
-    title
+    title,
+    showLabel=false
 }) => {
     const { toggle, filterValue, isOpen } = useFilterItemContext();
+    const isLoading = showLabel && !filterValue?.label && filterValue?.value;
+    const { t } = useTranslation();
     return (
         <div onClick={toggle} className="cursor-pointer flex justify-between items-center py-1">
-            <span>{title}</span>
+            <span>{t(title)}</span>
             {
-                filterValue ? <span className="text-sm text-gray-500 w-10 overflow-hidden text-ellipsis whitespace-nowrap">{filterValue}</span> : <FaAngleDown className={`text-gray-500 duration-100 transition-all ${isOpen ? "rotate-180" : "rotation-0"}`} /> 
+                isLoading ? <AiOutlineLoading3Quarters size={12} className="animate-spin text-stone-800" /> :
+                (filterValue?.label && showLabel) ? <span className="text-sm text-gray-500 max-w-1/2 overflow-hidden text-ellipsis whitespace-nowrap">{filterValue?.label}</span> : <FaAngleDown className={`text-gray-500 duration-100 transition-all ${isOpen ? "rotate-180" : "rotation-0"}`} /> 
             }
         </div>
     );
@@ -97,7 +107,7 @@ export const FilterItemMenuContainer: FC<PropsWithChildren<{searchable?: boolean
         <SearchContext.Provider value={{
             value: deferredSearch
         }}>
-            <div className={`filter-item-menu space-y-2 overflow-y-auto border-b border-b-stone-300 transition-all duration-200 ${isOpen ? "max-h-96 pb-2" : "max-h-0"}`}>
+            <div className={`space-y-2 flex flex-col overflow-hidden border-b border-b-stone-300 transition-all duration-200 ${isOpen ? "max-h-96 pb-2" : "max-h-0"}`}>
                 {
                     searchable && (
                         <div className="group/search border rounded-md border-stone-200 focus-within:border-blue-500 p-1 flex items-center">
@@ -113,7 +123,9 @@ export const FilterItemMenuContainer: FC<PropsWithChildren<{searchable?: boolean
                         </div>
                     )
                 }
-                {children}
+                <div className="filter-item-menu overflow-y-auto flex-1">
+                    {children}
+                </div>
             </div>
         </SearchContext.Provider>
     );

@@ -18,7 +18,10 @@ const FilterContextProvider: FC<PropsWithChildren> = ({
             if(key.startsWith("filter-")) {
                const keyName = key.split("-")[1];
                if(keyName && (stringFilterKeys as unknown as string[]).includes(keyName)) {
-                filters[keyName as keyof Filters] = value;
+                filters[keyName as keyof Filters] = {
+                    label: undefined,
+                    value
+                };
                }
             }
         }
@@ -41,9 +44,15 @@ const FilterContextProvider: FC<PropsWithChildren> = ({
 
         if(debounceRef.current) clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => {
+            const filters = Object.entries(curr).reduce((acc, entry) => {
+                const [key, value] = entry;
+                acc[`filter-${key}`] = value.value;
+                return acc;
+            }, {} as Record<string, string>);
+
             setSearchParams({
-                ...curr,
-                [key]: value
+                ...filters,
+                [`filter-${key}`]: value.value
             });
         }, DEBOUNCE_DELAY);
     }, [setSearchParams]);
