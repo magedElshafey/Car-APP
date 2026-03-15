@@ -3,6 +3,7 @@ import FilterItem, { useSearch } from "./car-filter-item";
 import useGetBrands from "../hooks/use-get-brands";
 import SkeletonFilterList from "./filter-list-skeleton";
 import { useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 
 const BrandFilterMenu = () => {
     const { 
@@ -14,6 +15,7 @@ const BrandFilterMenu = () => {
         }
     } = useFilters();
     const { value: search } = useSearch();
+    const {t} = useTranslation();
 
     const {
         data: brands,
@@ -27,7 +29,7 @@ const BrandFilterMenu = () => {
     }, [brands, search]);
 
     useEffect(() => {
-        if(brands && brand && !brand.label) {
+        if(brands && brand?.value && !brand.label) {
             const active = brands.find(b => b.id.toString() === brand.value);
             if(active) {
                 handleChange("brand", {
@@ -36,13 +38,13 @@ const BrandFilterMenu = () => {
                 });
             }
         }
-    }, [brands, brand]);
+    }, [brands, brand, handleChange]);
 
     if(brandsLoading) return <SkeletonFilterList /> 
 
     return (
         <div className="bg-slate-100 rounded-sm p-1">
-            {filteredBrands?.map(brand => (
+            {Boolean(filteredBrands?.length) ? filteredBrands?.map(brand => (
                 <button 
                     className={`py-2 block w-full text-start rounded px-2 duration-75 cursor-pointer font-semibold text-sm ${activeBrand === brand.id ? "text-blue-400 bg-blue-50" : "hover:bg-slate-300"}`} key={brand.id}
                     onClick={() => {
@@ -50,11 +52,12 @@ const BrandFilterMenu = () => {
                             label: brand.name,
                             value: brand.id.toString()
                         });
+                        handleChange("model", undefined);
                     }}
                 >
                     {brand.name}
                 </button>
-            ))}
+            )): <div className="py-2 block w-full text-start rounded px-2 text-sm text-gray-500">{t("no results found")}</div>}
         </div>
     );
 }

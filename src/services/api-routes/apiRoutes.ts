@@ -34,6 +34,7 @@ export const apiRoutes = {
   leafletDesc: "content/leaflets-disclaimer",
   report: "leaflets/report",
   brands: "/car-brands",
+  models: "/car-models",
   login: "/auth/login",
   register: "auth/register",
   sendOtp: "auth/send_otp",

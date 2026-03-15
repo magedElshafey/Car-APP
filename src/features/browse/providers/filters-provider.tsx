@@ -15,14 +15,14 @@ const FilterContextProvider: FC<PropsWithChildren> = ({
         const filters: Partial<Filters> = {};
         for (const entry of params.entries()) {
             const [key, value] = entry;
-            if(key.startsWith("filter-")) {
-               const keyName = key.split("-")[1];
-               if(keyName && (stringFilterKeys as unknown as string[]).includes(keyName)) {
-                filters[keyName as keyof Filters] = {
-                    label: undefined,
-                    value
-                };
-               }
+            if (key.startsWith("filter-")) {
+                const keyName = key.split("-")[1];
+                if (keyName && (stringFilterKeys as unknown as string[]).includes(keyName)) {
+                    filters[keyName as keyof Filters] = {
+                        label: undefined,
+                        value
+                    };
+                }
             }
         }
         return filters;
@@ -32,28 +32,36 @@ const FilterContextProvider: FC<PropsWithChildren> = ({
 
     const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
-    const handleChange = useCallback((key: keyof Filters, value: Filters[typeof key]) => {
+    const handleChange = useCallback((key: keyof Filters, value: Filters[typeof key] | undefined) => {
         let curr: Partial<Filters> = {};
+        const exists = filters[key] && filters[key]?.value === value?.value;
         setFilters(old => {
             curr = old;
             return {
                 ...old,
-                [key]: value,
+                [key]: exists ? undefined : value,
             }
         });
 
-        if(debounceRef.current) clearTimeout(debounceRef.current);
+        if (debounceRef.current) clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => {
             const filters = Object.entries(curr).reduce((acc, entry) => {
                 const [key, value] = entry;
-                acc[`filter-${key}`] = value.value;
+                acc[`filter-${key}`] = value?.value;
                 return acc;
             }, {} as Record<string, string>);
 
-            setSearchParams({
-                ...filters,
-                [`filter-${key}`]: value.value
-            });
+            if (!exists && value) {
+                setSearchParams({
+                    ...filters,
+                    [`filter-${key!}`]: value?.value || ""
+                })
+            } else {
+                setSearchParams(params => {
+                    params.delete(`filter-${key}`);
+                    return params;
+                });
+            }
         }, DEBOUNCE_DELAY);
     }, [setSearchParams]);
 

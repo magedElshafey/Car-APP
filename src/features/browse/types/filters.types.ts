@@ -1,5 +1,6 @@
 export const stringFilterKeys = [
-    "brand"
+    "brand",
+    "model",
 ] as const;
 
 type StringFilters = {
@@ -14,6 +15,6 @@ export type Filters = StringFilters;
 export interface FiltersContextType {
     states: Partial<Filters>;
     handlers: {
-        handleChange: (key: keyof Filters, value: Filters[typeof key]) => void
+        handleChange: (key: keyof Filters, value: Filters[typeof key] | undefined) => void
     };
 }
