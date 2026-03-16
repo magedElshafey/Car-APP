@@ -15,6 +15,7 @@ export type Filters = StringFilters;
 export interface FiltersContextType {
     states: Partial<Filters>;
     handlers: {
-        handleChange: (key: keyof Filters, value: Filters[typeof key] | undefined) => void
+        handleChange: (key: keyof Filters, value: Filters[typeof key] | undefined) => void,
+        handleUniqueChange: (key: keyof Filters, value: Filters[typeof key] | undefined) => void,
     };
 }

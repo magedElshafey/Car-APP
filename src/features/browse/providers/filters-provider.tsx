@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren, useCallback, useRef, useState } from "react";
+import { FC, PropsWithChildren, useCallback, useEffect, useRef, useState } from "react";
 import { FiltersContext } from "../hooks/use-filters";
 import { Filters } from "../types/filters.types";
 import { useSearchParams } from "react-router-dom";
@@ -33,43 +33,50 @@ const FilterContextProvider: FC<PropsWithChildren> = ({
     const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
     const handleChange = useCallback((key: keyof Filters, value: Filters[typeof key] | undefined) => {
-        let curr: Partial<Filters> = {};
-        const exists = filters[key] && filters[key]?.value === value?.value;
         setFilters(old => {
-            curr = old;
             return {
                 ...old,
-                [key]: exists ? undefined : value,
+                [key]: value,
             }
         });
+    }, []);
 
+    const handleUniqueChange = useCallback((key: keyof Filters, value: Filters[typeof key] | undefined) => {
+        const exists = filters[key]?.value && filters[key]?.value === value?.value && (filters[key]?.label && value?.label ? filters[key]?.label === value.label : false);
+        handleChange(key, exists ? undefined : value);
+    }, [filters, handleChange]);
+
+    useEffect(() => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => {
-            const filters = Object.entries(curr).reduce((acc, entry) => {
+            const newFilters = Object.entries(filters).reduce((acc, entry) => {
                 const [key, value] = entry;
                 acc[`filter-${key}`] = value?.value;
                 return acc;
             }, {} as Record<string, string>);
 
-            if (!exists && value) {
-                setSearchParams({
-                    ...filters,
-                    [`filter-${key!}`]: value?.value || ""
-                })
-            } else {
-                setSearchParams(params => {
-                    params.delete(`filter-${key}`);
-                    return params;
-                });
-            }
+            setSearchParams((prev) => {
+                for (const entry of Object.entries(newFilters)) {
+                    const [key, value] = entry;
+                    if (!value) {
+                        prev.delete(key);
+                    } else {
+                        prev.set(key, value);
+                    }
+                }
+
+                return prev.toString();
+            });
         }, DEBOUNCE_DELAY);
-    }, [setSearchParams]);
+
+    }, [filters]);
 
     return (
         <FiltersContext.Provider value={{
             states: filters,
             handlers: {
-                handleChange
+                handleChange,
+                handleUniqueChange
             }
         }}>
             {children}

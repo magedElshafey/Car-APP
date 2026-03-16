@@ -4,25 +4,27 @@ import SkeletonFilterList from "./filter-list-skeleton";
 import { useEffect, useMemo } from "react";
 import useGetModels from "../hooks/use-get-models";
 import { useTranslation } from "react-i18next";
+import useActiveFilters from "../hooks/use-active-filters";
 
 const ModelFilterMenu = () => {
     const { 
         states: {
            model,
-           brand
         },
         handlers: {
-            handleChange
+            handleUniqueChange
         }
     } = useFilters();
     const {t} = useTranslation();
 
     const { value: search } = useSearch();
 
+    const activeFilters = useActiveFilters();
+
     const {
         data: models,
         isLoading: modelsLoading 
-    } = useGetModels(brand?.value);
+    } = useGetModels(activeFilters.brand);
 
     const activeModel = parseInt(model?.value || "") || undefined;
 
@@ -35,15 +37,15 @@ const ModelFilterMenu = () => {
         if(models && model?.value && !model.label) {
             const active = models.find(b => b.id.toString() === model.value);
             if(active) {
-                handleChange("model", {
+                handleUniqueChange("model", {
                     label: active.name,
                     value: model.value 
                 });
             }
         }
-    }, [models, model, handleChange]);
+    }, [models, model, handleUniqueChange]);
 
-    if(modelsLoading) return <SkeletonFilterList />
+    if(modelsLoading || !activeFilters.brand) return <SkeletonFilterList />
 
     return (
         <div className="bg-slate-100 rounded-sm p-1">
@@ -51,7 +53,7 @@ const ModelFilterMenu = () => {
                 <button 
                     className={`py-2 block w-full text-start rounded px-2 duration-75 cursor-pointer font-semibold text-sm ${activeModel === model.id ? "text-blue-400 bg-blue-50" : "hover:bg-slate-300"}`} key={model.id}
                     onClick={() => {
-                        handleChange("model", {
+                        handleUniqueChange("model", {
                             label: model.name,
                             value: model.id.toString()
                         });
@@ -65,9 +67,9 @@ const ModelFilterMenu = () => {
 }
 
 const ModelFilter = () => {
-    const {states: {brand}} = useFilters();
-    if(!brand?.value) return null;
+    const {brand} = useFilters().states;
 
+    if(!brand?.value) return null;
     return (
         <FilterItem filterKey="model">
             <FilterItem.Header showLabel title="model" />

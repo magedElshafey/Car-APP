@@ -11,7 +11,7 @@ const BrandFilterMenu = () => {
             brand
         },
         handlers: {
-            handleChange
+            handleUniqueChange
         }
     } = useFilters();
     const { value: search } = useSearch();
@@ -32,13 +32,13 @@ const BrandFilterMenu = () => {
         if(brands && brand?.value && !brand.label) {
             const active = brands.find(b => b.id.toString() === brand.value);
             if(active) {
-                handleChange("brand", {
+                handleUniqueChange("brand", {
                     label: active.name,
                     value: brand.value 
                 });
             }
         }
-    }, [brands, brand, handleChange]);
+    }, [brands, brand, handleUniqueChange]);
 
     if(brandsLoading) return <SkeletonFilterList /> 
 
@@ -48,11 +48,11 @@ const BrandFilterMenu = () => {
                 <button 
                     className={`py-2 block w-full text-start rounded px-2 duration-75 cursor-pointer font-semibold text-sm ${activeBrand === brand.id ? "text-blue-400 bg-blue-50" : "hover:bg-slate-300"}`} key={brand.id}
                     onClick={() => {
-                        handleChange("brand", {
+                        handleUniqueChange("brand", {
                             label: brand.name,
                             value: brand.id.toString()
                         });
-                        handleChange("model", undefined);
+                        handleUniqueChange("model", undefined);
                     }}
                 >
                     {brand.name}

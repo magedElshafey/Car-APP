@@ -40,12 +40,14 @@ export const useSearch = () => {
 
 interface FilterItemProps {
     filterKey?: keyof Filters;
+    className?: string;
 }
 
 
 const FilterItem: FC<PropsWithChildren<FilterItemProps>> & { Header: typeof FilterItemHeader, Menu: typeof FilterItemMenuContainer } = ({
     children,
-    filterKey
+    filterKey,
+    className=""
 }) => {
     const [state, setState] = useState(false);
     const { states } = useFilters();
@@ -56,7 +58,9 @@ const FilterItem: FC<PropsWithChildren<FilterItemProps>> & { Header: typeof Filt
 
     return (
         <FilterItemContext.Provider value={{ isOpen: state, toggle, filterValue: filterKey ? states[filterKey] : undefined, filterKey }}>
-            {children}
+            <div className={className}>
+                {children}
+            </div>
         </FilterItemContext.Provider>
     );
 }
