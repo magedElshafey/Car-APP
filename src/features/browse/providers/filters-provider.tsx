@@ -1,8 +1,7 @@
 import { FC, PropsWithChildren, useCallback, useEffect, useRef, useState } from "react";
 import { FiltersContext } from "../hooks/use-filters";
-import { Filters } from "../types/filters.types";
+import { Filters, FiltersContextType, rangeFilterKeys, rangeFilterParamKeys, stringFilterKeys } from "../types/filters.types";
 import { useSearchParams } from "react-router-dom";
-import { stringFilterKeys } from "../types/filters.types";
 import { DEBOUNCE_DELAY } from "../config";
 
 const FilterContextProvider: FC<PropsWithChildren> = ({
@@ -13,18 +12,30 @@ const FilterContextProvider: FC<PropsWithChildren> = ({
     function getInitialFilters() {
         const params = searchParams;
         const filters: Partial<Filters> = {};
-        for (const entry of params.entries()) {
-            const [key, value] = entry;
-            if (key.startsWith("filter-")) {
-                const keyName = key.split("-")[1];
-                if (keyName && (stringFilterKeys as unknown as string[]).includes(keyName)) {
-                    filters[keyName as keyof Filters] = {
-                        label: undefined,
-                        value
-                    };
-                }
+
+        for (const key of stringFilterKeys) {
+            const value = params.get(`filter-${key}`);
+            if (value) {
+                filters[key] = {
+                    label: undefined,
+                    value
+                };
             }
         }
+
+        for (const key of rangeFilterKeys) {
+            const paramKeys = rangeFilterParamKeys[key];
+            const from = params.get(`filter-${paramKeys.from}`) || undefined;
+            const to = params.get(`filter-${paramKeys.to}`) || undefined;
+
+            if (from || to) {
+                filters[key] = {
+                    from,
+                    to
+                };
+            }
+        }
+
         return filters;
     }
 
@@ -32,7 +43,7 @@ const FilterContextProvider: FC<PropsWithChildren> = ({
 
     const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
-    const handleChange = useCallback((key: keyof Filters, value: Filters[typeof key] | undefined) => {
+    const handleChange = useCallback<FiltersContextType["handlers"]["handleChange"]>((key, value) => {
         setFilters(old => {
             return {
                 ...old,
@@ -41,42 +52,63 @@ const FilterContextProvider: FC<PropsWithChildren> = ({
         });
     }, []);
 
-    const handleUniqueChange = useCallback((key: keyof Filters, value: Filters[typeof key] | undefined) => {
+    const handleUniqueChange = useCallback<FiltersContextType["handlers"]["handleUniqueChange"]>((key, value) => {
         const exists = filters[key]?.value && filters[key]?.value === value?.value && (filters[key]?.label && value?.label ? filters[key]?.label === value.label : false);
         handleChange(key, exists ? undefined : value);
     }, [filters, handleChange]);
 
+    const resetFilters = useCallback<FiltersContextType["handlers"]["resetFilters"]>(() => {
+        setFilters({});
+    }, []);
+
     useEffect(() => {
         if (debounceRef.current) clearTimeout(debounceRef.current);
         debounceRef.current = setTimeout(() => {
-            const newFilters = Object.entries(filters).reduce((acc, entry) => {
-                const [key, value] = entry;
-                acc[`filter-${key}`] = value?.value;
-                return acc;
-            }, {} as Record<string, string>);
-
             setSearchParams((prev) => {
-                for (const entry of Object.entries(newFilters)) {
-                    const [key, value] = entry;
+                const nextSearchParams = new URLSearchParams(prev);
+
+                for (const key of stringFilterKeys) {
+                    const value = filters[key]?.value;
+                    const searchKey = `filter-${key}`;
                     if (!value) {
-                        prev.delete(key);
+                        nextSearchParams.delete(searchKey);
                     } else {
-                        prev.set(key, value);
+                        nextSearchParams.set(searchKey, value);
                     }
                 }
 
-                return prev.toString();
+                for (const key of rangeFilterKeys) {
+                    const value = filters[key];
+                    const paramKeys = rangeFilterParamKeys[key];
+                    const fromSearchKey = `filter-${paramKeys.from}`;
+                    const toSearchKey = `filter-${paramKeys.to}`;
+
+                    if (!value?.from) {
+                        nextSearchParams.delete(fromSearchKey);
+                    } else {
+                        nextSearchParams.set(fromSearchKey, value.from);
+                    }
+
+                    if (!value?.to) {
+                        nextSearchParams.delete(toSearchKey);
+                    } else {
+                        nextSearchParams.set(toSearchKey, value.to);
+                    }
+                }
+
+                return nextSearchParams;
             });
         }, DEBOUNCE_DELAY);
 
-    }, [filters]);
+    }, [filters, setSearchParams]);
 
     return (
         <FiltersContext.Provider value={{
             states: filters,
             handlers: {
                 handleChange,
-                handleUniqueChange
+                handleUniqueChange,
+                resetFilters
             }
         }}>
             {children}

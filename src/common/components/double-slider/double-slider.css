@@ -21,7 +21,7 @@
 }
 
 .slider__range {
-    @apply bg-blue-300;
+    @apply bg-blue-800;
     width: 100%;
     z-index: 2;
 }
@@ -61,7 +61,7 @@
     pointer-events: all;
     position: relative;
     border: 3px solid;
-    @apply border-orangeColor;
+    @apply border-blue-900;
 }
 
 /* For Firefox browsers */

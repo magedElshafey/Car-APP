@@ -1,5 +1,6 @@
+import useFilterSearch from "@/features/browse/hooks/use-filter-search";
 import useFilters from "../hooks/use-filters";
-import FilterItem, { useSearch } from "./car-filter-item";
+import FilterItem from "./car-filter-item";
 import SkeletonFilterList from "./filter-list-skeleton";
 import { useEffect, useMemo } from "react";
 import useGetModels from "../hooks/use-get-models";
@@ -17,7 +18,7 @@ const ModelFilterMenu = () => {
     } = useFilters();
     const {t} = useTranslation();
 
-    const { value: search } = useSearch();
+    const { value: search } = useFilterSearch();
 
     const activeFilters = useActiveFilters();
 

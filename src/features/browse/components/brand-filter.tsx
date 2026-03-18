@@ -1,5 +1,6 @@
+import useFilterSearch from "@/features/browse/hooks/use-filter-search";
 import useFilters from "../hooks/use-filters";
-import FilterItem, { useSearch } from "./car-filter-item";
+import FilterItem from "./car-filter-item";
 import useGetBrands from "../hooks/use-get-brands";
 import SkeletonFilterList from "./filter-list-skeleton";
 import { useEffect, useMemo } from "react";
@@ -14,7 +15,7 @@ const BrandFilterMenu = () => {
             handleUniqueChange
         }
     } = useFilters();
-    const { value: search } = useSearch();
+    const { value: search } = useFilterSearch();
     const {t} = useTranslation();
 
     const {

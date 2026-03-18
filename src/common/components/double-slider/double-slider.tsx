@@ -1,86 +1,117 @@
-import { useRef, useCallback, useEffect, memo } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import "./double-slider.css";
 
-interface PriceFilterProps {
-  initialMin?: number;
+interface DoubleSliderProps {
+  min: number;
+  max: number;
   step?: number;
-  initialMax?: number;
+  value: {
+    min: number;
+    max: number;
+  };
+  onChange: (value: { min: number; max: number }) => void;
+  formatValue?: (value: number) => string;
 }
 
-const PriceFilter: React.FC<PriceFilterProps> = ({
-  initialMin = 0,
-  initialMax = 10000,
+const DoubleSlider: React.FC<DoubleSliderProps> = ({
+  min,
+  max,
   step = 1,
+  value,
+  onChange,
+  formatValue = (currentValue) => currentValue.toString(),
 }) => {
   const { i18n } = useTranslation();
-  const price_from = "100";
-  const price_to = "2000";
-
-  const minPrice = parseInt(price_from || "") || initialMin;
-  const maxPrice = parseInt(price_to || "") || initialMax;
-
-  const minValRef = useRef(minPrice || initialMin);
-  const maxValRef = useRef(maxPrice || initialMax);
+  const [internalValue, setInternalValue] = useState(value);
+  const isInteractingRef = useRef(false);
   const range = useRef<HTMLDivElement>(null);
-  // Convert to percentage
+
   const getPercent = useCallback(
-    (value: number) =>
-      Math.round(((value - initialMin) / (initialMax - initialMin)) * 100),
-    [initialMin, initialMax]
+    (currentValue: number) =>
+      Math.round(((currentValue - min) / (max - min)) * 100),
+    [min, max]
   );
 
-  // Set width of the range to decrease from the left side
   useEffect(() => {
-    const minPercent = getPercent(minPrice || initialMin);
-    const maxPercent = getPercent(maxPrice || initialMax);
+    if (!isInteractingRef.current) {
+      setInternalValue(value);
+    }
+  }, [value]);
+
+  useEffect(() => {
+    const minPercent = getPercent(internalValue.min);
+    const maxPercent = getPercent(internalValue.max);
 
     if (range.current) {
-      // Check if the current language is Arabic
       if (i18n.language === "ar") {
-        range.current.style.right = `${minPercent}%`; // Apply style for Arabic
+        range.current.style.right = `${minPercent}%`;
       } else {
-        range.current.style.left = `${minPercent}%`; // Apply default style
+        range.current.style.left = `${minPercent}%`;
       }
 
       range.current.style.width = `${maxPercent - minPercent}%`;
     }
-  }, [minPrice, maxPrice, getPercent, i18n.language]);
-  // Set width of the range to decrease from the right side
-  useEffect(() => {
-    const minPercent = getPercent(minValRef.current);
-    const maxPercent = getPercent(maxPrice || initialMax);
+  }, [getPercent, i18n.language, internalValue.max, internalValue.min]);
 
-    if (range.current) {
-      range.current.style.width = `${maxPercent - minPercent}%`;
-    }
-  }, [maxPrice, getPercent]);
+  const commitChange = useCallback(() => {
+    isInteractingRef.current = false;
+    onChange(internalValue);
+  }, [internalValue, onChange]);
 
   return (
-    <div className="my-5">
+    <div>
+
+    <div className="my-5 px-1">
       <div className="flex-center relative">
         <input
           type="range"
-          min={initialMin}
-          max={initialMax}
-          value={minPrice}
+          min={min}
+          max={max}
+          value={internalValue.min}
+          onMouseDown={() => {
+            isInteractingRef.current = true;
+          }}
+          onTouchStart={() => {
+            isInteractingRef.current = true;
+          }}
+          onMouseUp={commitChange}
+          onTouchEnd={commitChange}
+          onBlur={commitChange}
+          onKeyUp={commitChange}
           onChange={(event) => {
-            const value = Math.min(Number(event.target.value), maxPrice);
-            minValRef.current = value;
+            const nextMin = Math.min(Number(event.target.value), internalValue.max);
+            setInternalValue((old) => ({
+              min: nextMin,
+              max: old.max
+            }));
           }}
           className={`thumb thumbLeft`}
           step={step}
-          style={{ zIndex: minPrice > minPrice - 100 ? 5 : undefined }}
+          style={{ zIndex: internalValue.min >= max - step ? 5 : undefined }}
         />
         <input
           type="range"
-          min={initialMin}
-          max={initialMax}
-          value={maxPrice}
+          min={min}
+          max={max}
+          value={internalValue.max}
           step={step}
+          onMouseDown={() => {
+            isInteractingRef.current = true;
+          }}
+          onTouchStart={() => {
+            isInteractingRef.current = true;
+          }}
+          onMouseUp={commitChange}
+          onTouchEnd={commitChange}
+          onBlur={commitChange}
+          onKeyUp={commitChange}
           onChange={(event) => {
-            const value = Math.max(Number(event.target.value), minPrice);
-            maxValRef.current = value;
+            const nextMax = Math.max(Number(event.target.value), internalValue.min);
+            setInternalValue((old) => ({
+              min: old.min,
+              max: nextMax
+            }));
           }}
           className={`thumb thumbRight`}
         />
@@ -90,20 +121,13 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
           <div ref={range} className="slider__range" />
         </div>
       </div>
-      <div className="flex items-center justify-between mt-4">
-        <p>
-          <div className="flex items-center gap-2">
-            <p> {minPrice}</p>
-          </div>
-        </p>
-        <p>
-          <div className="flex items-center">
-            <p>{maxPrice}</p> 
-          </div>
-        </p>
+    </div>
+      <div className="pt-5 flex items-center justify-between text-sm text-stone-500">
+        <span>{formatValue(internalValue.min)}</span>
+        <span>{formatValue(internalValue.max)}</span>
       </div>
     </div>
   );
 };
 
-export default memo(PriceFilter);
+export default memo(DoubleSlider);

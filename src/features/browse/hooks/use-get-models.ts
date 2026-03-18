@@ -8,7 +8,6 @@ import { useTranslation } from "react-i18next";
 
 const useGetModels = (brand?: string) => {
     const { i18n: language } = useTranslation();
-    console.log("brand", brand);
     return useQuery({
         queryKey: [apiRoutes.brands, brand, language],
         queryFn: async () => {
