@@ -57,6 +57,17 @@
         "title": "Financing"
       }
     },
+    "features": {
+      "title": "Features & Highlighted Points",
+      "label": "Features",
+      "optional": "Optional",
+      "addButton": "Add Features",
+      "loading": "Loading features...",
+      "empty": "No features available.",
+      "cancel": "Cancel",
+      "apply": "Add Features",
+      "selectedCount": "{{count}} selected"
+    },
     "fields": {
       "condition": {
         "label": "Condition",
