@@ -7,8 +7,16 @@ export type NavLinkItem = {
 
 export const DEFAULT_LINKS: NavLinkItem[] = [
   { id: "home", label: "Home", href: "/" },
-  { id: "new-cars", label: "New Cars", href: "/new-cars" },
-  { id: "used-cars", label: "Used Cars", href: "/used-cars" },
+  {
+    id: "new-cars",
+    label: "New Cars",
+    href: "/car-browse?filter-condition=new",
+  },
+  {
+    id: "used-cars",
+    label: "Used Cars",
+    href: "/car-browse?filter-condition=used",
+  },
   {
     id: "other-vehicles",
     label: "Other Vehicles",
