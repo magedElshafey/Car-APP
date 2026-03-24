@@ -27,6 +27,15 @@ export const websiteRoutes: RouteObject = {
         breadcrumb: "terms",
       },
     },
+    {
+      path: "create-car-ad",
+      element: lazyLoad(
+        () => import("../features/create-car-ad/pages/CreateCarAd"),
+      ),
+      handle: {
+        breadcrumb: "create car ad",
+      },
+    },
 
     {
       path: "blogs",
