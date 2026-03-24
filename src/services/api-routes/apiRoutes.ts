@@ -1,5 +1,5 @@
 export const apiUrl: string = "https://q-car.dev.qutell.net/api/site";
-export const baseUrl: string = "https://wisefollowup.com";
+export const baseUrl: string = "https://q-car.dev.qutell.net";
 export const apiRoutes = {
   about: "about",
   cities: "cities",
@@ -45,4 +45,5 @@ export const apiRoutes = {
   forgetPasswordOtp: "forget_password/verfication",
   resetPassword: "auth/reset_password",
   changePassword: "auth/changePassword",
+  checkOTP: "auth/check_otp",
 };

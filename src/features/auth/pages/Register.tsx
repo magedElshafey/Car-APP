@@ -5,16 +5,16 @@ import MainInput from "../../../common/components/inputs/MainInput";
 import MainBtn from "../../../common/components/buttons/MainBtn";
 import { CiUser } from "react-icons/ci";
 import { GoKey } from "react-icons/go";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MdOutlineEmail, MdOutlinePhoneEnabled } from "react-icons/md";
-import MainCheckInput from "../../../common/components/inputs/MainCheckInput";
+// import MainCheckInput from "../../../common/components/inputs/MainCheckInput";
 
 const Register = () => {
-  const { register, errors, handleSubmit, onSubmit, isPending, control } =
+  const { register, errors, handleSubmit, onSubmit, isPending } =
     useRegisterLogic();
   const { t } = useTranslation();
-  const navigate = useNavigate();
-  const handleNavigateClick = () => navigate("/static/3-terms-and-conditions");
+  // const navigate = useNavigate();
+  // const handleNavigateClick = () => navigate("/static/3-terms-and-conditions");
   return (
     <AuthCard
       title="Create a new account"
@@ -32,6 +32,7 @@ const Register = () => {
             error={errors.name?.message}
           />
         </div>
+
         <div className="mb-4">
           <MainInput
             required={true}
@@ -45,7 +46,7 @@ const Register = () => {
         </div>
         <div className="mb-4">
           <MainInput
-            required={false}
+            required={true}
             Icon={MdOutlineEmail}
             placeholder="example@example.com"
             label="email"
@@ -55,7 +56,7 @@ const Register = () => {
           />
         </div>
 
-        <div className="mb-4 grid-2 gap-4">
+        <div className="gap-4 mb-4 grid-2">
           <MainInput
             required={true}
             Icon={GoKey}
@@ -75,12 +76,12 @@ const Register = () => {
             {...register("password_confirmation")}
           />
         </div>
-        <MainCheckInput
+        {/* <MainCheckInput
           label={
             <div>
               <span className="me-1">{t("agree-on-terms-and-conditions")}</span>
               <span
-                className="underline text-sm cursor-pointer font-bold"
+                className="text-sm font-bold underline cursor-pointer"
                 onClick={(e) => {
                   e.preventDefault();
                   handleNavigateClick();
@@ -92,21 +93,25 @@ const Register = () => {
           }
           control={control}
           name="agree_on_terms"
-        />
-        <div className="w-full mb-7 text-sm">
-          <span className="text-text-gray">{t("have an account ?")}</span>
-          <Link to="/auth/login" className="text-orangeColor underline ms-1">
+        /> */}
+        <div className="w-full text-sm mb-7">
+          <span className="text-gray">{t("have an account ?")}</span>
+          <Link
+            to="/auth/login"
+            className="underline transition-colors duration-200 text-accent hover:text-accent-hover ms-1"
+          >
             {t("login now")}
           </Link>
         </div>
-        <div className="w-full flex-center">
-          <div className="w-full md:w-[180px]">
+        <div className="flex items-center justify-center w-full">
+          <div className="w-full md:w-auto text-nowrap">
             <MainBtn
               type="submit"
-              className="w-full flex-center disabled:!pointer-events-auto"
-              text="Create a new account"
-              isPending={isPending}
-            />
+              className="w-full flex items-center justify-center disabled:!pointer-events-auto"
+              disabled={isPending}
+            >
+              {t("Create a new account")}
+            </MainBtn>
           </div>
         </div>
       </form>

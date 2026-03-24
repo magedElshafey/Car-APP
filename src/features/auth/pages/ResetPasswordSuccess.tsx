@@ -6,17 +6,17 @@ const ResetPasswordSuccess = () => {
   const navigate = useNavigate();
   const handleClick = () => navigate("/");
   return (
-    <div className="items-center w-full text-center flex-column">
+    <div className="flex flex-col items-center w-full text-center">
       <header className="mb-7">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+        <h1 className="text-xl font-bold text-primary ">
           {t("Password changed successfully")}
         </h1>
 
-        <p className="mt-2 text-sm text-text-gray dark:text-gray-400">
+        <p className="mt-2 text-sm text-text-muted">
           {t("Keep your password confidential")}
         </p>
       </header>
-      <div className="w-full md:w-[170px]">
+      <div className="flex items-center justify-center w-full text-nowrap">
         <MainBtn variant="primary" onClick={handleClick} type="button">
           {t("Home")}
         </MainBtn>

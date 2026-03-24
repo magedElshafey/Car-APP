@@ -53,7 +53,7 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
   (
     {
       header,
-      content,
+      // content,
       children,
       action,
       cancel,
@@ -62,7 +62,7 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
       onSuccess,
       onOpenChange,
     },
-    ref
+    ref,
   ) => {
     const { t } = useTranslation();
     const queryClient = useQueryClient();
@@ -77,7 +77,7 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
         },
         open: () => setOpened(true),
       }),
-      []
+      [],
     );
 
     const { mutate, isPending } = useMutation({
@@ -97,7 +97,8 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
         ) {
           toast.success(response.data.message as string);
         }
-        if(queryKey) await queryClient.invalidateQueries({ queryKey: queryKey });
+        if (queryKey)
+          await queryClient.invalidateQueries({ queryKey: queryKey });
         setOpened(false);
         onSuccess?.();
       },
@@ -120,8 +121,8 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
         <DialogTrigger onClick={() => setOpened(true)} asChild>
           {children}
         </DialogTrigger>
-        <DialogContent className="min-w-96 w-fit">
-          {header && (
+        <DialogContent className="w-[calc(100%-2rem)] max-w-sm rounded-3xl  bg-surface p-0 shadow-2xl">
+          {/* {header && (
             <DialogHeader
               className={!content ? "border-b-0" : ""}
               autoFocus
@@ -132,22 +133,34 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
                 <DialogDescription>{t(header.description)}</DialogDescription>
               )}
             </DialogHeader>
+          )} */}
+          {header && (
+            <DialogHeader className="p-6 text-start" autoFocus tabIndex={1}>
+              {header.title && (
+                <DialogTitle className="text-lg font-semibold text-primary">
+                  {t(header.title)}
+                </DialogTitle>
+              )}
+              {header.description && (
+                <DialogDescription className="mt-2 text-sm leading-6 text-text-muted">
+                  {t(header.description)}
+                </DialogDescription>
+              )}
+            </DialogHeader>
           )}
+          {/* {content} */}
 
-          {content}
-
-          <DialogFooter className={content ? "" : "border-t-0"}>
+          <DialogFooter className="flex-col-reverse gap-3 p-6 sm:flex-row sm:justify-center">
             <DialogClose className="w-full sm:w-auto">
-              <MainBtn className="w-full" theme="outline">
+              <MainBtn className="w-full" variant="outline">
                 {t(cancel?.text || defaultCancelText)}
               </MainBtn>
             </DialogClose>
             {action && (
               <MainBtn
                 onClick={() => mutate()}
-                isPending={isPending}
-                theme={type === "danger" ? "danger" : "main"}
-                disabled={action.disabled}
+                variant={type === "danger" ? "ghost" : "outline"}
+                disabled={action.disabled || isPending}
               >
                 {t(action.text || defaultOkText)}
               </MainBtn>
@@ -156,7 +169,7 @@ const DialogComponent = forwardRef<RefType, PropsWithChildren<Props>>(
         </DialogContent>
       </Dialog>
     );
-  }
+  },
 );
 
 export default DialogComponent;

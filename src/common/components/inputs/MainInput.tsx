@@ -31,7 +31,7 @@ const MainInput = React.forwardRef<HTMLInputElement, MainInputProps>(
       onBlur,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const { t } = useTranslation();
     const autoId = useId();
@@ -51,7 +51,7 @@ const MainInput = React.forwardRef<HTMLInputElement, MainInputProps>(
     const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
       if (enableAutocomplete && storageKey && value) {
         const updated = Array.from(
-          new Set([value as string, ...suggestions])
+          new Set([value as string, ...suggestions]),
         ).slice(0, 10);
         setSuggestions(updated);
         localStorage.setItem(storageKey, JSON.stringify(updated));
@@ -67,26 +67,24 @@ const MainInput = React.forwardRef<HTMLInputElement, MainInputProps>(
           <label
             tabIndex={-1}
             htmlFor={inputId}
-            className="text-sm md:text-base block mb-2 font-medium text-gray-700"
+            className="block mb-2 text-sm font-medium md:text-base text-text-muted"
           >
             {t(label)}
-            {required && <span className="text-red-500 ml-1">*</span>}
+            {required && <span className="ml-1 text-danger">*</span>}
           </label>
         )}
 
         <div
-          className={`transition duration-150  w-full rounded-pill  px-4 py-2.5 pr-10 flex items-center gap-3 bg-bg-surface
-border border-border-subtle
+          className={`transition duration-150  w-full rounded-lg  px-4 py-2.5 pr-10 flex items-center gap-3 bg-surface-2
+border border-border
 focus-within:ring-2 focus-within:ring-primary
-text-text-main
-placeholder:text-text-muted
-shadow-soft
+text-text
+placeholder:text-muted
+shadow-sm
           ${disabled ? "opacity-50 cursor-not-allowed" : ""}
-          ${error ? "ring-2 ring-red-500" : ""}`}
+          ${error ? "ring-2 ring-danger" : ""}`}
         >
-          {Icon && (
-            <Icon size={20} className="text-text-gray" aria-hidden="true" />
-          )}
+          {Icon && <Icon size={20} className="text-muted" aria-hidden="true" />}
 
           <input
             id={inputId}
@@ -102,12 +100,7 @@ shadow-soft
             aria-invalid={!!error}
             aria-describedby={error ? `${inputId}-error` : undefined}
             list={enableAutocomplete ? `${inputId}-list` : undefined}
-            className="flex-1 outline-none w-full bg-transparent border-none 
-
-
-text-text-main
-placeholder:text-text-muted
-"
+            className="flex-1 w-full bg-transparent border-none outline-none text-text placeholder:text-muted"
             {...rest}
           />
 
@@ -119,9 +112,13 @@ placeholder:text-text-muted
               aria-label={
                 showPassword ? t("hide password") : t("show password")
               }
-              className="text-gray-500 hover:text-gray-700 focus:outline-none"
+              className="text-muted focus:outline-none"
             >
-              {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+              {showPassword ? (
+                <FiEyeOff className="text-muted" size={20} />
+              ) : (
+                <FiEye size={20} className="text-muted" />
+              )}
             </button>
           )}
         </div>
@@ -135,13 +132,13 @@ placeholder:text-text-muted
         )}
 
         <div
-          className={`transition-all duration-300 ease-in-out overflow-hidden ${
-            error ? "max-h-10 opacity-100 mt-1" : "max-h-0 opacity-0"
+          className={`transition-all duration-100   mt-1 min-h-1 overflow-hidden ${
+            error ? "opacity-100" : " opacity-0"
           }`}
         >
           <p
             id={`${inputId}-error`}
-            className="text-red-500 text-xs"
+            className="text-xs text-danger"
             role="alert"
           >
             {error && t(error)}
@@ -149,7 +146,7 @@ placeholder:text-text-muted
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default MainInput;

@@ -6,12 +6,14 @@ import { IoArrowBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../../store/LanguageProvider";
 import useForgetPasswordLogic from "../logic/useForgetPasswordLogic";
+import { useTranslation } from "react-i18next";
 const ForgetPassword = () => {
   const { register, errors, handleSubmit, onSubmit, isPending } =
     useForgetPasswordLogic();
   const navigate = useNavigate();
   const { language } = useLanguage();
   const isRTL = language === "ar";
+  const { t } = useTranslation();
   return (
     <AuthCard
       title="Password recovery"
@@ -34,14 +36,20 @@ const ForgetPassword = () => {
           <div className="w-full md:w-[180px] flex gap-2">
             {isRTL ? (
               <>
-                <MainBtn type="submit" className="flex-1 flex-center" text="next" isPending={isPending} />
+                <MainBtn
+                  type="submit"
+                  className="flex-1 flex-center"
+                  disabled={isPending}
+                >
+                  {t("next")}
+                </MainBtn>
                 <MainBtn
                   type="button"
                   onClick={() => navigate("/auth/login")}
-                  className="flex-1 flex-center"
-                  text="back"
-                  theme="outline"
+                  className="flex-1 gap-2 flex-center"
+                  variant="outline"
                 >
+                  <p>{t("back")}</p>
                   <IoArrowBack size={18} />
                 </MainBtn>
               </>
@@ -51,12 +59,18 @@ const ForgetPassword = () => {
                   type="button"
                   onClick={() => navigate("/auth/login")}
                   className="flex-1 flex-center"
-                  text="back"
-                  theme="outline"
+                  variant="outline"
                 >
+                  <p>{t("back")}</p>
                   <IoArrowBack size={18} />
                 </MainBtn>
-                <MainBtn type="submit" className="flex-1 flex-center" text="next" isPending={isPending} />
+                <MainBtn
+                  type="submit"
+                  className="flex-1 flex-center"
+                  disabled={isPending}
+                >
+                  {t("next")}
+                </MainBtn>
               </>
             )}
           </div>

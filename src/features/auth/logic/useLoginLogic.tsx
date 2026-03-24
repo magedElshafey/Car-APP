@@ -25,7 +25,7 @@ const useLoginLogic = () => {
     mode: "onBlur",
     reValidateMode: "onBlur",
     defaultValues: {
-      phone: "",
+      email: "",
       password: "",
     },
   });
