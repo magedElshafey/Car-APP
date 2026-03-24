@@ -1,0 +1,146 @@
+{
+  "createCarAd": {
+    "seo": {
+      "title": "Create car ad",
+      "description": "Create a new car ad and add up to 20 images with a live grid preview."
+    },
+    "hero": {
+      "badge": "New ad",
+      "title": "Create your car ad in minutes",
+      "description": "Enter the car details, add images, and review everything before connecting the page to the final save flow."
+    },
+    "images": {
+      "title": "Car images",
+      "description": "Add up to 20 images, and they will appear immediately in an organized grid.",
+      "emptyTitle": "Upload car images",
+      "emptyDescription": "Choose clear interior and exterior photos. You can add multiple images at once and remove any image you do not want.",
+      "uploadButton": "Upload images",
+      "addMore": "Add more",
+      "remaining": "{{count}} images left",
+      "helper": "You can reopen the file picker at any time to add more images.",
+      "addImages": "Add images",
+      "removeAriaLabel": "Remove {{imageName}}"
+    },
+    "form": {
+      "title": "Ad details",
+      "description": "Enter the key information that helps buyers understand the car quickly."
+    },
+    "pricing": {
+      "title": "Car price and financing",
+      "description": "Set the selling price and choose if this car can be financed.",
+      "fields": {
+        "price": {
+          "label": "Price",
+          "placeholder": "Enter price"
+        },
+        "canBeFinanced": {
+          "label": "Can this car be financed? (optional)",
+          "options": {
+            "yes": "Yes",
+            "no": "No"
+          }
+        },
+        "downPayment": {
+          "label": "Down payment",
+          "placeholder": "Enter down payment"
+        },
+        "durationMonths": {
+          "label": "Duration (months)",
+          "placeholder": "Enter duration"
+        },
+        "monthlyInstallment": {
+          "label": "Monthly installment",
+          "placeholder": "Enter monthly installment"
+        }
+      },
+      "financing": {
+        "title": "Financing"
+      }
+    },
+    "features": {
+      "title": "Features & Highlighted Points",
+      "label": "Features",
+      "optional": "Optional",
+      "addButton": "Add Features",
+      "loading": "Loading features...",
+      "empty": "No features available.",
+      "cancel": "Cancel",
+      "apply": "Add Features",
+      "selectedCount": "{{count}} selected"
+    },
+    "fields": {
+      "condition": {
+        "label": "Condition",
+        "options": {
+          "new": "New",
+          "used": "Used"
+        }
+      },
+      "carType": {
+        "label": "Car type",
+        "options": {
+          "automatic": "Automatic",
+          "manual": "Manual"
+        }
+      },
+      "fuelType": {
+        "label": "Fuel type",
+        "loading": "Loading fuel types..."
+      },
+      "color": {
+        "label": "Color",
+        "options": {
+          "white": "White",
+          "black": "Black",
+          "silver": "Silver",
+          "red": "Red",
+          "blue": "Blue",
+          "green": "Green",
+          "gold": "Gold",
+          "bronze": "Bronze"
+        }
+      },
+      "location": {
+        "label": "Location",
+        "placeholder": "Select city"
+      }
+    },
+    "summary": {
+      "title": "Quick summary",
+      "description": "Review ad readiness before continuing.",
+      "imagesCount": "Images count",
+      "remaining": "Remaining",
+      "tip": "Clear images and a concise, strong description directly improve ad quality."
+    },
+    "actions": {
+      "submit": "Publish ad",
+      "reset": "Clear form"
+    },
+    "tips": {
+      "title": "Image tips",
+      "items": {
+        "lighting": "Use well-lit photos for the front, rear, and both sides.",
+        "interior": "Add interior and dashboard photos to increase trust.",
+        "duplicates": "Avoid blurry or duplicate photos to keep the ad clean."
+      }
+    },
+    "toasts": {
+      "imagesOnly": "Only image files can be uploaded.",
+      "maxImages": "You can add up to {{count}} images.",
+      "readyToSubmit": "The ad is ready successfully. You can now connect it to the save API."
+    },
+    "validation": {
+      "imagesRequired": "Add at least one image for the ad.",
+      "conditionRequired": "Please choose condition",
+      "carTypeRequired": "Please choose car type",
+      "fuelTypeRequired": "Please choose fuel type",
+      "locationRequired": "Please choose location",
+      "colorRequired": "Please choose color",
+      "priceRequired": "Please enter price",
+      "canBeFinancedRequired": "Please choose financing option",
+      "downPaymentRequired": "Please enter down payment",
+      "durationMonthsRequired": "Please enter duration in months",
+      "monthlyInstallmentRequired": "Please enter monthly installment"
+    }
+  }
+}
