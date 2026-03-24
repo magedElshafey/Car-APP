@@ -1,9 +1,10 @@
 import { z } from "zod";
 import { loginSchema } from "./loginSchema";
+import { emailSchema } from "@/features/auth/schema/emailSchema";
 export const registerSchema = loginSchema
   .extend({
     name: z.string().min(1, "user name is required"),
-    email: z.string().optional(),
+    email: emailSchema,
     phone: z
       .string()
       .min(1, "phone is required")

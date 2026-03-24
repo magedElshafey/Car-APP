@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import "../style/login-form.css";
 import MainBtn from "../../../common/components/buttons/MainBtn";
 import useLoginLogic from "../logic/useLoginLogic";
-import { MdOutlinePhoneEnabled } from "react-icons/md";
+import { MdAttachEmail } from "react-icons/md";
 
 const Login = () => {
   const { t } = useTranslation();
@@ -26,13 +26,13 @@ const Login = () => {
         <div className="mb-4">
           <MainInput
             required={true}
-            Icon={MdOutlinePhoneEnabled}
-            placeholder="0574896520"
-            label="phone"
+            Icon={MdAttachEmail}
+            placeholder="example@example.com"
+            label="email"
             enableAutocomplete
-            {...register("phone")}
-            error={errors.phone?.message}
-            storageKey="phone"
+            {...register("email")}
+            error={errors.email?.message}
+            storageKey="email"
           />
         </div>
         <div className="mb-4">
@@ -46,8 +46,8 @@ const Login = () => {
             {...register("password")}
           />
         </div>
-        <div className="mb-4 flex-between w-full">
-          <Link className="text-sm text-text-red" to="/auth/forget-password">
+        <div className="flex items-center justify-between w-full mb-4">
+          <Link className="text-sm text-danger" to="/auth/forget-password">
             {t("forget password?")}
           </Link>
           <MainCheckInput
@@ -56,19 +56,23 @@ const Login = () => {
             name="rememberMe"
           />
         </div>
-        <div className="w-full flex-center mb-7 sm:mb-8 md:mb-9 lg:mb-10">
+        <div className="flex items-center justify-center w-full mb-7 sm:mb-8 md:mb-9 lg:mb-10">
           <div className="w-full md:w-[150px]">
             <MainBtn
               type="submit"
-              className="w-full flex-center"
-              text="login"
-              isPending={isPending}
-            />
+              className="flex items-center justify-center w-full"
+              disabled={isPending}
+            >
+              {t("login")}
+            </MainBtn>
           </div>
         </div>
-        <div className="w-full flex-center text-sm gap-2">
-          <span className="text-text-gray">{t("don't have an account ?")}</span>
-          <Link to="/auth/register" className="text-orangeColor underline">
+        <div className="flex items-center justify-center w-full gap-2 text-sm">
+          <span className="text-muted">{t("don't have an account ?")}</span>
+          <Link
+            to="/auth/register"
+            className="underline transition-colors duration-200 text-accent hover:text-accent-hover"
+          >
             {t("create an account")}
           </Link>
         </div>

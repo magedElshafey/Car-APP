@@ -43,7 +43,7 @@ const NavbarLinks: React.FC<NavbarLinksProps> = ({ links }) => {
                 ${
                   isParentActive
                     ? "font-semibold text-primary"
-                    : "text-text-muted hover:text-text-main"
+                    : "text-text-muted"
                 }
               `}
             >
@@ -66,9 +66,9 @@ const NavbarLinks: React.FC<NavbarLinksProps> = ({ links }) => {
                   group-hover:visible group-hover:translate-y-0 group-hover:opacity-100
                 "
               >
-                <div className="p-6 border shadow-xl rounded-2xl border-border-subtle bg-bg-surface">
+                <div className="p-6 border shadow-xl rounded-2xl border-border bg-surface">
                   <div className="mb-4">
-                    <p className="text-base font-semibold text-text-main">
+                    <p className="text-base font-semibold text-text-muted">
                       {t(link.label)}
                     </p>
                     <p className="text-sm text-text-muted">
@@ -89,13 +89,13 @@ const NavbarLinks: React.FC<NavbarLinksProps> = ({ links }) => {
                               ${
                                 isSubActive
                                   ? "border-primary/30 bg-primary/5"
-                                  : "border-transparent hover:border-border-subtle hover:bg-bg-muted"
+                                  : "border-transparent hover:border-border hover:bg-muted"
                               }
                             `}
                           >
                             <p
                               className={`text-sm font-medium ${
-                                isSubActive ? "text-primary" : "text-text-main"
+                                isSubActive ? "text-primary" : "text-text-muted"
                               }`}
                             >
                               {t(subLink.label)}
