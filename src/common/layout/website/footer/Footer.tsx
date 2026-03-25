@@ -1,73 +1,48 @@
-import React from "react";
-import FooterLinkGroup from "./components/footer-links/FooterLinkGroup";
-import CopyRight from "./components/copyrights/CopyRight";
-import FooterConnectSection from "./components/connect/FooterConnectSection";
-import { FooterLinkGroup as FooterLinkGroupT } from "./types/footer.types";
+import React, { useMemo } from "react";
+import FooterBrand from "./components/FooterBrand";
+import FooterLinkGroup from "./components/FooterLinkGroup";
+import FooterSocialLinks from "./components/FooterSocialLinks";
+import { buildFooterGroups } from "./data/footer.data";
+import {
+  DEFAULT_LINKS,
+  NavLinkItem,
+} from "@/common/layout/website/navbar/data/navbarData";
+import CopyRight from "@/common/layout/website/footer/components/CopyRight";
 
-const LINK_GROUPS: FooterLinkGroupT[] = [
-  {
-    id: "site-map",
-    title: "Site Map",
-    links: [
-      { label: "home", href: "/" },
-      { label: "Contact us", href: "/contact-us" },
-      { label: "terms and conditions", href: "/terms" },
-      { label: "privacy policy", href: "/privacy-policy" },
-    ],
-  },
-  {
-    id: "new-cars",
-    title: "New cars",
-    links: [
-      { label: "New cars in egypt", href: "/new-cars?filter=egypt" },
-      {
-        label: "new cars in saudi arabia",
-        href: "/new-cars?filter=saudi",
-      },
-      {
-        label: "New cars in Qatar",
-        href: "/new-cars?filter=Qatar",
-      },
-    ],
-  },
-  {
-    id: "used-cars",
-    title: "used cars",
-    links: [
-      { label: "used cars in egypt", href: "/used-cars?filter=egypt" },
-      {
-        label: "used cars in saudi arabia",
-        href: "/used-cars?filter=saudi",
-      },
-      {
-        label: "used cars in Qatar",
-        href: "/used-cars?filter=Qatar",
-      },
-    ],
-  },
-];
+type FooterProps = {
+  navLinks?: NavLinkItem[];
+};
 
-const Footer: React.FC = () => {
+const Footer: React.FC<FooterProps> = ({ navLinks = DEFAULT_LINKS }) => {
+  const footerGroups = useMemo(
+    () => buildFooterGroups({ navLinks }),
+    [navLinks],
+  );
+
   return (
     <footer
-      className="mt-10 border-t border-border-subtle bg-bg-surface"
       aria-label="Site footer"
+      className="mt-16 border-t border-border/80 bg-bg"
     >
-      <div className="py-8 space-y-8 app-container md:py-10 lg:py-12">
-        <nav
-          aria-label="Footer navigation"
-          className="grid gap-6 md:grid-cols-2 lg:grid-cols-3"
-        >
-          {LINK_GROUPS.map((group) => (
-            <FooterLinkGroup key={group.id} group={group} />
+      <div className="py-10 app-container md:py-12 lg:py-14">
+        <div className="grid gap-6 lg:grid-cols-3">
+          <FooterBrand />
+
+          {footerGroups.map((group) => (
+            <div
+              key={group.id}
+              className="p-5 border shadow-sm rounded-3xl border-border/70 bg-surface/80 backdrop-blur-sm sm:p-6"
+            >
+              <FooterLinkGroup group={group} />
+            </div>
           ))}
-        </nav>
 
-        {/* Connect */}
-        <FooterConnectSection />
+          <FooterSocialLinks />
+        </div>
 
-        {/* Copyright & policies */}
-        <CopyRight />
+        <div className="mt-6">
+          <CopyRight />
+        </div>
       </div>
     </footer>
   );
