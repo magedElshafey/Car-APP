@@ -1,0 +1,149 @@
+// src/common/components/loader/skeltons/banner-skeleton/BannerSkeleton.tsx
+
+import { cn } from "@/lib/utils";
+
+type BannerSkeletonProps = {
+  className?: string;
+  count?: number;
+  variant?: "single" | "double";
+  animated?: boolean;
+};
+
+function SkeletonBlock({
+  className,
+  animated = true,
+}: {
+  className?: string;
+  animated?: boolean;
+}) {
+  return (
+    <div
+      className={cn(
+        "rounded-xl bg-[rgb(var(--muted)/0.55)]",
+        animated && "animate-pulse",
+        className,
+      )}
+    />
+  );
+}
+
+function BannerSkeletonCard({
+  animated = true,
+  compact = false,
+}: {
+  animated?: boolean;
+  compact?: boolean;
+}) {
+  return (
+    <article
+      className={cn(
+        "relative overflow-hidden rounded-2xl border border-divider bg-surface shadow-sm",
+        compact
+          ? "min-h-[180px] md:min-h-[220px]"
+          : "min-h-[240px] md:min-h-[320px]",
+      )}
+      aria-hidden="true"
+    >
+      {/* media area */}
+      <div className="absolute inset-0">
+        <SkeletonBlock
+          animated={animated}
+          className="w-full h-full rounded-none"
+        />
+        <div className="absolute inset-0 bg-gradient-to-l from-black/35 via-black/10 to-transparent" />
+      </div>
+
+      {/* content */}
+      <div
+        className={cn(
+          "relative z-[1] flex h-full flex-col justify-center",
+          compact ? "p-4 md:p-5" : "p-5 md:p-8",
+        )}
+      >
+        <div className="ms-auto w-full max-w-[520px] text-right">
+          <SkeletonBlock
+            animated={animated}
+            className={cn(
+              "ms-auto",
+              compact ? "h-6 w-3/4 md:h-7" : "h-7 w-4/5 md:h-10",
+            )}
+          />
+
+          <SkeletonBlock
+            animated={animated}
+            className={cn(
+              "ms-auto mt-3",
+              compact
+                ? "h-4 w-full max-w-[280px]"
+                : "h-4 w-full max-w-[420px] md:h-5",
+            )}
+          />
+
+          <SkeletonBlock
+            animated={animated}
+            className={cn(
+              "ms-auto mt-2",
+              compact
+                ? "h-4 w-2/3 max-w-[220px]"
+                : "h-4 w-3/4 max-w-[360px] md:h-5",
+            )}
+          />
+
+          <SkeletonBlock
+            animated={animated}
+            className={cn(
+              "ms-auto mt-5 rounded-xl",
+              compact ? "h-10 w-28" : "h-11 w-32 md:w-36",
+            )}
+          />
+        </div>
+      </div>
+
+      {/* dots placeholder */}
+      <div className="absolute bottom-3 left-1/2 z-[2] flex -translate-x-1/2 items-center gap-2">
+        <SkeletonBlock animated={animated} className="h-2.5 w-7 rounded-full" />
+        <SkeletonBlock
+          animated={animated}
+          className="h-2.5 w-2.5 rounded-full"
+        />
+        <SkeletonBlock
+          animated={animated}
+          className="h-2.5 w-2.5 rounded-full"
+        />
+      </div>
+    </article>
+  );
+}
+
+export default function BannerSkeleton({
+  className,
+  count,
+  variant = "single",
+  animated = true,
+}: BannerSkeletonProps) {
+  const resolvedCount = count ?? (variant === "double" ? 2 : 1);
+  const isSingle = resolvedCount === 1;
+
+  return (
+    <section
+      className={cn("w-full", className)}
+      aria-label="Loading banners"
+      aria-busy="true"
+    >
+      <div
+        className={cn(
+          "grid gap-4 md:gap-5",
+          isSingle ? "grid-cols-1" : "grid-cols-1 lg:grid-cols-2",
+        )}
+      >
+        {Array.from({ length: resolvedCount }).map((_, index) => (
+          <BannerSkeletonCard
+            key={index}
+            animated={animated}
+            compact={!isSingle}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}

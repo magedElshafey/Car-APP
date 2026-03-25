@@ -19,7 +19,7 @@ import TrustSectionSkeleton from "./TrustSectionSkeleton";
 import BlogCardSkeleton from "./BlogCardSkeleton";
 import TestimonialsSkeleton from "./TestimonialCardSkeleton";
 import ArticlePageSkeleton from "./ArticlePageSkeleton";
-
+import BannerSkeleton from "@/common/components/loader/skeltons/BannerSkeleton";
 interface SkeltonProps {
   type: SkeletonType;
 }
@@ -61,6 +61,8 @@ const Skeleton: React.FC<SkeltonProps> = ({ type }) => {
       return <TrustSectionSkeleton />;
     case "testimonials":
       return <TestimonialsSkeleton />;
+    case "banner":
+      return <BannerSkeleton />;
     case "founder-profile":
       return (
         <>

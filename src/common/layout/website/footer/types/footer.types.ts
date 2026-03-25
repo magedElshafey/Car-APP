@@ -1,4 +1,4 @@
-export type FooterLink = {
+export type FooterLinkItem = {
   label: string;
   href: string;
 };
@@ -6,5 +6,5 @@ export type FooterLink = {
 export type FooterLinkGroup = {
   id: string;
   title: string;
-  links: FooterLink[];
+  links: FooterLinkItem[];
 };

@@ -24,7 +24,7 @@ export const apiRoutes = {
   simpleBlogs: "blogs",
   advancedSearch: "leaflets/advanced-search",
   contacts: "contacts",
-  hero: "content/home-intro",
+  hero: "hero_section",
   trust: "content/home-trust",
   categories: "categories",
   vision: "content/about-vision",
@@ -48,4 +48,5 @@ export const apiRoutes = {
   resetPassword: "auth/reset_password",
   changePassword: "auth/changePassword",
   checkOTP: "auth/check_otp",
+  sliders: "sliders",
 };
