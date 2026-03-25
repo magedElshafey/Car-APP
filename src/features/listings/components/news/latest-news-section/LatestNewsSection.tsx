@@ -1,61 +1,140 @@
+// import { Link } from "react-router-dom";
+// import { FiChevronLeft } from "react-icons/fi";
+// import { CarouselSlider } from "@/common/components/sliders/CarouselSlider";
+// import NewsCard from "@/features/listings/components/news/news-card/NewsCard";
+// // import {
+// //   carNews,
+// //   type CarNewsItem,
+// // } from "@/features/listings/data/carNews.data";
+// import { cn } from "@/lib/utils";
+// import { Blog } from "@/features/blogs/types/blog.types";
+// import { useTranslation } from "react-i18next";
+// // type LatestCarNewsSectionProps = {
+// //   items?: readonly CarNewsItem[];
+// //   className?: string;
+// //   title?: React.ReactNode;
+// //   actionHref?: string;
+// //   actionLabel?: string;
+// // };
+// type LatestCarNewsSectionProps = {
+//   data: Blog[];
+//   title?: string;
+//   actionHref?: string;
+//   actionLabel?: string;
+// };
+// export default function LatestCarNewsSection({
+//   data,
+
+//   title = "أحدث أخبار السيارات",
+//   actionHref = "/blogs",
+//   actionLabel = "عرض جميع الأخبار",
+// }: LatestCarNewsSectionProps) {
+//   const { t } = useTranslation();
+//   if (!data.length) return null;
+
+//   return (
+//     <section className={cn("w-full")} aria-label="Latest car news">
+//       <div className="flex flex-col gap-3 mb-5 md:mb-6 md:flex-row md:items-center md:justify-between">
+//         <h2 className="text-2xl font-bold text-text md:text-4xl">{t(title)}</h2>
+
+//         <Link
+//           to={actionHref}
+//           className="inline-flex items-center gap-2 text-sm font-medium transition text-primary hover:underline"
+//         >
+//           <FiChevronLeft className="w-4 h-4" aria-hidden="true" />
+//           <span>{t(actionLabel)}</span>
+//         </Link>
+//       </div>
+
+//       <CarouselSlider
+//         items={data}
+//         className="w-full"
+//         trackClassName="pb-1"
+//         slideClassName=""
+//         arrowsClassName="!top-1/2 !-translate-y-1/2"
+//         getItemId={(item) => item.id}
+//         getItemAriaLabel={(item) => item.name}
+//         renderItem={(item) => (
+//           <NewsCard
+//             title={item.name}
+//             image={item.image}
+//             href={`/blogs/${item?.id}`}
+//             date={item.published_at}
+//             imageAlt={item.name}
+//           />
+//         )}
+//       />
+//     </section>
+//   );
+// }
 import { Link } from "react-router-dom";
 import { FiChevronLeft } from "react-icons/fi";
 import { CarouselSlider } from "@/common/components/sliders/CarouselSlider";
 import NewsCard from "@/features/listings/components/news/news-card/NewsCard";
-import {
-  carNews,
-  type CarNewsItem,
-} from "@/features/listings/data/carNews.data";
 import { cn } from "@/lib/utils";
+import { Blog } from "@/features/blogs/types/blog.types";
+import { useTranslation } from "react-i18next";
 
 type LatestCarNewsSectionProps = {
-  items?: readonly CarNewsItem[];
-  className?: string;
-  title?: React.ReactNode;
+  data: Blog[];
+  title?: string;
   actionHref?: string;
   actionLabel?: string;
 };
 
 export default function LatestCarNewsSection({
-  items = carNews,
-  className,
+  data,
   title = "أحدث أخبار السيارات",
-  actionHref = "/news",
+  actionHref = "/blogs",
   actionLabel = "عرض جميع الأخبار",
 }: LatestCarNewsSectionProps) {
-  if (!items.length) return null;
+  const {
+    t,
+    i18n: { dir },
+  } = useTranslation();
+
+  if (!data.length) return null;
 
   return (
-    <section className={cn("w-full", className)} aria-label="Latest car news">
+    <section className="w-full" aria-label="Latest car news">
       <div className="flex flex-col gap-3 mb-5 md:mb-6 md:flex-row md:items-center md:justify-between">
-        <h2 className="text-2xl font-bold text-text md:text-4xl">{title}</h2>
+        <h2 className="text-2xl font-bold tracking-tight text-text md:text-4xl">
+          {t(title)}
+        </h2>
 
         <Link
           to={actionHref}
-          className="inline-flex items-center gap-2 text-sm font-medium transition text-primary hover:underline"
+          className={cn(
+            "inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors duration-200 hover:text-primary/80",
+          )}
         >
-          <FiChevronLeft className="w-4 h-4" aria-hidden="true" />
-          <span>{actionLabel}</span>
+          <FiChevronLeft
+            className={cn("h-4 w-4 shrink-0", dir() === "ltr" && "rotate-180")}
+            aria-hidden="true"
+          />
+          <span>{t(actionLabel)}</span>
         </Link>
       </div>
 
       <CarouselSlider
-        items={items}
+        items={data}
         className="w-full"
         trackClassName="pb-1"
-        slideClassName=""
+        slideClassName="h-full"
         arrowsClassName="!top-1/2 !-translate-y-1/2"
         getItemId={(item) => item.id}
-        getItemAriaLabel={(item) => item.title}
+        getItemAriaLabel={(item) => item.name}
         renderItem={(item) => (
-          <NewsCard
-            title={item.title}
-            image={item.image}
-            href={item.href}
-            date={item.date}
-            imageAlt={item.imageAlt}
-            category={item.category}
-          />
+          <div className="h-full">
+            <NewsCard
+              className="h-full"
+              title={item.name}
+              image={item.image}
+              href={`/blogs/${item.id}`}
+              date={item.published_at}
+              imageAlt={item.name}
+            />
+          </div>
         )}
       />
     </section>
