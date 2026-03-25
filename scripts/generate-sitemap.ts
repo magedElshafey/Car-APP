@@ -85,7 +85,7 @@ async function generateSitemap() {
     ...blogs.map(
       (blog) => `<url><loc>${SITE_URL}/blogs/${blog.slug}</loc></url>`,
     ),
-    ...cars.map((car) => `<url><loc>${SITE_URL}/blogs/${car.id}</loc></url>`),
+    ...cars.map((car) => `<url><loc>${SITE_URL}/cars/${car.id}</loc></url>`),
   ];
 
   /* ========= Sitemap XML ========= */
@@ -96,6 +96,7 @@ ${urls.join("\n")}
 
   fs.writeFileSync("public/sitemap.xml", sitemap);
   console.log(`✅ sitemap.xml generated (${blogs.length} blogs)`);
+  console.log(`✅ sitemap.xml generated (${cars.length} cars)`);
 }
 
 generateSitemap().catch((err) => {
