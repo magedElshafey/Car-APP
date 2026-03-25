@@ -4,6 +4,8 @@ import { GridPagesSlider } from "@/common/components/sliders/GridPagesSlider";
 import BrowseCard from "@/features/listings/components/browse/browse-card/BrowseCard";
 import useGetFuelTypes from "@/features/browse/hooks/use-get-fuel-types";
 import { mapFuelTypeToBrowseCards } from "@/features/listings/mappers/mapFuelTypeToBrowseCards";
+import BrowseCardSkeletonList from "@/common/components/loader/skeltons/BrowseCardSkeletonList";
+import ErrorMessage from "@/common/components/error-message/ErrorMessage";
 
 export default function BrowseFuelTypeTab() {
   const navigate = useNavigate();
@@ -19,14 +21,15 @@ export default function BrowseFuelTypeTab() {
     [navigate],
   );
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>حدث خطأ أثناء تحميل العلامات التجارية</div>;
+  if (isLoading) return <BrowseCardSkeletonList />;
+  if (isError)
+    return <ErrorMessage message="An error occurred while retrieving data." />;
   if (!items.length) return null;
 
   return (
     <GridPagesSlider
       items={items}
-      itemsPerPage={16}
+      itemsPerPage={8}
       getItemId={(item) => item.id}
       getItemAriaLabel={(item) => item.label}
       renderItem={(item) => (

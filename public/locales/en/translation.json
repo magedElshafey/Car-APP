@@ -292,5 +292,7 @@
         "car_type": "Search car type"
       }
     }
-  }
+  },
+  "An error occurred while fetching trademarks": "An error occurred while fetching brands",
+  "An error occurred while retrieving data.": "An error occurred while retrieving data."
 }

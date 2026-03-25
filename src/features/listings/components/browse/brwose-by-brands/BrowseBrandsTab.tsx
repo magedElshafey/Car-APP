@@ -4,6 +4,8 @@ import { GridPagesSlider } from "@/common/components/sliders/GridPagesSlider";
 import BrowseCard from "@/features/listings/components/browse/browse-card/BrowseCard";
 import useGetBrands from "@/features/browse/hooks/use-get-brands";
 import { mapBrandsToBrowseCards } from "@/features/listings/mappers/mapBrandsToBrowseCards";
+import BrowseCardSkeletonList from "@/common/components/loader/skeltons/BrowseCardSkeletonList";
+import ErrorMessage from "@/common/components/error-message/ErrorMessage";
 
 export default function BrowseBrandsTab() {
   const navigate = useNavigate();
@@ -20,14 +22,17 @@ export default function BrowseBrandsTab() {
     [navigate],
   );
 
-  if (isLoading) return <div>Loading...</div>;
-  if (isError) return <div>حدث خطأ أثناء تحميل العلامات التجارية</div>;
+  if (isLoading) return <BrowseCardSkeletonList />;
+  if (isError)
+    return (
+      <ErrorMessage message="An error occurred while fetching trademarks" />
+    );
   if (!items.length) return null;
 
   return (
     <GridPagesSlider
       items={items}
-      itemsPerPage={16}
+      itemsPerPage={8}
       getItemId={(item) => item.id}
       getItemAriaLabel={(item) => item.label}
       renderItem={(item) => (

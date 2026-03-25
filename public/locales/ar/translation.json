@@ -291,5 +291,7 @@
         "car_type": "ابحث عن نوع السيارة"
       }
     }
-  }
+  },
+  "An error occurred while fetching trademarks": "حدث خطأ أثناء جلب العلامات التجارية",
+  "An error occurred while retrieving data.": "حدث خطأ أثناء جلب البيانات"
 }

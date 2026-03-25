@@ -13,6 +13,10 @@ import {
 } from "@/features/listings/components/banners/utils/banner.adapter";
 import useGetSliders from "@/features/home/api/useGetSliders";
 import useGetBlogs from "@/features/home/api/useGetBlogs";
+import useGetUsedCars from "@/features/home/api/useGetUsedCars";
+import UsedCarSection from "@/features/home/components/UsedCarSection";
+import useGetNewCars from "@/features/home/api/useGetNewCars";
+import NewsCarsSection from "@/features/home/components/NewsCarsSection";
 const Home = () => {
   const heroQuery = useGetHeroSection();
   const slidersQuery = useGetSliders();
@@ -34,13 +38,15 @@ const Home = () => {
 
     return mapSliderBannerResponse(slidersQuery.data, {
       variant: "full-hero",
-      href: "/offers",
+      href: "/car-browse",
       ctaLabel: "شوف العروض",
       titleFallback: "Latest Offers",
       imageAltPrefix: "Promotional slider",
     });
   }, [slidersQuery.data]);
-
+  const usedCarsQuery = useGetUsedCars();
+  const newCarsQuery = useGetNewCars();
+  console.log("sliderItems", sliderItems);
   return (
     <>
       <div className="mb-8 overflow-x-hidden md:mb-9 lg:mb-10 xl:mb-11 2xl:mb-12">
@@ -67,8 +73,13 @@ const Home = () => {
             showArrows={false}
           />
         </FetchHandler>
-
+        <FetchHandler queryResult={usedCarsQuery} skeletonType="blog-card">
+          <UsedCarSection data={usedCarsQuery?.data || []} />
+        </FetchHandler>
         <BrowseByLocationSection title="تصفح حسب المدن الأكثر طلبًا" />
+        <FetchHandler queryResult={newCarsQuery} skeletonType="blog-card">
+          <NewsCarsSection data={newCarsQuery?.data || []} />
+        </FetchHandler>
         <FetchHandler queryResult={blogQuery} skeletonType="blog-card">
           <LatestCarNewsSection data={blogQuery?.data || []} />
         </FetchHandler>

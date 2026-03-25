@@ -6,18 +6,23 @@ import { PaginatedResponse } from "@/types/Response";
 import { CarListing } from "../types/car.types";
 
 const useGetCars = (filters: Record<string, string> = {}) => {
-    const { i18n: {language} } = useTranslation();
+  const {
+    i18n: { language },
+  } = useTranslation();
 
-    return useQuery({
-        queryKey: [apiRoutes.cars, language, filters],
-        queryFn: async () => {
-            const response = await Axios.get<PaginatedResponse<CarListing[]>>(apiRoutes.cars, {
-                params: filters
-            });
+  return useQuery({
+    queryKey: [apiRoutes.cars, language, filters],
+    queryFn: async () => {
+      const response = await Axios.get<PaginatedResponse<CarListing[]>>(
+        apiRoutes.cars,
+        {
+          params: filters,
+        },
+      );
 
-            return response.data;
-        }
-    })
-}
+      return response.data;
+    },
+  });
+};
 
 export default useGetCars;

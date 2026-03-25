@@ -87,12 +87,12 @@ export function CarouselSlider<TItem>({
       slideClassName={cn("h-full", slideClassName)}
       arrowsClassName={arrowsClassName}
       dotsClassName={dotsClassName}
-      slidesPerView={{ xs: 1.15, sm: 2.2, md: 3.1, lg: 4.1, xl: 5 }}
+      slidesPerView={{ xs: 1.15, sm: 2.2, md: 3.1, lg: 4.1, xl: 4.1 }}
       spacing={16}
-      showArrows
-      showDots={false}
+      showDots={true}
       mode="snap"
       renderMode="performance"
+      showArrows={false}
     >
       {items.map((item, index) => (
         <div

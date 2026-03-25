@@ -1,7 +1,6 @@
 import React, { useMemo } from "react";
 import SliderPrimitive from "@/common/components/sliders/SliderPrimitive";
 import { chunkArray } from "@/lib/utils";
-import { cn } from "@/lib/utils";
 type GridPagesSliderProps<TItem> = {
   items: readonly TItem[];
   itemsPerPage?: number;
@@ -16,7 +15,7 @@ type GridPagesSliderProps<TItem> = {
 
 export function GridPagesSlider<TItem>({
   items,
-  itemsPerPage = 16,
+  itemsPerPage = 8,
   className,
   gridClassName,
   slideClassName,
@@ -46,10 +45,7 @@ export function GridPagesSlider<TItem>({
       {pages.map((page, pageIndex) => (
         <div
           key={pageIndex}
-          className={cn(
-            "grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8",
-            gridClassName,
-          )}
+          className={`grid gap-3 ${gridClassName ? gridClassName : "grid-cols-2  sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8"} `}
         >
           {page.map((item, itemIndex) => {
             const absoluteIndex = pageIndex * itemsPerPage + itemIndex;
