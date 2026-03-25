@@ -45,7 +45,7 @@ const CreateCarAdPage: React.FC = () => {
     reset,
     setValue,
     trigger,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useCreateCarAdForm();
 
   const { data: fuelTypes, isLoading: fuelTypesLoading } = useGetFuelTypes();
@@ -280,6 +280,7 @@ const CreateCarAdPage: React.FC = () => {
       is_special_needs: values.is_special_needs ?? false,
       contact_phone: values.contact_phone,
       whatsapp_allowed: values.whatsapp_allowed ?? false,
+      images: uploadedImages,
     };
 
     try {
@@ -380,7 +381,7 @@ const CreateCarAdPage: React.FC = () => {
             color={color}
             price={price}
             contactPhone={contactPhone}
-            isSubmitting={isSubmitting || isCreatingCar}
+            isPending={isCreatingCar}
             onReset={handleFormReset}
           />
         </form>

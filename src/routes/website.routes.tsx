@@ -1,6 +1,7 @@
 import { lazyLoad } from "../utils/LazyLoad";
 import type { RouteObject } from "react-router-dom";
 import { apiRoutes } from "@/services/api-routes/apiRoutes";
+import Guard from "./Guard";
 
 export const websiteRoutes: RouteObject = {
   element: lazyLoad(() => import("../common/layout/website/WebsiteLayout")),
@@ -29,8 +30,10 @@ export const websiteRoutes: RouteObject = {
     },
     {
       path: "create-car-ad",
-      element: lazyLoad(
-        () => import("../features/create-car-ad/pages/CreateCarAd"),
+      element: (
+        <Guard requireAuth>
+          {lazyLoad(() => import("../features/create-car-ad/pages/CreateCarAd"))}
+        </Guard>
       ),
       handle: {
         breadcrumb: "create car ad",
