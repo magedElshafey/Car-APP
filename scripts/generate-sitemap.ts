@@ -1,20 +1,15 @@
 import fs from "fs";
 
-const SITE_URL = "https://wisefollowup.com";
-const API_URL = "https://dashboard.wisefollowup.com/api/v1";
+const SITE_URL = "https://q-car.dev.qutell.net";
+const API_URL = "https://q-car.dev.qutell.net/api/site";
 
 /* ========= API ROUTES (local copy) ========= */
 const apiRoutes = {
   blogs: "blogs",
-  leaflets: "leaflets",
 };
 
 /* ========= Minimal Types (local) ========= */
 type Blog = {
-  slug: string;
-};
-
-type Leaflet = {
   slug: string;
 };
 
@@ -74,22 +69,10 @@ async function fetchAllItems<T>(endpoint: string): Promise<T[]> {
 
 async function generateSitemap() {
   /* ========= Static pages ========= */
-  const staticPages = [
-    "",
-    "/about",
-    "/contact-us",
-    "/blogs",
-    "/leaflets",
-    "/medical-calculators",
-    "/policies/privacy-policy",
-    "/policies/cookies-policy",
-    "/policies/terms-of-use",
-    "/policies/medical-disclaimer",
-  ];
+  const staticPages = ["", "/about", "/blogs"];
 
   /* ========= Dynamic pages ========= */
   const blogs = await fetchAllItems<Blog>(apiRoutes.blogs);
-  const leaflets = await fetchAllItems<Leaflet>(apiRoutes.leaflets);
 
   /* ========= Build URLs ========= */
   const urls = [
@@ -97,10 +80,6 @@ async function generateSitemap() {
 
     ...blogs.map(
       (blog) => `<url><loc>${SITE_URL}/blogs/${blog.slug}</loc></url>`,
-    ),
-
-    ...leaflets.map(
-      (leaflet) => `<url><loc>${SITE_URL}/leaflets/${leaflet.slug}</loc></url>`,
     ),
   ];
 
@@ -111,9 +90,7 @@ ${urls.join("\n")}
 </urlset>`;
 
   fs.writeFileSync("public/sitemap.xml", sitemap);
-  console.log(
-    `✅ sitemap.xml generated (${blogs.length} blogs, ${leaflets.length} leaflets)`,
-  );
+  console.log(`✅ sitemap.xml generated (${blogs.length} blogs)`);
 }
 
 generateSitemap().catch((err) => {
