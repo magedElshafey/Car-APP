@@ -73,7 +73,7 @@ const ModelFilter = () => {
     if(!brand?.value) return null;
     return (
         <FilterItem filterKey="model">
-            <FilterItem.Header showLabel title="model" />
+            <FilterItem.Header showLabel title="browse.filters.model" />
             <FilterItem.Menu searchable>
                 <ModelFilterMenu />
             </FilterItem.Menu>

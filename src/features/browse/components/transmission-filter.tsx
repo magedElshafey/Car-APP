@@ -6,11 +6,11 @@ import FilterItem from "./car-filter-item";
 const transmissionOptions = [
     {
         value: "automatic",
-        labelKey: "automatic"
+        labelKey: "createCarAd.fields.carType.options.automatic"
     },
     {
         value: "manual",
-        labelKey: "manual"
+        labelKey: "createCarAd.fields.carType.options.manual"
     }
 ] as const;
 
@@ -64,7 +64,7 @@ const TransmissionFilterMenu = () => {
 const TransmissionFilter = () => {
     return (
         <FilterItem filterKey="transmission">
-            <FilterItem.Header showLabel title="transmission" />
+            <FilterItem.Header showLabel title="browse.filters.transmission" />
             <FilterItem.Menu>
                 <TransmissionFilterMenu />
             </FilterItem.Menu>

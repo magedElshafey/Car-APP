@@ -97,7 +97,7 @@ const FilterContextProvider: FC<PropsWithChildren> = ({
                 }
 
                 return nextSearchParams;
-            });
+            }, {replace: true});
         }, DEBOUNCE_DELAY);
 
     }, [filters, setSearchParams]);

@@ -6,11 +6,11 @@ import FilterItem from "./car-filter-item";
 const conditionOptions = [
     {
         value: "new",
-        labelKey: "new"
+        labelKey: "createCarAd.fields.condition.options.new"
     },
     {
         value: "used",
-        labelKey: "used"
+        labelKey: "createCarAd.fields.condition.options.used"
     }
 ] as const;
 
@@ -64,7 +64,7 @@ const ConditionFilterMenu = () => {
 const ConditionFilter = () => {
     return (
         <FilterItem filterKey="condition">
-            <FilterItem.Header showLabel title="condition" />
+            <FilterItem.Header showLabel title="browse.filters.condition" />
             <FilterItem.Menu>
                 <ConditionFilterMenu />
             </FilterItem.Menu>

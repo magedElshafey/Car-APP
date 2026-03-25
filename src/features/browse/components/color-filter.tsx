@@ -67,7 +67,7 @@ const ColorFilterMenu = () => {
 const ColorFilter = () => {
     return (
         <FilterItem filterKey="color">
-            <FilterItem.Header showLabel title="color" />
+            <FilterItem.Header showLabel title="browse.filters.color" />
             <FilterItem.Menu searchable>
                 <ColorFilterMenu />
             </FilterItem.Menu>

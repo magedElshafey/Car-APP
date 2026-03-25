@@ -8,7 +8,7 @@ const PriceFilter = () => {
     return (
         <RangeFilter
             filterKey="price"
-            title="price"
+            title="browse.filters.price"
             formatValue={(value) => formatPrice(value, i18n.language)}
         />
     );

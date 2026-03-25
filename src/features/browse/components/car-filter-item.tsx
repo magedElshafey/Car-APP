@@ -81,6 +81,7 @@ export const FilterItemMenuContainer: FC<PropsWithChildren<{searchable?: boolean
     searchable=false
 }) => {
     const { isOpen, filterKey } = useFilterItemContext();
+    const { t } = useTranslation();
     const [search, setSearch] = useState("");
     const [deferredSearch, setDeferredSearch] = useState("");
 
@@ -107,7 +108,7 @@ export const FilterItemMenuContainer: FC<PropsWithChildren<{searchable?: boolean
                                 className="flex-1 appearance-none outline-none"
                                 value={search}
                                 onChange={e => handleChange(e.target.value)}
-                                placeholder={`Search ${filterKey?.replace(/_/g, " ")}`}
+                                placeholder={filterKey ? t(`browse.filters.search.${filterKey}`) : ""}
                             />
                             <HiMagnifyingGlass
                                 className="text-stone-200 group-focus-within/search:text-blue-500"

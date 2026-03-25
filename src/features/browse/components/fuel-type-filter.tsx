@@ -67,7 +67,7 @@ const FuelTypeFilterMenu = () => {
 const FuelTypeFilter = () => {
     return (
         <FilterItem filterKey="fuel_type">
-            <FilterItem.Header showLabel title="fuel type" />
+            <FilterItem.Header showLabel title="browse.filters.fuelType" />
             <FilterItem.Menu searchable>
                 <FuelTypeFilterMenu />
             </FilterItem.Menu>

@@ -66,7 +66,7 @@ const BrandFilterMenu = () => {
 const BrandFilter = () => {
     return (
         <FilterItem filterKey="brand">
-            <FilterItem.Header showLabel title="brand" />
+            <FilterItem.Header showLabel title="browse.filters.brand" />
             <FilterItem.Menu searchable>
                 <BrandFilterMenu />
             </FilterItem.Menu>
