@@ -1,3 +1,8 @@
+export interface CarFeatureGroup {
+    category: string;
+    options: string[];
+}
+
 export interface CarFinancing {
     down_payment: string | null;
     duration_months: number | null;
@@ -9,6 +14,12 @@ export interface CarCoreInfo {
     model: string;
     year: number;
     trim: string | null;
+}
+
+export interface CarSeller {
+    name: string;
+    image: string | null;
+    phone: string;
 }
 
 export interface CarListing {
@@ -25,7 +36,7 @@ export interface CarListing {
     price: string;
     financing_available: boolean;
     financing: CarFinancing | null;
-    features: string[];
+    features: CarFeatureGroup[];
     highlights: string[];
     is_imported: boolean;
     is_taxi: boolean;
@@ -35,4 +46,9 @@ export interface CarListing {
     images: string[];
     status: string;
     created_at: string;
+    updated_at?: string;
+}
+
+export interface CarDetails extends CarListing {
+    seller?: CarSeller | null;
 }

@@ -272,7 +272,53 @@
   "Keep your password confidential": "Keep your password confidential",
   "shop now": "shop now",
 
+  "carDetails": {
+    "pageTitle": "Car Details",
+    "table": {
+      "brand": "Brand",
+      "model": "Model",
+      "year": "Year",
+      "trim": "Trim",
+      "condition": "Condition",
+      "color": "Color",
+      "location": "Location",
+      "transmission": "Transmission",
+      "fuelType": "Fuel Type",
+      "mileage": "Mileage",
+      "price": "Price",
+      "publishedAt": "Published",
+      "updatedAt": "Last Updated"
+    },
+    "description": "Description",
+    "features": "Features",
+    "highlights": "Highlights",
+    "seller": "Seller",
+    "financing": {
+      "title": "Financing",
+      "downPayment": "Down Payment",
+      "duration": "Duration",
+      "monthlyInstallment": "Monthly Installment",
+      "months": "months"
+    },
+    "contact": "Contact",
+    "whatsapp": "WhatsApp",
+    "loading": "Loading car details...",
+    "notFound": "Car not found",
+    "notFoundTitle": "This car could not be found",
+    "notFoundDescription": "The requested car may have been removed, is unavailable, or the link is no longer valid.",
+    "backToBrowse": "Back to cars"
+  },
+
   "browse": {
+    "empty": {
+      "title": "There are no results",
+      "description": "No cars are available at the moment.",
+      "action": "Show all cars"
+    },
+    "card": {
+      "call": "Call",
+      "whatsapp": "WhatsApp"
+    },
     "filters": {
       "brand": "Brand",
       "model": "Model",

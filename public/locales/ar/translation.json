@@ -271,7 +271,53 @@
   "Keep your password confidential": "حافظ على سرية كلمة مرورك",
   "shop now": "ابدأ التصفح",
 
+  "carDetails": {
+    "pageTitle": "تفاصيل السيارة",
+    "table": {
+      "brand": "الماركة",
+      "model": "الموديل",
+      "year": "سنة الصنع",
+      "trim": "الفئة",
+      "condition": "الحالة",
+      "color": "اللون",
+      "location": "الموقع",
+      "transmission": "ناقل الحركة",
+      "fuelType": "نوع الوقود",
+      "mileage": "الممشى",
+      "price": "السعر",
+      "publishedAt": "تاريخ النشر",
+      "updatedAt": "آخر تحديث"
+    },
+    "description": "الوصف",
+    "features": "المميزات",
+    "highlights": "النقاط البارزة",
+    "seller": "البائع",
+    "financing": {
+      "title": "التمويل",
+      "downPayment": "الدفعة المقدمة",
+      "duration": "المدة",
+      "monthlyInstallment": "القسط الشهري",
+      "months": "شهر"
+    },
+    "contact": "التواصل",
+    "whatsapp": "واتساب",
+    "loading": "جاري تحميل تفاصيل السيارة...",
+    "notFound": "السيارة غير موجودة",
+    "notFoundTitle": "تعذر العثور على هذه السيارة",
+    "notFoundDescription": "قد تكون السيارة المطلوبة محذوفة أو غير متاحة أو أن الرابط لم يعد صالحاً.",
+    "backToBrowse": "العودة إلى السيارات"
+  },
+
   "browse": {
+    "empty": {
+      "title": "لا توجد نتائج",
+      "description": "لا توجد سيارات متاحة في الوقت الحالي.",
+      "action": "عرض كل السيارات"
+    },
+    "card": {
+      "call": "اتصال",
+      "whatsapp": "واتساب"
+    },
     "filters": {
       "brand": "الماركة",
       "model": "الموديل",
