@@ -37,6 +37,7 @@ export const apiRoutes = {
   models: "/car-models",
   cars: "cars",
   fuelTypes: "/fuel-types",
+  highlightTypes: "/highlight-types",
   featureOptions: "/feature-options",
   colors: "/car-colors",
   carTypes: "/car-types",
