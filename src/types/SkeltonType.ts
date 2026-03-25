@@ -19,4 +19,5 @@ export type SkeletonType =
   | "blog-card"
   | "testimonials"
   | "article-page"
-  | "banner";
+  | "banner"
+  | "car";

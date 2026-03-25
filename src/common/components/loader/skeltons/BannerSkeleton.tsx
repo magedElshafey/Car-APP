@@ -1,5 +1,3 @@
-// src/common/components/loader/skeltons/banner-skeleton/BannerSkeleton.tsx
-
 import { cn } from "@/lib/utils";
 
 type BannerSkeletonProps = {
@@ -7,6 +5,9 @@ type BannerSkeletonProps = {
   count?: number;
   variant?: "single" | "double";
   animated?: boolean;
+
+  // 👇 جديد: نفس variant بتاع BannerCard
+  itemVariant?: "full-hero" | "gradient" | "small-side" | "text-only";
 };
 
 function SkeletonBlock({
@@ -27,24 +28,43 @@ function SkeletonBlock({
   );
 }
 
+// 👇 نفس heights بالظبط من BannerCard
+function getHeightByVariant(variant?: string) {
+  switch (variant) {
+    case "small-side":
+      return "min-h-[180px] md:min-h-[220px]";
+
+    case "gradient":
+    case "text-only":
+      return "min-h-[220px] md:min-h-[260px]";
+
+    case "full-hero":
+    default:
+      return "min-h-[320px] md:min-h-[420px] lg:min-h-[520px]";
+  }
+}
+
 function BannerSkeletonCard({
   animated = true,
-  compact = false,
+  variant,
 }: {
   animated?: boolean;
-  compact?: boolean;
+  variant?: string;
 }) {
+  const isCompact =
+    variant === "small-side" ||
+    variant === "gradient" ||
+    variant === "text-only";
+
   return (
     <article
       className={cn(
         "relative overflow-hidden rounded-2xl border border-divider bg-surface shadow-sm",
-        compact
-          ? "min-h-[180px] md:min-h-[220px]"
-          : "min-h-[240px] md:min-h-[320px]",
+        getHeightByVariant(variant),
       )}
       aria-hidden="true"
     >
-      {/* media area */}
+      {/* media */}
       <div className="absolute inset-0">
         <SkeletonBlock
           animated={animated}
@@ -57,25 +77,27 @@ function BannerSkeletonCard({
       <div
         className={cn(
           "relative z-[1] flex h-full flex-col justify-center",
-          compact ? "p-4 md:p-5" : "p-5 md:p-8",
+          isCompact ? "p-4 md:p-5" : "p-5 md:p-8 lg:p-12",
         )}
       >
-        <div className="ms-auto w-full max-w-[520px] text-right">
+        <div className="ms-auto w-full max-w-[620px] text-right">
+          {/* title */}
           <SkeletonBlock
             animated={animated}
             className={cn(
               "ms-auto",
-              compact ? "h-6 w-3/4 md:h-7" : "h-7 w-4/5 md:h-10",
+              isCompact ? "h-6 w-3/4 md:h-7" : "h-7 w-4/5 md:h-10 lg:h-12",
             )}
           />
 
+          {/* description */}
           <SkeletonBlock
             animated={animated}
             className={cn(
               "ms-auto mt-3",
-              compact
+              isCompact
                 ? "h-4 w-full max-w-[280px]"
-                : "h-4 w-full max-w-[420px] md:h-5",
+                : "h-4 w-full max-w-[420px] md:h-5 lg:h-6",
             )}
           />
 
@@ -83,33 +105,28 @@ function BannerSkeletonCard({
             animated={animated}
             className={cn(
               "ms-auto mt-2",
-              compact
+              isCompact
                 ? "h-4 w-2/3 max-w-[220px]"
-                : "h-4 w-3/4 max-w-[360px] md:h-5",
+                : "h-4 w-3/4 max-w-[360px] md:h-5 lg:h-6",
             )}
           />
 
+          {/* button */}
           <SkeletonBlock
             animated={animated}
             className={cn(
               "ms-auto mt-5 rounded-xl",
-              compact ? "h-10 w-28" : "h-11 w-32 md:w-36",
+              isCompact ? "h-10 w-28" : "h-11 w-32 md:h-12 md:w-36",
             )}
           />
         </div>
       </div>
 
-      {/* dots placeholder */}
+      {/* dots */}
       <div className="absolute bottom-3 left-1/2 z-[2] flex -translate-x-1/2 items-center gap-2">
-        <SkeletonBlock animated={animated} className="h-2.5 w-7 rounded-full" />
-        <SkeletonBlock
-          animated={animated}
-          className="h-2.5 w-2.5 rounded-full"
-        />
-        <SkeletonBlock
-          animated={animated}
-          className="h-2.5 w-2.5 rounded-full"
-        />
+        <SkeletonBlock className="h-2.5 w-7 rounded-full" />
+        <SkeletonBlock className="h-2.5 w-2.5 rounded-full" />
+        <SkeletonBlock className="h-2.5 w-2.5 rounded-full" />
       </div>
     </article>
   );
@@ -120,6 +137,7 @@ export default function BannerSkeleton({
   count,
   variant = "single",
   animated = true,
+  itemVariant = "full-hero",
 }: BannerSkeletonProps) {
   const resolvedCount = count ?? (variant === "double" ? 2 : 1);
   const isSingle = resolvedCount === 1;
@@ -140,7 +158,7 @@ export default function BannerSkeleton({
           <BannerSkeletonCard
             key={index}
             animated={animated}
-            compact={!isSingle}
+            variant={itemVariant}
           />
         ))}
       </div>

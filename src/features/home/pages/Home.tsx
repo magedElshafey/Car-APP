@@ -68,11 +68,11 @@ const Home = () => {
             showArrows={false}
           />
         </FetchHandler>
-        <FetchHandler queryResult={usedCarsQuery} skeletonType="blog-card">
+        <FetchHandler queryResult={usedCarsQuery} skeletonType="car">
           <UsedCarSection data={usedCarsQuery?.data || []} />
         </FetchHandler>
         <BrowseByLocationSection title="Browse by most popular cities" />
-        <FetchHandler queryResult={newCarsQuery} skeletonType="blog-card">
+        <FetchHandler queryResult={newCarsQuery} skeletonType="car">
           <NewsCarsSection data={newCarsQuery?.data || []} />
         </FetchHandler>
         <FetchHandler queryResult={blogQuery} skeletonType="blog-card">

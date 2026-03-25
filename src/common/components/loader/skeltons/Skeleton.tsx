@@ -20,6 +20,7 @@ import BlogCardSkeleton from "./BlogCardSkeleton";
 import TestimonialsSkeleton from "./TestimonialCardSkeleton";
 import ArticlePageSkeleton from "./ArticlePageSkeleton";
 import BannerSkeleton from "@/common/components/loader/skeltons/BannerSkeleton";
+import BrowseCarsSkeleton from "@/features/browse/components/browse-cars-skeleton";
 interface SkeltonProps {
   type: SkeletonType;
 }
@@ -27,6 +28,8 @@ const Skeleton: React.FC<SkeltonProps> = ({ type }) => {
   switch (type) {
     case "hero":
       return <HeroSkeleton />;
+    case "car":
+      return <BrowseCarsSkeleton />;
     case "home-hero":
       return <HomeHeroSkeleton />;
     case "about-hero":
@@ -62,7 +65,7 @@ const Skeleton: React.FC<SkeltonProps> = ({ type }) => {
     case "testimonials":
       return <TestimonialsSkeleton />;
     case "banner":
-      return <BannerSkeleton />;
+      return <BannerSkeleton variant="single" itemVariant="full-hero" />;
     case "founder-profile":
       return (
         <>
