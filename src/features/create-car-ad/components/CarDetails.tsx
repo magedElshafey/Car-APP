@@ -10,6 +10,7 @@ export type CarDetailsValue = {
   brand: string;
   model: string;
   year: string;
+  trim_id: number | null;
 };
 
 type CarDetailsProps = CarDetailsValue & {
@@ -20,6 +21,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
   brand,
   model,
   year,
+  trim_id,
   onChange,
 }) => {
   const { t, i18n } = useTranslation();
@@ -29,7 +31,12 @@ const CarDetails: React.FC<CarDetailsProps> = ({
   const [brandSearch, setBrandSearch] = useState("");
   const [modelSearch, setModelSearch] = useState("");
   const [yearSearch, setYearSearch] = useState("");
-  const [draft, setDraft] = useState<CarDetailsValue>({ brand, model, year });
+  const [draft, setDraft] = useState<CarDetailsValue>({
+    brand,
+    model,
+    year,
+    trim_id,
+  });
   const [selectedBrandId, setSelectedBrandId] = useState<number | null>(null);
 
   const { data: models = [], isLoading: modelsLoading } = useGetModels(
@@ -40,12 +47,12 @@ const CarDetails: React.FC<CarDetailsProps> = ({
 
   useEffect(() => {
     if (!opened) {
-      setDraft({ brand, model, year });
+      setDraft({ brand, model, year, trim_id });
       setBrandSearch("");
       setModelSearch("");
       setYearSearch("");
     }
-  }, [brand, model, opened, year]);
+  }, [brand, model, opened, trim_id, year]);
 
   useEffect(() => {
     if (!opened) return;
@@ -76,6 +83,11 @@ const CarDetails: React.FC<CarDetailsProps> = ({
     return models.filter((item) => item.name.toLowerCase().includes(keyword));
   }, [modelSearch, models]);
 
+  const selectedModelId = useMemo(() => {
+    const matchedModel = models.find((item) => item.name === draft.model);
+    return matchedModel?.id ?? null;
+  }, [draft.model, models]);
+
   const years = useMemo(() => {
     const currentYear = new Date().getFullYear();
     return Array.from({ length: currentYear - 1970 + 1 }, (_, index) =>
@@ -97,8 +109,8 @@ const CarDetails: React.FC<CarDetailsProps> = ({
     <>
       <div className="w-full" onClick={() => setOpened(true)}>
         <MainInput
-          label="Car details"
-          placeholder="Choose brand, model, and year"
+          label="createCarAd.carDetails.label"
+          placeholder="createCarAd.carDetails.placeholder"
           value={triggerValue}
           readOnly
         />
@@ -121,7 +133,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                     <div className="min-w-0 flex-1 rounded-lg max-h-[500px] flex flex-col">
                       <div className="border-b border-slate-200 px-3 py-3 text-center">
                         <h4 className="text-2xl font-semibold text-text-main">
-                          {t("Brands")}
+                          {t("createCarAd.carDetails.brands.title")}
                         </h4>
                       </div>
 
@@ -130,14 +142,14 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                           type="text"
                           value={brandSearch}
                           onChange={(event) => setBrandSearch(event.target.value)}
-                          placeholder={t("Search brand")}
+                          placeholder={t("createCarAd.carDetails.brands.search")}
                           className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-text-main outline-none focus:border-primary"
                         />
                       </div>
 
                       <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-100">
                         {brandsLoading ? (
-                          <p className="p-4 text-sm text-text-muted">{t("Loading...")}</p>
+                          <p className="p-4 text-sm text-text-muted">{t("createCarAd.carDetails.loading")}</p>
                         ) : filteredBrands.length ? (
                           filteredBrands.map((item) => {
                             const isActive = draft.brand === item.name;
@@ -152,6 +164,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                                     brand: item.name,
                                     model: "",
                                     year: "",
+                                    trim_id: null,
                                   };
                                   setDraft(next);
                                   setSelectedBrandId(item.id);
@@ -180,7 +193,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                             );
                           })
                         ) : (
-                          <p className="p-4 text-sm text-text-muted">{t("no data")}</p>
+                          <p className="p-4 text-sm text-text-muted">{t("createCarAd.carDetails.empty")}</p>
                         )}
                       </div>
                     </div>
@@ -189,7 +202,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                       <div className="min-w-0 flex-1 rounded-lg max-h-[500px] flex flex-col">
                         <div className="border-b border-slate-200 px-3 py-3 text-center">
                           <h4 className="text-2xl font-semibold text-text-main">
-                            {t("Models")}
+                            {t("createCarAd.carDetails.models.title")}
                           </h4>
                         </div>
 
@@ -198,7 +211,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                             type="text"
                             value={modelSearch}
                             onChange={(event) => setModelSearch(event.target.value)}
-                            placeholder={t("Search models")}
+                            placeholder={t("createCarAd.carDetails.models.search")}
                             className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-text-main outline-none focus:border-primary"
                           />
                         </div>
@@ -206,7 +219,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                         <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-100">
                           {modelsLoading ? (
                             <p className="p-4 text-sm text-text-muted">
-                              {t("Loading...")}
+                              {t("createCarAd.carDetails.loading")}
                             </p>
                           ) : filteredModels.length ? (
                             filteredModels.map((item) => {
@@ -221,6 +234,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                                       ...draft,
                                       model: item.name,
                                       year: "",
+                                      trim_id: null,
                                     };
                                     setDraft(next);
                                     onChange(next);
@@ -247,7 +261,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                               );
                             })
                           ) : (
-                            <p className="p-4 text-sm text-text-muted">{t("no data")}</p>
+                            <p className="p-4 text-sm text-text-muted">{t("createCarAd.carDetails.empty")}</p>
                           )}
                         </div>
                       </div>
@@ -257,7 +271,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                       <div className="min-w-0 flex-1 rounded-lg max-h-[500px] flex flex-col">
                         <div className="border-b border-slate-200 px-3 py-3 text-center">
                           <h4 className="text-2xl font-semibold text-text-main">
-                            {t("Years")}
+                            {t("createCarAd.carDetails.years.title")}
                           </h4>
                         </div>
 
@@ -266,7 +280,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                             type="text"
                             value={yearSearch}
                             onChange={(event) => setYearSearch(event.target.value)}
-                            placeholder={t("Search years")}
+                            placeholder={t("createCarAd.carDetails.years.search")}
                             className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-text-main outline-none focus:border-primary"
                           />
                         </div>
@@ -281,7 +295,11 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                                   key={item}
                                   type="button"
                                   onClick={() => {
-                                    const next = { ...draft, year: item };
+                                    const next = {
+                                      ...draft,
+                                      year: item,
+                                      trim_id: selectedModelId,
+                                    };
                                     setDraft(next);
                                     onChange(next);
                                   }}
@@ -307,7 +325,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                               );
                             })
                           ) : (
-                            <p className="p-4 text-sm text-text-muted">{t("no data")}</p>
+                            <p className="p-4 text-sm text-text-muted">{t("createCarAd.carDetails.empty")}</p>
                           )}
                         </div>
                       </div>
@@ -325,7 +343,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                       setOpened(false);
                     }}
                   >
-                    {t("Done")}
+                    {t("createCarAd.carDetails.done")}
                   </MainBtn>
                 </div>
               </>

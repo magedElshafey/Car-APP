@@ -1,30 +1,25 @@
-import React, { ChangeEvent, useMemo, useState } from "react";
+import React, { ChangeEvent, useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FiCheck, FiImage, FiPlus, FiX } from "react-icons/fi";
+import { useWatch } from "react-hook-form";
 import { toast } from "sonner";
-import MainBtn from "@/common/components/buttons/MainBtn";
-import MainInput from "@/common/components/inputs/MainInput";
-import MainSelect from "@/common/components/inputs/MainSelect";
 import PageSeo from "@/common/components/seo/PageSeo";
-import { Dialog, DialogContent, DialogTrigger } from "@/shadcn/ui/dialog";
 import CarImagesUpload from "../components/CarImagesUpload";
-import CarDetails, { CarDetailsValue } from "../components/CarDetails";
+import CarInfoSection from "../components/CarInfoSection";
+import PricingSection from "../components/PricingSection";
+import FeaturesAttributesSection from "../components/FeaturesAttributesSection";
+import ContactSection from "../components/ContactSection";
+import CreateCarAdSidebar from "../components/CreateCarAdSidebar";
+import { CarDetailsValue } from "../components/CarDetails";
 import useCreateCarAdForm from "../hooks/useCreateCarAdForm";
+import { CreateCarAdSchemaType } from "../schema/createCarAd.schema";
 import useGetFuelTypes from "@/features/browse/hooks/use-get-fuel-types";
-import useGetCities, { CityOption } from "@/features/browse/hooks/use-get-cities";
+import useGetCities from "@/features/browse/hooks/use-get-cities";
 import useGetCarFeatures from "@/features/browse/hooks/use-get-car-features";
+import useGetHighlightTypes from "@/features/browse/hooks/use-get-highlight-types";
+import useCreateCar, { CreateCarPayload } from "../api/useCreateCar";
+import toastApiError from "@/utils/toastApiError";
 
 const MAX_IMAGES = 20;
-const PREDEFINED_COLORS = [
-  { value: "white", hexColor: "#FFFFFF" },
-  { value: "black", hexColor: "#000000" },
-  { value: "silver", hexColor: "#E5E7EB" },
-  { value: "red", hexColor: "#FF1A1A" },
-  { value: "blue", hexColor: "#1D39F2" },
-  { value: "green", hexColor: "#30B05C" },
-  { value: "gold", hexColor: "#ECDD67" },
-  { value: "bronze", hexColor: "#D4B07B" },
-] as const;
 
 const CreateCarAdPage: React.FC = () => {
   const { t } = useTranslation();
@@ -34,17 +29,22 @@ const CreateCarAdPage: React.FC = () => {
     brand: "",
     model: "",
     year: "",
+    trim_id: null,
   });
   const [isFeaturesDialogOpen, setIsFeaturesDialogOpen] = useState(false);
   const [selectedFeatureIds, setSelectedFeatureIds] = useState<number[]>([]);
   const [draftFeatureIds, setDraftFeatureIds] = useState<number[]>([]);
   const [activeFeatureCategory, setActiveFeatureCategory] = useState<string>("");
+  const [isAttributesDialogOpen, setIsAttributesDialogOpen] = useState(false);
+  const [selectedAttributeIds, setSelectedAttributeIds] = useState<number[]>([]);
+  const [draftAttributeIds, setDraftAttributeIds] = useState<number[]>([]);
 
   const {
+    control,
     handleSubmit,
     reset,
     setValue,
-    watch,
+    trigger,
     formState: { errors, isSubmitting },
   } = useCreateCarAdForm();
 
@@ -52,23 +52,20 @@ const CreateCarAdPage: React.FC = () => {
   const { data: cities, isLoading: citiesLoading } = useGetCities();
   const { data: groupedCarFeatures = {}, isLoading: carFeaturesLoading } =
     useGetCarFeatures();
+  const { data: highlightTypes = [], isLoading: highlightTypesLoading } =
+    useGetHighlightTypes();
+  const { mutateAsync: createCar, isPending: isCreatingCar } = useCreateCar();
 
-  const selectedCondition = watch("condition");
-  const selectedCarType = watch("car_type");
-  const selectedFuelType = watch("fuel_type");
-  const selectedCity = watch("city");
-  const selectedColor = watch("color");
-  const selectedCanBeFinanced = watch("can_be_financed");
-  const price = watch("price");
-  const downPayment = watch("down_payment");
-  const durationMonths = watch("duration_months");
-  const monthlyInstallment = watch("monthly_installment");
+  const condition = useWatch({ control, name: "condition" });
+  const carType = useWatch({ control, name: "car_type" });
+  const color = useWatch({ control, name: "color" });
+  const price = useWatch({ control, name: "price" });
+  const contactPhone = useWatch({ control, name: "contact_phone" });
 
-  const selectedCityId = useMemo(() => {
-    if (!selectedCity || !cities?.length) return null;
-    const matchedCity = cities.find((item) => item.value === selectedCity);
-    return matchedCity?.id ?? null;
-  }, [cities, selectedCity]);
+  const carDetailsText = useMemo(
+    () => [carDetails.brand, carDetails.model, carDetails.year].filter(Boolean).join(" • "),
+    [carDetails.brand, carDetails.model, carDetails.year],
+  );
 
   const remainingSlots = useMemo(
     () => MAX_IMAGES - uploadedImages.length,
@@ -104,7 +101,23 @@ const CreateCarAdPage: React.FC = () => {
       .filter((item) => item.selectedFeatures.length > 0);
   }, [featureCategories, selectedFeatureIds]);
 
-  const handleImagesChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const sortedHighlightTypes = useMemo(() => {
+    return [...highlightTypes].sort((a, b) => {
+      const aSort = a.sort ?? Number.MAX_SAFE_INTEGER;
+      const bSort = b.sort ?? Number.MAX_SAFE_INTEGER;
+
+      if (aSort !== bSort) return aSort - bSort;
+      return a.name.localeCompare(b.name);
+    });
+  }, [highlightTypes]);
+
+  const selectedAttributes = useMemo(() => {
+    return sortedHighlightTypes.filter((attribute) =>
+      selectedAttributeIds.includes(attribute.id),
+    );
+  }, [selectedAttributeIds, sortedHighlightTypes]);
+
+  const handleImagesChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(event.target.files || []);
 
     if (!selectedFiles.length) {
@@ -134,55 +147,94 @@ const CreateCarAdPage: React.FC = () => {
     setUploadedImages((currentImages) => [...currentImages, ...acceptedFiles]);
     setImagesError("");
     event.target.value = "";
-  };
+  }, [remainingSlots, t]);
 
-  const removeImage = (imageIndex: number) => {
+  const removeImage = useCallback((imageIndex: number) => {
     setUploadedImages((currentImages) => {
       return currentImages.filter(
         (_, currentIndex) => currentIndex !== imageIndex,
       );
     });
-  };
+  }, []);
 
-  const clearUploadedImages = () => {
+  const clearUploadedImages = useCallback(() => {
     setUploadedImages([]);
     setImagesError("");
-  };
+  }, []);
 
-  const toggleDraftFeature = (featureId: number) => {
+  const toggleDraftFeature = useCallback((featureId: number) => {
     setDraftFeatureIds((current) => {
       if (current.includes(featureId)) {
         return current.filter((id) => id !== featureId);
       }
       return [...current, featureId];
     });
-  };
+  }, []);
 
-  const handleFeaturesDialogChange = (opened: boolean) => {
+  const handleFeaturesDialogChange = useCallback((opened: boolean) => {
     setIsFeaturesDialogOpen(opened);
-
-    if (opened) {
-      setDraftFeatureIds(selectedFeatureIds);
-
-      if (featureCategories.length && !activeFeatureCategory) {
-        setActiveFeatureCategory(featureCategories[0][0]);
-      }
-      return;
-    }
-
     setDraftFeatureIds(selectedFeatureIds);
-  };
 
-  const applyFeatureSelection = () => {
+    if (opened && featureCategories.length && !activeFeatureCategory) {
+      setActiveFeatureCategory(featureCategories[0][0]);
+    }
+  }, [activeFeatureCategory, featureCategories, selectedFeatureIds]);
+
+  const applyFeatureSelection = useCallback(() => {
     setSelectedFeatureIds(draftFeatureIds);
     setIsFeaturesDialogOpen(false);
-  };
+  }, [draftFeatureIds]);
 
-  const removeSelectedFeature = (featureId: number) => {
+  const removeSelectedFeature = useCallback((featureId: number) => {
     setSelectedFeatureIds((current) => current.filter((id) => id !== featureId));
-  };
+  }, []);
 
-  const onSubmit = () => {
+  const toggleDraftAttribute = useCallback((attributeId: number) => {
+    setDraftAttributeIds((current) => {
+      if (current.includes(attributeId)) {
+        return current.filter((id) => id !== attributeId);
+      }
+
+      return [...current, attributeId];
+    });
+  }, []);
+
+  const handleAttributesDialogChange = useCallback((opened: boolean) => {
+    setIsAttributesDialogOpen(opened);
+    setDraftAttributeIds(selectedAttributeIds);
+  }, [selectedAttributeIds]);
+
+  const applyAttributeSelection = useCallback(() => {
+    setSelectedAttributeIds(draftAttributeIds);
+    setIsAttributesDialogOpen(false);
+  }, [draftAttributeIds]);
+
+  const removeSelectedAttribute = useCallback((attributeId: number) => {
+    setSelectedAttributeIds((current) =>
+      current.filter((id) => id !== attributeId),
+    );
+  }, []);
+
+  const handleFormReset = useCallback(() => {
+    reset();
+    clearUploadedImages();
+    setCarDetails({ brand: "", model: "", year: "", trim_id: null });
+    setSelectedFeatureIds([]);
+    setDraftFeatureIds([]);
+    setSelectedAttributeIds([]);
+    setDraftAttributeIds([]);
+  }, [clearUploadedImages, reset]);
+
+  const handleCarDetailsChange = useCallback((value: CarDetailsValue) => {
+    setCarDetails(value);
+    setValue("trim_id", value.trim_id ?? undefined, {
+      shouldValidate: true,
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+  }, [setValue]);
+
+  const onSubmit = useCallback(async (values: CreateCarAdSchemaType) => {
     if (!uploadedImages.length) {
       const message = "createCarAd.validation.imagesRequired";
       setImagesError(message);
@@ -190,10 +242,54 @@ const CreateCarAdPage: React.FC = () => {
       return;
     }
 
-    toast.success(t("createCarAd.toasts.readyToSubmit"));
-    reset();
-    clearUploadedImages();
-  };
+    const cityId = values.city_id ?? cities?.find((item) => item.value === values.city)?.id;
+
+    if (!values.trim_id) {
+      toast.error(t("createCarAd.validation.trimRequired"));
+      return;
+    }
+
+    if (!cityId) {
+      toast.error(t("createCarAd.validation.locationRequired"));
+      return;
+    }
+
+    const financingAvailable = values.can_be_financed === "yes";
+
+    const payload: CreateCarPayload = {
+      trim_id: values.trim_id,
+      city_id: cityId,
+      condition: values.condition,
+      mileage_km: values.condition === "used" ? Number(values.mileage_km) : 0,
+      transmission: values.car_type,
+      fuel_type: values.fuel_type,
+      color: values.color,
+      price: Number(values.price),
+      financing_available: financingAvailable,
+      financing: financingAvailable
+        ? {
+            down_payment: Number(values.down_payment),
+            duration_months: Number(values.duration_months),
+            monthly_installment: Number(values.monthly_installment),
+          }
+        : null,
+      feature_option_ids: selectedFeatureIds,
+      highlight_type_ids: selectedAttributeIds,
+      is_imported: values.is_imported ?? false,
+      is_taxi: values.is_taxi ?? false,
+      is_special_needs: values.is_special_needs ?? false,
+      contact_phone: values.contact_phone,
+      whatsapp_allowed: values.whatsapp_allowed ?? false,
+    };
+
+    try {
+      await createCar(payload);
+      toast.success(t("createCarAd.toasts.readyToSubmit"));
+      handleFormReset();
+    } catch (error) {
+      toastApiError(error as Error);
+    }
+  }, [cities, createCar, handleFormReset, selectedAttributeIds, selectedFeatureIds, t, uploadedImages]);
 
   return (
     <div className="app-container py-10 space-y-4">
@@ -229,527 +325,64 @@ const CreateCarAdPage: React.FC = () => {
               maxImages={MAX_IMAGES}
             />
 
-            <section className="rounded-card border border-slate-300 bg-bg-surface p-6 shadow-soft md:p-8">
-              <div className="mb-6">
-                <h2 className="text-xl font-semibold text-text-main">
-                  {t("createCarAd.form.title")}
-                </h2>
-                <p className="mt-2 text-sm text-text-muted">
-                  {t("createCarAd.form.description")}
-                </p>
-              </div>
+            <CarInfoSection
+              control={control}
+              setValue={setValue}
+              trigger={trigger}
+              errors={errors}
+              carDetails={carDetails}
+              onCarDetailsChange={handleCarDetailsChange}
+              cities={cities ?? []}
+              citiesLoading={citiesLoading}
+              fuelTypes={fuelTypes ?? []}
+              fuelTypesLoading={fuelTypesLoading}
+            />
 
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <div className="md:col-span-2">
-                  <CarDetails
-                    brand={carDetails.brand}
-                    model={carDetails.model}
-                    year={carDetails.year}
-                    onChange={setCarDetails}
-                  />
-                </div>
+            <PricingSection control={control} setValue={setValue} trigger={trigger} errors={errors} />
 
-                <div>
-                  <h3 className="mb-3 text-sm font-semibold text-text-main">
-                    {t("createCarAd.fields.condition.label")}
-                  </h3>
-                  <div className="flex flex-wrap gap-2 py-1">
-                    {["new", "used"].map((option) => {
-                      const isActive = selectedCondition === option;
-                      return (
-                        <button
-                          key={option}
-                          type="button"
-                          className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${
-                            isActive
-                              ? "border-blue-400 bg-blue-50 text-blue-500"
-                              : "border-slate-300 text-stone-600 hover:border-slate-400"
-                          }`}
-                          onClick={() => {
-                            setValue("condition", option as "new" | "used", {
-                              shouldValidate: true,
-                              shouldDirty: true,
-                              shouldTouch: true,
-                            });
-                          }}
-                        >
-                          {t(`createCarAd.fields.condition.options.${option}`)}
-                        </button>
-                      );
-                    })}
-                  </div>
-                  {errors.condition?.message && (
-                    <p className="mt-2 text-xs text-red-500">
-                      {t(errors.condition.message)}
-                    </p>
-                  )}
-                </div>
+            <FeaturesAttributesSection
+              featureCategories={featureCategories}
+              activeFeatureCategory={activeFeatureCategory}
+              onActiveFeatureCategoryChange={setActiveFeatureCategory}
+              activeFeatures={activeFeatures}
+              selectedFeatureIds={selectedFeatureIds}
+              selectedFeaturesByCategory={selectedFeaturesByCategory}
+              isFeaturesDialogOpen={isFeaturesDialogOpen}
+              onFeaturesDialogChange={handleFeaturesDialogChange}
+              draftFeatureIds={draftFeatureIds}
+              onToggleDraftFeature={toggleDraftFeature}
+              onApplyFeatureSelection={applyFeatureSelection}
+              onRemoveSelectedFeature={removeSelectedFeature}
+              carFeaturesLoading={carFeaturesLoading}
+              sortedHighlightTypes={sortedHighlightTypes}
+              selectedAttributeIds={selectedAttributeIds}
+              selectedAttributes={selectedAttributes}
+              isAttributesDialogOpen={isAttributesDialogOpen}
+              onAttributesDialogChange={handleAttributesDialogChange}
+              draftAttributeIds={draftAttributeIds}
+              onToggleDraftAttribute={toggleDraftAttribute}
+              onApplyAttributeSelection={applyAttributeSelection}
+              onRemoveSelectedAttribute={removeSelectedAttribute}
+              highlightTypesLoading={highlightTypesLoading}
+              control={control}
+              setValue={setValue}
+              trigger={trigger}
+            />
 
-                <MainSelect<CityOption>
-                  options={cities || []}
-                  value={selectedCityId}
-                  loading={citiesLoading}
-                  label="createCarAd.fields.location.label"
-                  placeholder="createCarAd.fields.location.placeholder"
-                  required
-                  onSelect={(option) => {
-                    setValue("city", option.value, {
-                      shouldValidate: true,
-                      shouldDirty: true,
-                      shouldTouch: true,
-                    });
-                  }}
-                  error={errors.city?.message}
-                />
-
-                <div>
-                  <h3 className="mb-3 text-sm font-semibold text-text-main">
-                    {t("createCarAd.fields.carType.label")}
-                  </h3>
-                  <div className="flex flex-wrap gap-2 py-1">
-                    {["automatic", "manual"].map((option) => {
-                      const isActive = selectedCarType === option;
-                      return (
-                        <button
-                          key={option}
-                          type="button"
-                          className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${
-                            isActive
-                              ? "border-blue-400 bg-blue-50 text-blue-500"
-                              : "border-slate-300 text-stone-600 hover:border-slate-400"
-                          }`}
-                          onClick={() => {
-                            setValue("car_type", option as "automatic" | "manual", {
-                              shouldValidate: true,
-                              shouldDirty: true,
-                              shouldTouch: true,
-                            });
-                          }}
-                        >
-                          {t(`createCarAd.fields.carType.options.${option}`)}
-                        </button>
-                      );
-                    })}
-                  </div>
-                  {errors.car_type?.message && (
-                    <p className="mt-2 text-xs text-red-500">
-                      {t(errors.car_type.message)}
-                    </p>
-                  )}
-                </div>
-
-                <div>
-                  <h3 className="mb-3 text-sm font-semibold text-text-main">
-                    {t("createCarAd.fields.fuelType.label")}
-                  </h3>
-                  {fuelTypesLoading ? (
-                    <p className="text-sm text-text-muted">
-                      {t("createCarAd.fields.fuelType.loading")}
-                    </p>
-                  ) : (
-                    <div className="flex flex-wrap gap-2 py-1">
-                      {fuelTypes?.map((item) => {
-                        const isActive = selectedFuelType === item.value;
-                        return (
-                          <button
-                            key={item.value}
-                            type="button"
-                            className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${
-                              isActive
-                                ? "border-blue-400 bg-blue-50 text-blue-500"
-                                : "border-slate-300 text-stone-600 hover:border-slate-400"
-                            }`}
-                            onClick={() => {
-                              setValue("fuel_type", item.value, {
-                                shouldValidate: true,
-                                shouldDirty: true,
-                                shouldTouch: true,
-                              });
-                            }}
-                          >
-                            {item.label}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
-                  {errors.fuel_type?.message && (
-                    <p className="mt-2 text-xs text-red-500">
-                      {t(errors.fuel_type.message)}
-                    </p>
-                  )}
-                </div>
-
-                <div className="md:col-span-2">
-                  <h3 className="mb-3 text-sm font-semibold text-text-main">
-                    {t("createCarAd.fields.color.label")}
-                  </h3>
-                  <div className="flex flex-wrap gap-x-5 gap-y-3 py-1">
-                    {PREDEFINED_COLORS.map((item) => {
-                      const isActive = selectedColor === item.value;
-                      return (
-                        <button
-                          key={item.value}
-                          type="button"
-                          className="flex min-w-[88px] flex-col items-center gap-2 text-center"
-                          onClick={() => {
-                            setValue("color", item.value, {
-                              shouldValidate: true,
-                              shouldDirty: true,
-                              shouldTouch: true,
-                            });
-                          }}
-                        >
-                          <span
-                            className={`h-11 w-full rounded-md border transition-all ${
-                              isActive
-                                ? "border-blue-500 ring-2 ring-blue-200"
-                                : "border-slate-300"
-                            }`}
-                            style={{ backgroundColor: item.hexColor }}
-                            aria-hidden="true"
-                          />
-                          <span className="text-sm text-text-main">
-                            {t(`createCarAd.fields.color.options.${item.value}`)}
-                          </span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                  {errors.color?.message && (
-                    <p className="mt-2 text-xs text-red-500">
-                      {t(errors.color.message)}
-                    </p>
-                  )}
-                </div>
-              </div>
-            </section>
-
-            <section className="rounded-card border border-slate-300 bg-bg-surface p-6 shadow-soft md:p-8">
-              <div className="mb-6">
-                <h2 className="text-xl font-semibold text-text-main">
-                  {t("createCarAd.pricing.title")}
-                </h2>
-                <p className="mt-2 text-sm text-text-muted">
-                  {t("createCarAd.pricing.description")}
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                <MainInput
-                  label="createCarAd.pricing.fields.price.label"
-                  placeholder="createCarAd.pricing.fields.price.placeholder"
-                  value={price}
-                  onChange={(event) => {
-                    setValue("price", event.target.value, {
-                      shouldValidate: true,
-                      shouldDirty: true,
-                      shouldTouch: true,
-                    });
-                  }}
-                  error={errors.price?.message}
-                />
-
-                <div>
-                  <h3 className="mb-3 text-sm font-semibold text-text-main">
-                    {t("createCarAd.pricing.fields.canBeFinanced.label")}
-                  </h3>
-                  <div className="flex flex-wrap gap-2 py-1">
-                    {["yes", "no"].map((option) => {
-                      const isActive = selectedCanBeFinanced === option;
-                      return (
-                        <button
-                          key={option}
-                          type="button"
-                          className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${
-                            isActive
-                              ? "border-blue-400 bg-blue-50 text-blue-500"
-                              : "border-slate-300 text-stone-600 hover:border-slate-400"
-                          }`}
-                          onClick={() => {
-                            setValue("can_be_financed", option as "yes" | "no", {
-                              shouldValidate: true,
-                              shouldDirty: true,
-                              shouldTouch: true,
-                            });
-
-                            if (option === "no") {
-                              setValue("down_payment", "", { shouldValidate: true });
-                              setValue("duration_months", "", { shouldValidate: true });
-                              setValue("monthly_installment", "", { shouldValidate: true });
-                            }
-                          }}
-                        >
-                          {t(`createCarAd.pricing.fields.canBeFinanced.options.${option}`)}
-                        </button>
-                      );
-                    })}
-                  </div>
-                  {errors.can_be_financed?.message && (
-                    <p className="mt-2 text-xs text-red-500">
-                      {t(errors.can_be_financed.message)}
-                    </p>
-                  )}
-                </div>
-
-                {selectedCanBeFinanced === "yes" && (
-                  <div className="md:col-span-2 rounded-2xl bg-slate-50/40 p-4">
-                    <p className="mb-4 text-sm font-semibold text-text-main">
-                      {t("createCarAd.pricing.financing.title")}
-                    </p>
-
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-                      <MainInput
-                        label="createCarAd.pricing.fields.downPayment.label"
-                        placeholder="createCarAd.pricing.fields.downPayment.placeholder"
-                        value={downPayment}
-                        onChange={(event) => {
-                          setValue("down_payment", event.target.value, {
-                            shouldValidate: true,
-                            shouldDirty: true,
-                            shouldTouch: true,
-                          });
-                        }}
-                        error={errors.down_payment?.message}
-                      />
-
-                      <MainInput
-                        label="createCarAd.pricing.fields.durationMonths.label"
-                        placeholder="createCarAd.pricing.fields.durationMonths.placeholder"
-                        value={durationMonths}
-                        onChange={(event) => {
-                          setValue("duration_months", event.target.value, {
-                            shouldValidate: true,
-                            shouldDirty: true,
-                            shouldTouch: true,
-                          });
-                        }}
-                        error={errors.duration_months?.message}
-                      />
-
-                      <MainInput
-                        label="createCarAd.pricing.fields.monthlyInstallment.label"
-                        placeholder="createCarAd.pricing.fields.monthlyInstallment.placeholder"
-                        value={monthlyInstallment}
-                        onChange={(event) => {
-                          setValue("monthly_installment", event.target.value, {
-                            shouldValidate: true,
-                            shouldDirty: true,
-                            shouldTouch: true,
-                          });
-                        }}
-                        error={errors.monthly_installment?.message}
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-            </section>
-
-            <section className="rounded-card border border-slate-300 bg-bg-surface p-6 shadow-soft md:p-8">
-              <div className="mb-6">
-                <h2 className="text-xl font-semibold text-text-main">
-                  {t("createCarAd.features.title")}
-                </h2>
-                <p className="mt-2 text-sm font-semibold text-text-main">
-                  {t("createCarAd.features.label")}
-                  <span className="ms-1 font-normal text-text-muted">
-                    ({t("createCarAd.features.optional")})
-                  </span>
-                </p>
-                {!!selectedFeatureIds.length && (
-                  <p className="mt-2 text-sm text-text-muted">
-                    {t("createCarAd.features.selectedCount", {
-                      count: selectedFeatureIds.length,
-                    })}
-                  </p>
-                )}
-              </div>
-
-              <Dialog
-                open={isFeaturesDialogOpen}
-                onOpenChange={handleFeaturesDialogChange}
-              >
-                <DialogTrigger asChild>
-                  <button
-                    type="button"
-                    className="inline-flex items-center gap-2 rounded-lg border border-blue-300 bg-blue-50 px-5 py-2 font-semibold text-blue-600 transition-colors hover:bg-blue-100"
-                  >
-                    <FiPlus size={18} />
-                    <span>{t("createCarAd.features.addButton")}</span>
-                  </button>
-                </DialogTrigger>
-
-                <DialogContent className="w-[calc(100%-2rem)] max-w-5xl rounded-xl border border-slate-300 bg-white p-0">
-                  <div className="px-6 pt-6">
-                    <div className="flex flex-wrap gap-6 border-b border-slate-200">
-                      {featureCategories.map(([categoryName]) => {
-                        const isActive = activeFeatureCategory === categoryName;
-                        return (
-                          <button
-                            key={categoryName}
-                            type="button"
-                            onClick={() => setActiveFeatureCategory(categoryName)}
-                            className={`-mb-px border-b-2 pb-3 text-base transition-colors ${
-                              isActive
-                                ? "border-blue-600 font-semibold text-blue-700"
-                                : "border-transparent text-text-muted hover:text-text-main"
-                            }`}
-                          >
-                            {categoryName}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  <div className="max-h-[420px] overflow-y-auto px-6 py-4">
-                    {carFeaturesLoading ? (
-                      <p className="text-sm text-text-muted">
-                        {t("createCarAd.features.loading")}
-                      </p>
-                    ) : !featureCategories.length ? (
-                      <p className="text-sm text-text-muted">
-                        {t("createCarAd.features.empty")}
-                      </p>
-                    ) : (
-                      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                        {activeFeatures.map((feature) => {
-                          const isSelected = draftFeatureIds.includes(feature.id);
-                          return (
-                            <button
-                              key={feature.id}
-                              type="button"
-                              onClick={() => toggleDraftFeature(feature.id)}
-                              className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-5 text-start transition-colors hover:bg-slate-50"
-                            >
-                              <span className="text-base text-text-main">
-                                {feature.name}
-                              </span>
-                              <span
-                                className={`inline-flex h-5 w-5 items-center justify-center rounded-md border transition-colors ${
-                                  isSelected
-                                    ? "border-blue-500 bg-blue-500"
-                                    : "border-slate-300 bg-white"
-                                }`}
-                              >
-                                {isSelected && (
-                                  <FiCheck size={13} className="text-white" />
-                                )}
-                              </span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex items-center justify-end gap-3 border-t border-slate-200 px-6 py-4">
-                    <MainBtn
-                      type="button"
-                      variant="outline"
-                      onClick={() => setIsFeaturesDialogOpen(false)}
-                    >
-                      {t("createCarAd.features.cancel")}
-                    </MainBtn>
-                    <MainBtn type="button" onClick={applyFeatureSelection}>
-                      {t("createCarAd.features.apply")}
-                    </MainBtn>
-                  </div>
-                </DialogContent>
-              </Dialog>
-
-              {!!selectedFeaturesByCategory.length && (
-                <div className="mt-6 space-y-4">
-                  {selectedFeaturesByCategory.map((group) => (
-                    <div key={group.categoryName}>
-                      <p className="mb-2 text-lg font-semibold text-text-main">
-                        {group.categoryName}
-                      </p>
-
-                      <div className="flex flex-wrap gap-2">
-                        {group.selectedFeatures.map((feature) => (
-                          <button
-                            key={feature.id}
-                            type="button"
-                            className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-base text-text-main"
-                            onClick={() => removeSelectedFeature(feature.id)}
-                          >
-                            <span>{feature.name}</span>
-                            <FiX size={14} className="text-text-muted" />
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </section>
+            <ContactSection control={control} setValue={setValue} trigger={trigger} errors={errors} />
           </div>
 
-          <aside className="space-y-6 xl:sticky xl:top-20 xl:self-start">
-            <section className="rounded-card border border-slate-300 bg-bg-surface p-6 shadow-soft">
-              <div className="flex items-center gap-3 text-text-main">
-                <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-                  <FiImage size={22} />
-                </span>
-                <div>
-                  <h2 className="font-semibold">{t("createCarAd.summary.title")}</h2>
-                  <p className="text-sm text-text-muted">
-                    {t("createCarAd.summary.description")}
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-5 space-y-3 text-sm text-text-muted">
-                <div className="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
-                  <span>{t("createCarAd.summary.imagesCount")}</span>
-                  <strong className="text-text-main">
-                    {uploadedImages.length}
-                  </strong>
-                </div>
-                <div className="flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
-                  <span>{t("createCarAd.summary.remaining")}</span>
-                  <strong className="text-text-main">{remainingSlots}</strong>
-                </div>
-                <div className="rounded-2xl bg-slate-50 px-4 py-3 leading-6">
-                  {t("createCarAd.summary.tip")}
-                </div>
-              </div>
-
-              <div className="mt-6 space-y-3">
-                <MainBtn
-                  type="submit"
-                  className="w-full"
-                  disabled={isSubmitting}>
-                  {t("createCarAd.actions.submit")}
-                </MainBtn>
-                <MainBtn
-                  type="button"
-                  variant="ghost"
-                  className="w-full"
-                  onClick={() => {
-                    reset();
-                    clearUploadedImages();
-                  }}>
-                  {t("createCarAd.actions.reset")}
-                </MainBtn>
-              </div>
-            </section>
-
-            <section className="rounded-card border border-slate-300 bg-bg-surface p-6 shadow-soft">
-              <h2 className="text-lg font-semibold text-text-main">
-                {t("createCarAd.tips.title")}
-              </h2>
-              <ul className="mt-4 space-y-3 text-sm leading-6 text-text-muted">
-                <li>
-                  {t("createCarAd.tips.items.lighting")}
-                </li>
-                <li>{t("createCarAd.tips.items.interior")}</li>
-                <li>{t("createCarAd.tips.items.duplicates")}</li>
-              </ul>
-            </section>
-          </aside>
+          <CreateCarAdSidebar
+            firstImageFile={uploadedImages[0] ?? null}
+            carDetailsText={carDetailsText}
+            condition={condition}
+            carType={carType}
+            color={color}
+            price={price}
+            contactPhone={contactPhone}
+            isSubmitting={isSubmitting || isCreatingCar}
+            onReset={handleFormReset}
+          />
         </form>
       </main>
     </div>

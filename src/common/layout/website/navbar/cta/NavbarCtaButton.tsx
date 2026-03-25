@@ -23,7 +23,7 @@ const NavbarCtaButton: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Link to="/sell-your-car">
+    <Link to="/create-car-ad">
       <MainBtn
         variant="primary"
         className="!rounded-full px-4 py-2 text-sm font-semibold shadow-sm"

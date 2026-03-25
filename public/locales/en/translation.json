@@ -25,6 +25,25 @@
       "title": "Ad details",
       "description": "Enter the key information that helps buyers understand the car quickly."
     },
+    "carDetails": {
+      "label": "Car details",
+      "placeholder": "Choose brand, model, and year",
+      "loading": "Loading...",
+      "empty": "No data",
+      "done": "Done",
+      "brands": {
+        "title": "Brands",
+        "search": "Search brand"
+      },
+      "models": {
+        "title": "Models",
+        "search": "Search models"
+      },
+      "years": {
+        "title": "Years",
+        "search": "Search years"
+      }
+    },
     "pricing": {
       "title": "Car price and financing",
       "description": "Set the selling price and choose if this car can be financed.",
@@ -68,6 +87,33 @@
       "apply": "Add Features",
       "selectedCount": "{{count}} selected"
     },
+    "featuresAndAttributes": {
+      "description": "Select car features, highlight attributes, and listing tags in one place."
+    },
+    "attributes": {
+      "title": "Car attributes",
+      "label": "Attributes",
+      "optional": "Optional",
+      "addButton": "Add Attributes",
+      "loading": "Loading attributes...",
+      "empty": "No attributes available.",
+      "cancel": "Cancel",
+      "apply": "Apply",
+      "selectedCount": "{{count}} selected"
+    },
+    "contact": {
+      "title": "Contact details",
+      "description": "Add your phone number and choose whether WhatsApp contact is allowed.",
+      "fields": {
+        "contactPhone": {
+          "label": "Phone number",
+          "placeholder": "Enter contact phone"
+        },
+        "whatsappAllowed": {
+          "label": "Allow contact via WhatsApp"
+        }
+      }
+    },
     "fields": {
       "condition": {
         "label": "Condition",
@@ -103,6 +149,27 @@
       "location": {
         "label": "Location",
         "placeholder": "Select city"
+      },
+      "mileage": {
+        "label": "عدد الكيلومترات بالسيارة",
+        "placeholder": "Enter how many kilometers the car has moved"
+      },
+      "description": {
+        "label": "Description",
+        "placeholder": "Describe your car condition, mileage, and key details"
+      },
+      "isSpecialNeeds": {
+        "label": "Special needs ready"
+      },
+      "isTaxi": {
+        "label": "Taxi"
+      },
+      "isImported": {
+        "label": "Imported"
+      },
+      "binaryOptions": {
+        "yes": "Yes",
+        "no": "No"
       }
     },
     "summary": {
@@ -111,6 +178,21 @@
       "imagesCount": "Images count",
       "remaining": "Remaining",
       "tip": "Clear images and a concise, strong description directly improve ad quality."
+    },
+    "preview": {
+      "title": "What Would Your Ad Look Like",
+      "description": "A quick live preview based on your entered data.",
+      "imageAlt": "First uploaded car image",
+      "noImage": "Upload at least one image to preview your ad visual.",
+      "emptyValue": "-",
+      "fields": {
+        "carDetails": "Car details",
+        "condition": "Condition",
+        "carType": "Car type",
+        "color": "Color",
+        "price": "Price",
+        "phone": "Phone number"
+      }
     },
     "actions": {
       "submit": "Publish ad",
@@ -131,11 +213,19 @@
     },
     "validation": {
       "imagesRequired": "Add at least one image for the ad.",
+      "trimRequired": "Please complete car details",
+      "brandRequired": "Please choose brand",
+      "modelRequired": "Please choose model",
+      "yearRequired": "Please choose year",
       "conditionRequired": "Please choose condition",
       "carTypeRequired": "Please choose car type",
       "fuelTypeRequired": "Please choose fuel type",
       "locationRequired": "Please choose location",
       "colorRequired": "Please choose color",
+      "mileageRequired": "Please enter mileage for used cars",
+      "mileageInvalid": "Mileage must contain numbers only",
+      "contactPhoneRequired": "Please enter contact phone",
+      "contactPhoneInvalid": "Phone format is invalid",
       "priceRequired": "Please enter price",
       "canBeFinancedRequired": "Please choose financing option",
       "downPaymentRequired": "Please enter down payment",

@@ -24,6 +24,7 @@ const CarImagesUpload: React.FC<CarImagesUploadProps> = ({
 }) => {
   const { t } = useTranslation();
   const [previewImages, setPreviewImages] = useState<PreviewImage[]>([]);
+  const hasError = Boolean(error);
 
   useEffect(() => {
     const nextPreviewImages = files.map((file) => ({
@@ -43,7 +44,7 @@ const CarImagesUpload: React.FC<CarImagesUploadProps> = ({
   const remainingSlots = maxImages - files.length;
 
   return (
-    <section className="rounded-card border border-slate-300 bg-bg-surface p-6 shadow-soft md:p-8">
+    <section className="rounded-card rounded-2xl border border-slate-300 bg-bg-surface p-6 shadow-soft md:p-8">
       <div className="mb-6 flex items-start justify-between gap-4">
         <div>
           <h2 className="text-xl font-semibold text-text-main">
@@ -59,7 +60,11 @@ const CarImagesUpload: React.FC<CarImagesUploadProps> = ({
       </div>
 
       {!files.length ? (
-        <label className="flex min-h-[280px] w-full cursor-pointer flex-col items-center justify-center rounded-[28px] border border-dashed border-primary/30 bg-slate-50 px-6 text-center transition hover:border-primary hover:bg-primary/5">
+        <label className={`flex min-h-[280px] w-full cursor-pointer flex-col items-center justify-center rounded-[28px] border border-dashed px-6 text-center transition ${
+          hasError
+            ? "border-red-400 bg-red-50/40"
+            : "border-primary/30 bg-slate-50 hover:border-primary hover:bg-primary/5"
+        }`}>
           <input
             type="file"
             accept="image/*"
@@ -80,6 +85,11 @@ const CarImagesUpload: React.FC<CarImagesUploadProps> = ({
             <FiPlus size={18} />
             {t("createCarAd.images.uploadButton")}
           </span>
+          {hasError && (
+            <p className="mt-3 text-xs font-medium text-red-500">
+              {t(error as string)}
+            </p>
+          )}
         </label>
       ) : (
         <div className="space-y-5">

@@ -25,6 +25,25 @@
       "title": "تفاصيل الإعلان",
       "description": "أدخل المعلومات الأساسية التي تساعد المشترين على فهم السيارة بسرعة."
     },
+    "carDetails": {
+      "label": "تفاصيل السيارة",
+      "placeholder": "اختر الماركة والموديل وسنة الصنع",
+      "loading": "جاري التحميل...",
+      "empty": "لا توجد بيانات",
+      "done": "تم",
+      "brands": {
+        "title": "الماركات",
+        "search": "ابحث عن الماركة"
+      },
+      "models": {
+        "title": "الموديلات",
+        "search": "ابحث عن الموديل"
+      },
+      "years": {
+        "title": "السنوات",
+        "search": "ابحث عن السنة"
+      }
+    },
     "pricing": {
       "title": "سعر السيارة والتمويل",
       "description": "حدد سعر البيع واختر ما إذا كانت السيارة متاحة للتمويل.",
@@ -68,6 +87,33 @@
       "apply": "إضافة المميزات",
       "selectedCount": "تم تحديد {{count}}"
     },
+    "featuresAndAttributes": {
+      "description": "اختر المميزات وخصائص الإبراز وعلامات الإعلان في مكان واحد."
+    },
+    "attributes": {
+      "title": "خصائص السيارة",
+      "label": "الخصائص",
+      "optional": "اختياري",
+      "addButton": "إضافة الخصائص",
+      "loading": "جاري تحميل الخصائص...",
+      "empty": "لا توجد خصائص متاحة.",
+      "cancel": "إلغاء",
+      "apply": "تطبيق",
+      "selectedCount": "تم تحديد {{count}}"
+    },
+    "contact": {
+      "title": "معلومات التواصل",
+      "description": "أضف رقم الهاتف وحدد ما إذا كان التواصل عبر واتساب مسموحًا.",
+      "fields": {
+        "contactPhone": {
+          "label": "رقم الهاتف",
+          "placeholder": "أدخل رقم التواصل"
+        },
+        "whatsappAllowed": {
+          "label": "السماح بالتواصل عبر واتساب"
+        }
+      }
+    },
     "fields": {
       "condition": {
         "label": "حالة السيارة",
@@ -103,6 +149,27 @@
       "location": {
         "label": "الموقع",
         "placeholder": "اختر المدينة"
+      },
+      "mileage": {
+        "label": "عدد الكيلومترات بالسيارة",
+        "placeholder": "أدخل عدد الكيلومترات التي قطعتها السيارة"
+      },
+      "description": {
+        "label": "الوصف",
+        "placeholder": "اكتب حالة السيارة، الممشى، وأهم التفاصيل"
+      },
+      "isSpecialNeeds": {
+        "label": "مجهزة لذوي الاحتياجات الخاصة"
+      },
+      "isTaxi": {
+        "label": "تاكسي"
+      },
+      "isImported": {
+        "label": "مستورد"
+      },
+      "binaryOptions": {
+        "yes": "نعم",
+        "no": "لا"
       }
     },
     "summary": {
@@ -111,6 +178,20 @@
       "imagesCount": "عدد الصور",
       "remaining": "المتبقي",
       "tip": "الصور الواضحة والوصف المختصر الجيد يرفعان جودة الإعلان بشكل مباشر."
+    },
+    "preview": {
+      "title": "كيف سيبدو إعلانك",
+      "imageAlt": "أول صورة مرفوعة للسيارة",
+      "noImage": "ارفع صورة واحدة على الأقل لمعاينة شكل الإعلان.",
+      "emptyValue": "-",
+      "fields": {
+        "carDetails": "تفاصيل السيارة",
+        "condition": "حالة السيارة",
+        "carType": "نوع ناقل الحركة",
+        "color": "اللون",
+        "price": "السعر",
+        "phone": "رقم الهاتف"
+      }
     },
     "actions": {
       "submit": "نشر الإعلان",
@@ -131,11 +212,19 @@
     },
     "validation": {
       "imagesRequired": "أضف صورة واحدة على الأقل للإعلان.",
+      "trimRequired": "يرجى إكمال تفاصيل السيارة",
+      "brandRequired": "اختر الماركة",
+      "modelRequired": "اختر الموديل",
+      "yearRequired": "اختر سنة الصنع",
       "conditionRequired": "اختر حالة السيارة",
       "carTypeRequired": "اختر نوع ناقل الحركة",
       "fuelTypeRequired": "اختر نوع الوقود",
       "locationRequired": "اختر الموقع",
       "colorRequired": "اختر اللون",
+      "mileageRequired": "أدخل الممشى للسيارات المستعملة",
+      "mileageInvalid": "الممشى يجب أن يحتوي على أرقام فقط",
+      "contactPhoneRequired": "أدخل رقم التواصل",
+      "contactPhoneInvalid": "صيغة رقم الهاتف غير صحيحة",
       "priceRequired": "أدخل السعر",
       "canBeFinancedRequired": "اختر خيار التمويل",
       "downPaymentRequired": "أدخل الدفعة المقدمة",

@@ -275,7 +275,7 @@ const MainSelectInner = <T extends OptionType>(props: MainSelectProps<T>) => {
             // note: actual blur handling to forms will be called on select or explicitly if needed
           }}
           className={`transition text-text-gray duration-150 w-full rounded-pill px-4 py-2.5 pr-4 flex items-center justify-between gap-3 bg-bg-surface
-border border-border-subtle
+          border border-slate-300
 focus-within:ring-2 focus-within:ring-primary
 text-text-main
 placeholder:text-text-muted
@@ -307,7 +307,7 @@ shadow-soft
             role="listbox"
             aria-labelledby={inputId}
             ref={listRef}
-            className={`absolute top-full  w-full max-h-48 overflow-y-auto bg-white border border-slate-400 rounded-lg shadow-lg z-30 ${
+            className={`absolute top-full  w-full max-h-48 overflow-y-auto bg-white border border-slate-400 rounded-2xl shadow-lg z-30 ${
               i18n.language === "ar" ? "right-0" : "left-0"
             }`}
           >
