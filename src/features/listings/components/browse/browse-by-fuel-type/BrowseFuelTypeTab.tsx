@@ -8,7 +8,6 @@ import { mapFuelTypeToBrowseCards } from "@/features/listings/mappers/mapFuelTyp
 export default function BrowseFuelTypeTab() {
   const navigate = useNavigate();
   const { data, isLoading, isError } = useGetFuelTypes();
-  console.log("data from fuel type", data);
   const items = useMemo(() => {
     return mapFuelTypeToBrowseCards(data ?? []);
   }, [data]);

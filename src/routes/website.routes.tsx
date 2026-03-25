@@ -10,23 +10,23 @@ export const websiteRoutes: RouteObject = {
       element: lazyLoad(() => import("../features/home/pages/Home")),
     },
 
-    {
-      path: "contact-us",
-      element: lazyLoad(() => import("../features/contact-us/page/Contactus")),
-      handle: {
-        breadcrumb: "contact us",
-      },
-    },
+    // {
+    //   path: "contact-us",
+    //   element: lazyLoad(() => import("../features/contact-us/page/Contactus")),
+    //   handle: {
+    //     breadcrumb: "contact us",
+    //   },
+    // },
 
-    {
-      path: "submit-review",
-      element: lazyLoad(
-        () => import("../features/submit-review/pages/SubmitReview"),
-      ),
-      handle: {
-        breadcrumb: "terms",
-      },
-    },
+    // {
+    //   path: "submit-review",
+    //   element: lazyLoad(
+    //     () => import("../features/submit-review/pages/SubmitReview"),
+    //   ),
+    //   handle: {
+    //     breadcrumb: "terms",
+    //   },
+    // },
     {
       path: "create-car-ad",
       element: lazyLoad(
@@ -56,12 +56,10 @@ export const websiteRoutes: RouteObject = {
     },
     {
       path: "/car-browse",
-      element: lazyLoad(
-        () => import("../features/browse/pages/car-browse"),
-      ),
+      element: lazyLoad(() => import("../features/browse/pages/car-browse")),
       handle: {
-        breadcrumb: "browse"
-      }
+        breadcrumb: "browse",
+      },
     },
   ],
 };

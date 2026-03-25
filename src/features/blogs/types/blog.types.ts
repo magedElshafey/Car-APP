@@ -1,5 +1,3 @@
-import { LeafletType } from "@/features/leaflets/types/leaflets.types";
-
 export interface SimpleArticle {
   title: string;
   slug: string;
@@ -29,15 +27,14 @@ export interface Articles extends SimpleArticle {
   author?: {
     name: string;
     affiliation: string;
-    image: string
+    image: string;
   };
   author_name?: string;
-  related_leaflets?: LeafletType[]
 }
 
 export interface BlogCategories {
-  name: string
-  description: string
-  slug: string
-  blogs_count: number
+  name: string;
+  description: string;
+  slug: string;
+  blogs_count: number;
 }

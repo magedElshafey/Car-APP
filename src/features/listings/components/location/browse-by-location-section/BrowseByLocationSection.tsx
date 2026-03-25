@@ -1,6 +1,4 @@
 import { GridPagesSlider } from "@/common/components/sliders/GridPagesSlider";
-import { type LocationItem } from "@/features/listings/data/location.data";
-
 import { cn } from "@/lib/utils";
 import useGetCities from "@/features/browse/hooks/use-get-cities";
 import { useCallback, useMemo } from "react";
@@ -8,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { mapCitiesToBrowseCards } from "@/features/listings/mappers/mapCitiesToBrowseCards";
 import BrowseCard from "@/features/listings/components/browse/browse-card/BrowseCard";
 type BrowseByLocationSectionProps = {
-  items?: readonly LocationItem[];
   title?: React.ReactNode;
   className?: string;
 };
