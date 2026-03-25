@@ -302,10 +302,22 @@
     "contact": "Contact",
     "whatsapp": "WhatsApp",
     "loading": "Loading car details...",
-    "notFound": "Car not found"
+    "notFound": "Car not found",
+    "notFoundTitle": "This car could not be found",
+    "notFoundDescription": "The requested car may have been removed, is unavailable, or the link is no longer valid.",
+    "backToBrowse": "Back to cars"
   },
 
   "browse": {
+    "empty": {
+      "title": "There are no results",
+      "description": "No cars are available at the moment.",
+      "action": "Show all cars"
+    },
+    "card": {
+      "call": "Call",
+      "whatsapp": "WhatsApp"
+    },
     "filters": {
       "brand": "Brand",
       "model": "Model",

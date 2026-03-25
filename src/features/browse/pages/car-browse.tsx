@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import BrowseCarCard from "../components/car-card";
+import BrowseCarsSkeleton from "../components/browse-cars-skeleton";
+import BrowseEmptyState from "../components/browse-empty-state";
 import BrowseFiltersDrawer from "../components/browse-filters-drawer";
 import BrowseFiltersMenu from "../components/browse-filters-menu";
 import BrowsePagination from "../components/browse-pagination";
@@ -40,6 +42,10 @@ const CarBrowseContent = () => {
         });
     };
 
+    const handleEmptyAction = () => {
+        setSearchParams(new URLSearchParams());
+    };
+
     return (
         <div className="flex gap-4 min-h-screen app-container my-6">
             <div className="hidden self-start lg:sticky lg:top-24 lg:block">
@@ -57,7 +63,7 @@ const CarBrowseContent = () => {
                     </button>
                 </div>
                 {carsLoading ? (
-                    <div className="text-sm text-stone-500">Loading cars...</div>
+                    <BrowseCarsSkeleton />
                 ) : cars.length ? (
                     <div>
                         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
@@ -78,7 +84,9 @@ const CarBrowseContent = () => {
                         }
                     </div>
                 ) : (
-                    <div className="text-sm text-stone-500">No cars found.</div>
+                    <BrowseEmptyState
+                        onAction={handleEmptyAction}
+                    />
                 )}
             </div>
         </div>

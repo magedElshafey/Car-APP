@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { formatPrice } from "@/utils/formatPrice";
 import { formatDate } from "@/utils/formatDate";
+import CarDetailsNotFound from "../components/car-details-not-found";
+import CarDetailsSkeleton from "../components/car-details-skeleton";
 import useGetCar from "../hooks/use-get-car";
 
 const CarDetails = () => {
@@ -13,19 +15,11 @@ const CarDetails = () => {
     const [activeImage, setActiveImage] = useState(0);
 
     if (isLoading) {
-        return (
-            <div className="app-container my-12 flex items-center justify-center">
-                <p className="text-sm text-stone-500">{t("carDetails.loading")}</p>
-            </div>
-        );
+        return <CarDetailsSkeleton />;
     }
 
     if (!car) {
-        return (
-            <div className="app-container my-12 flex items-center justify-center">
-                <p className="text-sm text-stone-500">{t("carDetails.notFound")}</p>
-            </div>
-        );
+        return <CarDetailsNotFound />;
     }
 
     const images = car.images.length ? car.images : ["/images/cars/car-1.png"];
