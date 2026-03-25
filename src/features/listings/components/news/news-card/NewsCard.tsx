@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { FiCalendar } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
+import { FiArrowUpLeft } from "react-icons/fi";
+import HtmlConverter from "@/common/components/htmlConverter/HtmlConverter";
 
 type NewsCardProps = {
   title: string;
@@ -11,6 +13,7 @@ type NewsCardProps = {
   imageAlt?: string;
   category?: string;
   className?: string;
+  desc: string;
 };
 
 export default function NewsCard({
@@ -21,13 +24,14 @@ export default function NewsCard({
   imageAlt = "",
   category,
   className,
+  desc,
 }: NewsCardProps) {
   const {
     i18n: { dir },
   } = useTranslation();
 
   const isRtl = dir() === "rtl";
-
+  console.log("desc", desc);
   return (
     <Link
       to={href}
@@ -40,7 +44,7 @@ export default function NewsCard({
     >
       <article
         className={cn(
-          "flex h-full min-h-[420px] flex-col overflow-hidden rounded-[26px]",
+          "flex h-full min-h-[380px] flex-col overflow-hidden rounded-[26px]",
           "border border-divider/70 bg-background/95 backdrop-blur-sm",
           "transition-[border-color,background-color,transform] duration-300 ease-out",
           "hover:border-primary/15 hover:bg-background",
@@ -89,7 +93,7 @@ export default function NewsCard({
               <span className="truncate">{date}</span>
             </div>
 
-            {/* <div
+            <div
               className={cn(
                 "flex h-9 w-9 shrink-0 items-center justify-center rounded-full",
                 "border border-divider/80 bg-background text-text-muted",
@@ -106,7 +110,7 @@ export default function NewsCard({
                     : "rotate-180 group-hover:translate-x-0.5 group-hover:-translate-y-0.5",
                 )}
               />
-            </div> */}
+            </div>
           </div>
 
           <div className="flex flex-col flex-1">
@@ -120,28 +124,28 @@ export default function NewsCard({
             >
               <h3
                 className={cn(
-                  "line-clamp-3 text-lg font-extrabold leading-8 tracking-tight text-text",
-                  "md:text-[1.35rem]",
+                  "line-clamp-3 text-lg font-bold leading-8 tracking-tight text-text",
+                  "md:text-lg",
                 )}
               >
                 {title}
               </h3>
 
               <p className="mt-3 text-sm leading-6 line-clamp-2 text-text-muted">
-                اقرأ المزيد عن الخبر والتفاصيل الكاملة من خلال المقال.
+                <HtmlConverter html={desc} />
               </p>
             </div>
 
-            <div className="pt-4 mt-5">
+            {/* <div className="pt-4 mt-5">
               <div
                 className={cn(
                   "h-px w-full bg-gradient-to-r from-transparent via-divider to-transparent",
                   isRtl && "bg-gradient-to-l",
                 )}
               />
-            </div>
+            </div> */}
 
-            <div className="flex items-center justify-between mt-4">
+            {/* <div className="flex items-center justify-between mt-4">
               <span className="text-sm font-medium text-text-muted">
                 اقرأ المقال
               </span>
@@ -153,7 +157,7 @@ export default function NewsCard({
               >
                 NEWS
               </span>
-            </div>
+            </div> */}
           </div>
         </div>
       </article>

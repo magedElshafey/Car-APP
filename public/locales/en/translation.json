@@ -344,5 +344,31 @@
   "used cars": "used cars",
   "browse all used cars": "all used cars",
   "browse all new cars": "all new cars",
-  "new cars": "new cars"
+  "new cars": "new cars",
+  "contact": {
+    "badge": "Support & Contact",
+    "title": "Need Help? Contact Us",
+    "subtitle": "Choose the most convenient way to reach us, and we’ll assist you as quickly as possible.",
+
+    "address": {
+      "title": "Address",
+      "fallback": "No address available at the moment",
+      "aria": "View company address"
+    },
+
+    "sales": {
+      "title": "Contact Sales",
+      "fallback": "Sales phone number is not available",
+      "ariaWithPhone": "Contact sales via WhatsApp at {{phone}}"
+    },
+
+    "email": {
+      "title": "Email",
+      "fallback": "Email is not available",
+      "ariaWithEmail": "Send an email to {{email}}"
+    }
+  },
+  "Browse by most popular cities": "Browse by most popular cities",
+  "Latest car news": "Latest car news",
+  "View all news": "View all news"
 }

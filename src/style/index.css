@@ -20,7 +20,7 @@
     }
 
     body {
-        @apply overflow-x-hidden;
+        @apply overflow-x-hidden capitalize;
     }
 
     h1,
@@ -467,10 +467,10 @@ html {
 }
 
 .filter-item-menu {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .filter-item-menu::-webkit-scrollbar {
-  display: none;
+    display: none;
 }

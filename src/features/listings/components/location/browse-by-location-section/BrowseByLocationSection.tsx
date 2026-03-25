@@ -7,8 +7,9 @@ import { mapCitiesToBrowseCards } from "@/features/listings/mappers/mapCitiesToB
 import BrowseCard from "@/features/listings/components/browse/browse-card/BrowseCard";
 import BrowseCardSkeletonList from "@/common/components/loader/skeltons/BrowseCardSkeletonList";
 import ErrorMessage from "@/common/components/error-message/ErrorMessage";
+import SectionTitle from "@/common/components/section-title/SectionTitle";
 type BrowseByLocationSectionProps = {
-  title?: React.ReactNode;
+  title?: string;
   className?: string;
 };
 
@@ -37,9 +38,7 @@ export default function BrowseByLocationSection({
       className={cn("w-full", className)}
       aria-label="Browse by location"
     >
-      <div className="mb-4 md:mb-5">
-        <h2 className="text-2xl font-bold text-text md:text-4xl">{title}</h2>
-      </div>
+      <SectionTitle title={title} />
 
       <GridPagesSlider
         items={items}

@@ -42,7 +42,6 @@ const Home = () => {
   }, [slidersQuery.data]);
   const usedCarsQuery = useGetUsedCars();
   const newCarsQuery = useGetNewCars();
-  console.log("sliderItems", sliderItems);
   return (
     <>
       <div className="mb-8 overflow-x-hidden md:mb-9 lg:mb-10 xl:mb-11 2xl:mb-12">
@@ -72,7 +71,7 @@ const Home = () => {
         <FetchHandler queryResult={usedCarsQuery} skeletonType="blog-card">
           <UsedCarSection data={usedCarsQuery?.data || []} />
         </FetchHandler>
-        <BrowseByLocationSection title="تصفح حسب المدن الأكثر طلبًا" />
+        <BrowseByLocationSection title="Browse by most popular cities" />
         <FetchHandler queryResult={newCarsQuery} skeletonType="blog-card">
           <NewsCarsSection data={newCarsQuery?.data || []} />
         </FetchHandler>
