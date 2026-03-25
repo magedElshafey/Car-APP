@@ -6,13 +6,16 @@ const API_URL = "https://q-car.dev.qutell.net/api/site";
 /* ========= API ROUTES (local copy) ========= */
 const apiRoutes = {
   blogs: "blogs",
+  cars: "cars",
 };
 
 /* ========= Minimal Types (local) ========= */
 type Blog = {
   slug: string;
 };
-
+type Car = {
+  id: number;
+};
 /**
  * Backend may return:
  * 1) Paginated response with meta
@@ -69,10 +72,11 @@ async function fetchAllItems<T>(endpoint: string): Promise<T[]> {
 
 async function generateSitemap() {
   /* ========= Static pages ========= */
-  const staticPages = ["", "/about", "/blogs"];
+  const staticPages = ["", "/car-browse", "/blogs"];
 
   /* ========= Dynamic pages ========= */
   const blogs = await fetchAllItems<Blog>(apiRoutes.blogs);
+  const cars = await fetchAllItems<Car>(apiRoutes.cars);
 
   /* ========= Build URLs ========= */
   const urls = [
@@ -81,6 +85,7 @@ async function generateSitemap() {
     ...blogs.map(
       (blog) => `<url><loc>${SITE_URL}/blogs/${blog.slug}</loc></url>`,
     ),
+    ...cars.map((car) => `<url><loc>${SITE_URL}/blogs/${car.id}</loc></url>`),
   ];
 
   /* ========= Sitemap XML ========= */
