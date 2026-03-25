@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { apiRoutes } from "@/services/api-routes/apiRoutes";
 import { Axios } from "@/lib/axios/Axios";
 import { Response } from "@/types/Response";
-import { CarListing } from "../types/car.types";
+import { CarDetails } from "../types/car.types";
 
 const useGetCar = (id: string | null) => {
     const { i18n: { language } } = useTranslation();
@@ -11,7 +11,7 @@ const useGetCar = (id: string | null) => {
     return useQuery({
         queryKey: [apiRoutes.cars, id, language],
         queryFn: async () => {
-            const response = await Axios.get<Response<CarListing>>(`${apiRoutes.cars}/${id}`);
+            const response = await Axios.get<Response<CarDetails>>(`${apiRoutes.cars}/${id}`);
             return response.data;
         },
         enabled: !!id,

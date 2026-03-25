@@ -292,6 +292,7 @@
     "description": "Description",
     "features": "Features",
     "highlights": "Highlights",
+    "seller": "Seller",
     "financing": {
       "title": "Financing",
       "downPayment": "Down Payment",

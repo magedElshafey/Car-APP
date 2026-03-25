@@ -291,6 +291,7 @@
     "description": "الوصف",
     "features": "المميزات",
     "highlights": "النقاط البارزة",
+    "seller": "البائع",
     "financing": {
       "title": "التمويل",
       "downPayment": "الدفعة المقدمة",

@@ -16,6 +16,12 @@ export interface CarCoreInfo {
     trim: string | null;
 }
 
+export interface CarSeller {
+    name: string;
+    image: string | null;
+    phone: string;
+}
+
 export interface CarListing {
     id: number;
     car: CarCoreInfo;
@@ -41,4 +47,8 @@ export interface CarListing {
     status: string;
     created_at: string;
     updated_at?: string;
+}
+
+export interface CarDetails extends CarListing {
+    seller?: CarSeller | null;
 }
