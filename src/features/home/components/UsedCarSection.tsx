@@ -5,25 +5,40 @@ import { cn } from "@/lib/utils";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import { FiChevronLeft } from "react-icons/fi";
+
 type UsedCarSectionProps = {
   data: CarListing[];
   title?: string;
+  actionHref?: string;
+  actionLabel?: string;
 };
 const UsedCarSection: React.FC<UsedCarSectionProps> = ({
   data,
   title = "used cars",
+  actionHref = "/car-browse?filter-condition=used",
+  actionLabel = "browse all used cars",
 }) => {
-  const { t } = useTranslation();
+  const {
+    t,
+    i18n: { dir },
+  } = useTranslation();
   if (!data?.length) return;
   return (
     <section className={cn("w-full")} aria-label="Browse by location">
       <div className="flex flex-wrap justify-between gap-3 mb-4 md:mb-5">
         <h2 className="text-2xl font-bold text-text md:text-4xl">{t(title)}</h2>
         <Link
-          className="font-semibold text-primary"
-          to={`/car-browse?filter-condition=used`}
+          to={actionHref}
+          className={cn(
+            "inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors duration-200 hover:text-primary/80",
+          )}
         >
-          {t("browse more used cars")}
+          <FiChevronLeft
+            className={cn("h-4 w-4 shrink-0", dir() === "ltr" && "rotate-180")}
+            aria-hidden="true"
+          />
+          <span>{t(actionLabel)}</span>
         </Link>
       </div>
 

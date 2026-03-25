@@ -1,6 +1,6 @@
 import React, { useCallback, useId, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
-
+import { useTranslation } from "react-i18next";
 export type TabItem<TKey extends string> = {
   id: TKey;
   label: string;
@@ -32,7 +32,7 @@ export function TabbedSection<TKey extends string>({
   children,
 }: TabbedSectionProps<TKey>) {
   const generatedId = useId();
-
+  const { t } = useTranslation();
   const initialTab = useMemo(() => {
     return defaultTabId ?? tabs[0]?.id;
   }, [defaultTabId, tabs]);
@@ -136,7 +136,7 @@ export function TabbedSection<TKey extends string>({
                 isActive ? "text-primary" : "text-text-muted hover:text-text",
               )}
             >
-              {tab.label}
+              {t(tab.label)}
 
               <span
                 className={cn(

@@ -6,7 +6,7 @@ import type {
   SliderBannerApiResponse,
 } from "../types/banner.types";
 
-const FALLBACK_TITLE = "Explore now";
+// const FALLBACK_TITLE = "Explore now";
 
 export function stripHtml(html?: string | null): string {
   if (!html) return "";
@@ -83,7 +83,7 @@ export function mapHeroBannerResponse(
   const item = response?.data;
   if (!item || !item.is_active) return [];
 
-  const title = item.title?.trim() || options.titleFallback || FALLBACK_TITLE;
+  const title = item.title?.trim() || options.titleFallback;
   const description = stripHtml(item.description);
 
   return [
@@ -120,7 +120,7 @@ export function mapSliderBannerResponse(
       image: item.image,
       video: item.video,
       mediaType: item.media_type,
-      alt: `${options.imageAltPrefix ?? options.titleFallback ?? FALLBACK_TITLE} ${item.id}`,
+      alt: `${options.imageAltPrefix ?? options.titleFallback} ${item.id}`,
     }),
   );
 
@@ -130,10 +130,8 @@ export function mapSliderBannerResponse(
   return [
     {
       id: `slider-${items.map((item) => item.id).join("-")}`,
-      title:
-        firstWithTitle?.title?.trim() ||
-        options.titleFallback ||
-        FALLBACK_TITLE,
+      title: firstWithTitle?.title?.trim() || options.titleFallback,
+
       description: stripHtml(firstWithDescription?.description),
       href: options.href,
       ctaLabel: options.ctaLabel,

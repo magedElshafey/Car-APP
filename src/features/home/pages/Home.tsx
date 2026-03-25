@@ -28,7 +28,6 @@ const Home = () => {
       variant: "full-hero",
       href: "/car-browse",
       ctaLabel: "shop now",
-      titleFallback: "Find Your Perfect Car",
       imageAltPrefix: "Hero banner",
     });
   }, [heroQuery.data]);
@@ -38,9 +37,6 @@ const Home = () => {
 
     return mapSliderBannerResponse(slidersQuery.data, {
       variant: "full-hero",
-      href: "/car-browse",
-      ctaLabel: "شوف العروض",
-      titleFallback: "Latest Offers",
       imageAltPrefix: "Promotional slider",
     });
   }, [slidersQuery.data]);

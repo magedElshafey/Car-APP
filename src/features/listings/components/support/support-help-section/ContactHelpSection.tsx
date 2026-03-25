@@ -1,10 +1,5 @@
 import { useMemo } from "react";
-import {
-  FiChevronLeft,
-  FiHeadphones,
-  FiMail,
-  FiMessageCircle,
-} from "react-icons/fi";
+import { FiChevronLeft, FiHeadphones, FiMail, FiMapPin } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 
 import SupportCard from "@/features/listings/components/support/support-card/SupportCard";
@@ -53,13 +48,13 @@ export default function ContactHelpSection() {
   const items = useMemo<ContactHelpItem[]>(
     () => [
       {
-        id: "support",
-        title: "الدعم الفني",
-        description: "أرسل لنا استفساراتك وسنساعدك في أسرع وقت",
-        icon: <FiMessageCircle className="w-5 h-5" aria-hidden="true" />,
-        href: "/support",
+        id: "address",
+        title: "العنوان",
+        description: settings?.contact_address || "لا يوجد عنوان متاح حالياً",
+        icon: <FiMapPin className="w-5 h-5" aria-hidden="true" />,
+
         external: false,
-        ariaLabel: "الانتقال إلى صفحة الدعم الفني",
+        ariaLabel: "عرض عنوان الشركة",
       },
       {
         id: "sales",

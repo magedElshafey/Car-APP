@@ -15,7 +15,7 @@ export type BannerMediaItem = {
 
 export type NormalizedBannerItem = {
   id: string | number;
-  title: string;
+  title?: string;
   description?: string;
   href?: string;
   ctaLabel?: string;

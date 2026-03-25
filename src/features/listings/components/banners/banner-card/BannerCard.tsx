@@ -9,7 +9,7 @@ import type {
 } from "@/features/listings/components/banners/types/banner.types";
 
 type BannerCardProps = {
-  title: string;
+  title?: string;
   description?: string;
   href?: string;
   ctaLabel?: string;
@@ -162,7 +162,7 @@ function BannerContent({
   const { t } = useTranslation();
   if (variant === "text-only") {
     return (
-      <div className="flex flex-col justify-center h-full">
+      <div className="flex flex-col items-center justify-center h-full gap-2">
         <div className="max-w-[640px]">
           <h3 className="text-2xl font-extrabold leading-tight text-text md:text-4xl">
             {title}
@@ -189,7 +189,7 @@ function BannerContent({
   if (variant === "gradient") {
     return (
       <div className="relative z-[1] flex min-h-[220px] items-center justify-between gap-6 p-6 md:min-h-[260px] md:p-8">
-        <div className="max-w-[560px] text-right">
+        <div className="max-w-[560px] text-center">
           <h3 className="text-2xl font-extrabold leading-tight text-white md:text-4xl">
             {title}
           </h3>
@@ -215,7 +215,7 @@ function BannerContent({
   if (variant === "small-side") {
     return (
       <div className="relative z-[1] flex min-h-[180px] items-end justify-end p-4 md:min-h-[220px] md:p-5">
-        <div className="max-w-[340px] text-right text-white">
+        <div className="max-w-[340px] text-center text-white">
           <h3 className="text-lg font-extrabold leading-tight md:text-2xl">
             {title}
           </h3>
@@ -239,11 +239,13 @@ function BannerContent({
   }
 
   return (
-    <div className="relative z-[1] flex min-h-[320px] items-center justify-end p-6 md:min-h-[420px] md:p-10 lg:min-h-[520px] lg:p-12">
-      <div className="max-w-[620px] text-right text-white">
-        <h3 className="text-2xl font-extrabold leading-tight md:text-4xl lg:text-5xl">
-          {title}
-        </h3>
+    <div className="relative z-[1] flex min-h-[320px] items-center justify-center p-6 md:min-h-[420px] md:p-10 lg:min-h-[520px] lg:p-12">
+      <div className="max-w-[620px] text-center text-white">
+        {title && (
+          <h3 className="text-2xl font-extrabold leading-tight md:text-4xl lg:text-5xl">
+            {title}
+          </h3>
+        )}
 
         {description ? (
           <p className="mt-3 text-sm leading-6 text-white/90 md:text-lg lg:text-xl">

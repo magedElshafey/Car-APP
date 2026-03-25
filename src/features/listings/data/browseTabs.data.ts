@@ -6,7 +6,7 @@ export type BrowseTab = {
 };
 
 export const browseTabs: readonly BrowseTab[] = [
-  { id: "brands", label: "العلامات التجارية" },
-  { id: "body", label: "نوع الهيكل" },
-  { id: "fuel-type", label: "نوع الوقود" },
+  { id: "brands", label: "browse.filters.brand" },
+  { id: "body", label: "browse.filters.carType" },
+  { id: "fuel-type", label: "browse.filters.fuelType" },
 ];
