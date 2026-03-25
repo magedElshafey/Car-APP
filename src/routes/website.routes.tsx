@@ -64,5 +64,12 @@ export const websiteRoutes: RouteObject = {
         breadcrumb: "browse",
       },
     },
+    {
+      path: "/cars/:id",
+      element: lazyLoad(() => import("../features/browse/pages/car-details")),
+      handle: {
+        breadcrumb: "car details",
+      },
+    },
   ],
 };

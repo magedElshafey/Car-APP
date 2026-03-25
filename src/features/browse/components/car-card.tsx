@@ -1,5 +1,6 @@
 import { formatPrice } from "@/utils/formatPrice";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { CarListing } from "../types/car.types";
 
 interface BrowseCarCardProps {
@@ -11,7 +12,8 @@ const BrowseCarCard = ({ car }: BrowseCarCardProps) => {
     const image = car.images[0] || "/images/cars/car-1.png";
 
     return (
-        <article className="overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm">
+        <Link to={`/cars/${car.id}`} className="block overflow-hidden rounded-xl border border-stone-200 bg-white shadow-sm transition-shadow hover:shadow-md">
+            <article>
             <div className="aspect-[16/10] bg-stone-100">
                 <img
                     src={image}
@@ -41,7 +43,8 @@ const BrowseCarCard = ({ car }: BrowseCarCardProps) => {
                     {formatPrice(Number(car.price), i18n.language)} {t("EGP")}
                 </div>
             </div>
-        </article>
+            </article>
+        </Link>
     );
 }
 

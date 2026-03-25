@@ -270,6 +270,39 @@
   "Password changed successfully": "تم تغيير كلمة المرور بنجاح",
   "Keep your password confidential": "حافظ على سرية كلمة مرورك",
 
+  "carDetails": {
+    "pageTitle": "تفاصيل السيارة",
+    "table": {
+      "brand": "الماركة",
+      "model": "الموديل",
+      "year": "سنة الصنع",
+      "trim": "الفئة",
+      "condition": "الحالة",
+      "color": "اللون",
+      "location": "الموقع",
+      "transmission": "ناقل الحركة",
+      "fuelType": "نوع الوقود",
+      "mileage": "الممشى",
+      "price": "السعر",
+      "publishedAt": "تاريخ النشر",
+      "updatedAt": "آخر تحديث"
+    },
+    "description": "الوصف",
+    "features": "المميزات",
+    "highlights": "النقاط البارزة",
+    "financing": {
+      "title": "التمويل",
+      "downPayment": "الدفعة المقدمة",
+      "duration": "المدة",
+      "monthlyInstallment": "القسط الشهري",
+      "months": "شهر"
+    },
+    "contact": "التواصل",
+    "whatsapp": "واتساب",
+    "loading": "جاري تحميل تفاصيل السيارة...",
+    "notFound": "السيارة غير موجودة"
+  },
+
   "browse": {
     "filters": {
       "brand": "الماركة",

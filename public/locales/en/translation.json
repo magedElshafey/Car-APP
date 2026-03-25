@@ -271,6 +271,39 @@
   "Password changed successfully": "Password changed successfully",
   "Keep your password confidential": "Keep your password confidential",
 
+  "carDetails": {
+    "pageTitle": "Car Details",
+    "table": {
+      "brand": "Brand",
+      "model": "Model",
+      "year": "Year",
+      "trim": "Trim",
+      "condition": "Condition",
+      "color": "Color",
+      "location": "Location",
+      "transmission": "Transmission",
+      "fuelType": "Fuel Type",
+      "mileage": "Mileage",
+      "price": "Price",
+      "publishedAt": "Published",
+      "updatedAt": "Last Updated"
+    },
+    "description": "Description",
+    "features": "Features",
+    "highlights": "Highlights",
+    "financing": {
+      "title": "Financing",
+      "downPayment": "Down Payment",
+      "duration": "Duration",
+      "monthlyInstallment": "Monthly Installment",
+      "months": "months"
+    },
+    "contact": "Contact",
+    "whatsapp": "WhatsApp",
+    "loading": "Loading car details...",
+    "notFound": "Car not found"
+  },
+
   "browse": {
     "filters": {
       "brand": "Brand",
