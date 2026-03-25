@@ -67,7 +67,7 @@ const CarTypeFilterMenu = () => {
 const CarTypeFilter = () => {
     return (
         <FilterItem filterKey="car_type">
-            <FilterItem.Header showLabel title="car type" />
+            <FilterItem.Header showLabel title="browse.filters.carType" />
             <FilterItem.Menu searchable>
                 <CarTypeFilterMenu />
             </FilterItem.Menu>

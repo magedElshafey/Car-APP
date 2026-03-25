@@ -4,7 +4,7 @@ const YearFilter = () => {
     return (
         <RangeFilter
             filterKey="year"
-            title="year"
+            title="browse.filters.year"
         />
     );
 }

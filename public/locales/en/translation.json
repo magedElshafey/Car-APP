@@ -269,5 +269,27 @@
   "code": "code",
   "reassign password": "reassign password",
   "Password changed successfully": "Password changed successfully",
-  "Keep your password confidential": "Keep your password confidential"
+  "Keep your password confidential": "Keep your password confidential",
+
+  "browse": {
+    "filters": {
+      "brand": "Brand",
+      "model": "Model",
+      "fuelType": "Fuel type",
+      "color": "Color",
+      "carType": "Car type",
+      "transmission": "Transmission",
+      "condition": "Condition",
+      "year": "Year",
+      "price": "Price",
+      "reset": "Reset filters",
+      "search": {
+        "brand": "Search brand",
+        "model": "Search model",
+        "fuel_type": "Search fuel type",
+        "color": "Search color",
+        "car_type": "Search car type"
+      }
+    }
+  }
 }

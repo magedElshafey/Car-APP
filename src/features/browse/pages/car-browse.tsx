@@ -42,7 +42,7 @@ const CarBrowseContent = () => {
 
     return (
         <div className="flex gap-4 min-h-screen app-container my-6">
-            <div className="hidden self-start lg:sticky lg:top-16 lg:block">
+            <div className="hidden self-start lg:sticky lg:top-24 lg:block">
                 <BrowseFiltersMenu />
             </div>
             <BrowseFiltersDrawer />

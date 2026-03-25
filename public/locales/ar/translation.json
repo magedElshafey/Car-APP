@@ -268,5 +268,27 @@
   "code": "الرمز",
   "reassign password": "إعادة تعيين كلمة المرور",
   "Password changed successfully": "تم تغيير كلمة المرور بنجاح",
-  "Keep your password confidential": "حافظ على سرية كلمة مرورك"
+  "Keep your password confidential": "حافظ على سرية كلمة مرورك",
+
+  "browse": {
+    "filters": {
+      "brand": "الماركة",
+      "model": "الموديل",
+      "fuelType": "نوع الوقود",
+      "color": "اللون",
+      "carType": "نوع السيارة",
+      "transmission": "ناقل الحركة",
+      "condition": "الحالة",
+      "year": "السنة",
+      "price": "السعر",
+      "reset": "إعادة تعيين الفلاتر",
+      "search": {
+        "brand": "ابحث عن الماركة",
+        "model": "ابحث عن الموديل",
+        "fuel_type": "ابحث عن نوع الوقود",
+        "color": "ابحث عن اللون",
+        "car_type": "ابحث عن نوع السيارة"
+      }
+    }
+  }
 }
