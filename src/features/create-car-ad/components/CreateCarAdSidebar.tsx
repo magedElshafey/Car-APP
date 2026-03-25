@@ -11,7 +11,7 @@ type CreateCarAdSidebarProps = {
   color: string;
   price: string;
   contactPhone: string;
-  isSubmitting: boolean;
+  isPending: boolean;
   onReset: () => void;
 };
 
@@ -23,7 +23,7 @@ const CreateCarAdSidebar: React.FC<CreateCarAdSidebarProps> = ({
   color,
   price,
   contactPhone,
-  isSubmitting,
+  isPending,
   onReset,
 }) => {
   const { t } = useTranslation();
@@ -117,10 +117,10 @@ const CreateCarAdSidebar: React.FC<CreateCarAdSidebarProps> = ({
         </div>
 
         <div className="mt-6 space-y-3">
-          <MainBtn type="submit" className="w-full" disabled={isSubmitting}>
+          <MainBtn type="submit" className="w-full" disabled={isPending}>
             {t("createCarAd.actions.submit")}
           </MainBtn>
-          <MainBtn type="button" variant="ghost" className="w-full" onClick={onReset}>
+          <MainBtn type="button" variant="ghost" className="w-full" onClick={onReset} disabled={isPending}>
             {t("createCarAd.actions.reset")}
           </MainBtn>
         </div>

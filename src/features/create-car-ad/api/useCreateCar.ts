@@ -24,12 +24,15 @@ export type CreateCarPayload = {
   is_special_needs: boolean;
   contact_phone: string;
   whatsapp_allowed: boolean;
+  images: File[];
 };
 
 const useCreateCar = () => {
   return useMutation({
     mutationFn: async (payload: CreateCarPayload) => {
-      const { data } = await Axios.post(apiRoutes.cars, payload);
+      const { data } = await Axios.post(apiRoutes.cars, payload, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
       return data;
     },
   });
