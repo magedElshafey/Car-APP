@@ -7,14 +7,17 @@ import { AxiosResponse } from "axios";
 import { useTranslation } from "react-i18next";
 
 const useGetBrands = () => {
-    const {i18n: language} = useTranslation();
-    return useQuery({
-        queryKey: [apiRoutes.brands, language],
-        queryFn: async () => {
-            const response: Response<AxiosResponse<Brand[]>> = await Axios.get(apiRoutes.brands);
-            return response.data.data;
-        }
-    });
-}
+  const { i18n: language } = useTranslation();
+  return useQuery({
+    queryKey: [apiRoutes.brands, language],
+    queryFn: async () => {
+      const response: Response<AxiosResponse<Brand[]>> = await Axios.get(
+        apiRoutes.brands,
+      );
+      console.log("response from brands", response?.data?.data);
+      return response.data.data;
+    },
+  });
+};
 
 export default useGetBrands;

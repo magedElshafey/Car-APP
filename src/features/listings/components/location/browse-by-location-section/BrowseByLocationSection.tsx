@@ -1,12 +1,12 @@
 import { GridPagesSlider } from "@/common/components/sliders/GridPagesSlider";
-import LocationChipCard from "@/features/listings/components/location/location-card/LocationChipCard";
-import {
-  type LocationItem,
-  locations,
-} from "@/features/listings/data/location.data";
+import { type LocationItem } from "@/features/listings/data/location.data";
 
 import { cn } from "@/lib/utils";
-
+import useGetCities from "@/features/browse/hooks/use-get-cities";
+import { useCallback, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { mapCitiesToBrowseCards } from "@/features/listings/mappers/mapCitiesToBrowseCards";
+import BrowseCard from "@/features/listings/components/browse/browse-card/BrowseCard";
 type BrowseByLocationSectionProps = {
   items?: readonly LocationItem[];
   title?: React.ReactNode;
@@ -14,10 +14,24 @@ type BrowseByLocationSectionProps = {
 };
 
 export default function BrowseByLocationSection({
-  items = locations,
   title = "تصفح حسب المدينة أو المنطقة",
   className,
 }: BrowseByLocationSectionProps) {
+  const { data, isLoading, isError } = useGetCities();
+  console.log("data from cities", data);
+  const navigate = useNavigate();
+  const items = useMemo(() => {
+    return mapCitiesToBrowseCards(data ?? []);
+  }, [data]);
+
+  const handleBrandClick = useCallback(
+    (typeId: string) => {
+      navigate(`/car-browse?filter-city=${typeId}`);
+    },
+    [navigate],
+  );
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>حدث خطأ أثناء تحميل العلامات التجارية</div>;
   if (!items.length) return null;
 
   return (
@@ -38,7 +52,12 @@ export default function BrowseByLocationSection({
         getItemId={(item) => item.id}
         getItemAriaLabel={(item) => item.label}
         renderItem={(item) => (
-          <LocationChipCard label={item.label} href={item.href} />
+          <BrowseCard
+            label={item.label}
+            count={item.count}
+            image={item.image}
+            onClick={() => handleBrandClick(item.id)}
+          />
         )}
       />
     </section>

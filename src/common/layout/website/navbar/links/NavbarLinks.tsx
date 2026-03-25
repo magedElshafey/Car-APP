@@ -16,12 +16,21 @@ const NavbarLinks: React.FC<NavbarLinksProps> = ({ links }) => {
     const url = new URL(href, window.location.origin);
 
     const targetPath = url.pathname;
-    const targetType = url.searchParams.get("type");
+    const targetParams = url.searchParams;
 
     const currentPath = location.pathname;
-    const currentType = new URLSearchParams(location.search).get("type");
+    const currentParams = new URLSearchParams(location.search);
 
-    return currentPath === targetPath && currentType === targetType;
+    if (targetPath !== currentPath) return false;
+
+    // check all params
+    for (const [key, value] of targetParams.entries()) {
+      if (currentParams.get(key) !== value) {
+        return false;
+      }
+    }
+
+    return true;
   };
 
   if (!links.length) return null;
