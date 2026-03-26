@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import Logo from "@/common/components/logo/Logo";
 import { useWebsiteSettings } from "@/store/WebsiteSettingsProvider";
 const FooterBrand: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { settings } = useWebsiteSettings();
 
   return (
@@ -28,21 +28,12 @@ const FooterBrand: React.FC = () => {
       </h2>
 
       <p className="max-w-md mt-2 text-sm leading-6 text-text-muted">
-        {t(
-          "Discover new cars, used cars, and other vehicles through a fast, modern, and easy browsing experience.",
-        )}
+        {i18n.language === "en"
+          ? settings?.site_description
+          : settings?.site_description_ar}
       </p>
 
       <div className="flex flex-wrap gap-2 mt-5">
-        <span
-          className="
-            inline-flex items-center rounded-full border border-border
-            bg-bg px-3 py-1.5 text-xs font-medium text-text-muted
-          "
-        >
-          {t("Modern UI")}
-        </span>
-
         <span
           className="
             inline-flex items-center rounded-full border border-border

@@ -1,35 +1,69 @@
-const BlogSkelton = () => {
+import { cn } from "@/lib/utils";
+
+// =========================
+// Skeleton Components
+// =========================
+
+function Skeleton({ className }: { className?: string }) {
   return (
-    <div className="my-4 md:my-6 lg:my-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 lg:gap-8">
-      {[...Array(4)]?.map((_, i) => (
-        <div
-          key={i}
-          className="w-full max-w-md bg-white rounded-xl shadow-md overflow-hidden p-4 space-y-4 animate-pulse"
-        >
-          {/* صورة المقالة */}
-          <div className="w-full h-48 bg-gray-200 rounded-md" />
+    <div className={cn("animate-pulse rounded-md bg-surface-2", className)} />
+  );
+}
 
-          {/* عنوان المقالة */}
-          <div className="h-6 bg-gray-200 rounded-md w-3/4" />
+function BlogHeroSkeleton() {
+  return (
+    <section className="mb-10">
+      <div className="relative overflow-hidden rounded-2xl">
+        <Skeleton className="w-full h-[320px] md:h-[420px]" />
 
-          {/* وصف بسيط */}
-          <div className="space-y-2">
-            <div className="h-4 bg-gray-200 rounded-md w-full" />
-            <div className="h-4 bg-gray-200 rounded-md w-5/6" />
-          </div>
-
-          {/* معلومات النشر */}
-          <div className="flex items-center justify-between">
-            <div className="h-4 bg-gray-200 rounded-md w-1/3" />
-            <div className="h-4 bg-gray-200 rounded-md w-1/4" />
-          </div>
-
-          {/* زر Read More */}
-          <div className="h-10 bg-gray-300 rounded-md w-32 mx-auto" />
+        <div className="absolute bottom-0 w-full p-6 space-y-3 md:p-8">
+          <Skeleton className="w-2/3 h-6" />
+          <Skeleton className="w-1/3 h-4" />
         </div>
-      ))}
+      </div>
+    </section>
+  );
+}
+
+function BlogContentSkeleton() {
+  return (
+    <div className="space-y-4 lg:col-span-2">
+      <Skeleton className="w-full h-4" />
+      <Skeleton className="w-full h-4" />
+      <Skeleton className="w-5/6 h-4" />
+      <Skeleton className="w-4/6 h-4" />
+      <Skeleton className="w-full h-4" />
+      <Skeleton className="w-3/4 h-4" />
+      <Skeleton className="w-2/3 h-4" />
     </div>
   );
-};
+}
 
-export default BlogSkelton;
+function BlogSidebarSkeleton() {
+  return (
+    <div className="space-y-6">
+      <Skeleton className="w-full h-28 rounded-2xl" />
+      <Skeleton className="w-full h-40 rounded-2xl" />
+      <Skeleton className="w-full h-20 rounded-2xl" />
+    </div>
+  );
+}
+
+// =========================
+// Full Page Skeleton
+// =========================
+
+export default function BlogDetailsSkeleton() {
+  return (
+    <div className="min-h-screen bg-bg text-text">
+      <main className="max-w-5xl px-4 py-10 mx-auto">
+        <BlogHeroSkeleton />
+
+        <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
+          <BlogContentSkeleton />
+          <BlogSidebarSkeleton />
+        </div>
+      </main>
+    </div>
+  );
+}

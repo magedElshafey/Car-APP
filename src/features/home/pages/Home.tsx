@@ -12,7 +12,7 @@ import {
   mapUnknownBannerResponse,
 } from "@/features/listings/components/banners/utils/banner.adapter";
 import useGetSliders from "@/features/home/api/useGetSliders";
-import useGetBlogs from "@/features/home/api/useGetBlogs";
+import useGetBlogs from "@/features/blogs/api/useGetBlogs";
 import useGetUsedCars from "@/features/home/api/useGetUsedCars";
 import UsedCarSection from "@/features/home/components/UsedCarSection";
 import useGetNewCars from "@/features/home/api/useGetNewCars";

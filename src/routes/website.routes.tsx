@@ -32,7 +32,9 @@ export const websiteRoutes: RouteObject = {
       path: "create-car-ad",
       element: (
         <Guard requireAuth>
-          {lazyLoad(() => import("../features/create-car-ad/pages/CreateCarAd"))}
+          {lazyLoad(
+            () => import("../features/create-car-ad/pages/CreateCarAd"),
+          )}
         </Guard>
       ),
       handle: {
@@ -40,13 +42,6 @@ export const websiteRoutes: RouteObject = {
       },
     },
 
-    {
-      path: "blogs",
-      element: lazyLoad(() => import("../features/blogs/pages/AllBlogs")),
-      handle: {
-        breadcrumb: "blogs",
-      },
-    },
     {
       path: "blogs/:slug",
       element: lazyLoad(

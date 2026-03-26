@@ -18,10 +18,6 @@ const FooterSocialLinks: React.FC = () => {
       aria-labelledby="footer-social-title"
       className="p-5 border shadow-sm rounded-3xl border-border/70 bg-surface/80 backdrop-blur-sm sm:p-6"
     >
-      <p className="text-sm font-semibold uppercase tracking-[0.14em] text-text-muted">
-        {t("Social")}
-      </p>
-
       <h3
         id="footer-social-title"
         className="mt-3 text-base font-semibold text-text"
