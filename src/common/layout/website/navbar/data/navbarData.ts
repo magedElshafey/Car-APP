@@ -18,6 +18,11 @@ export const DEFAULT_LINKS: NavLinkItem[] = [
     href: "/car-browse?filter-condition=used",
   },
   {
+    id: "compare-cars",
+    label: "Compare Cars",
+    href: "/cars/compare",
+  },
+  {
     id: "other-vehicles",
     label: "Other Vehicles",
     href: "/other-vehicles",
