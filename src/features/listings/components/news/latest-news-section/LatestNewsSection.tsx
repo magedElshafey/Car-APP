@@ -6,21 +6,17 @@ import SectionTitle from "@/common/components/section-title/SectionTitle";
 type LatestCarNewsSectionProps = {
   data: Blog[];
   title?: string;
-  actionHref?: string;
-  actionLabel?: string;
 };
 
 export default function LatestCarNewsSection({
   data,
   title = "Latest car news",
-  actionHref = "/blogs",
-  actionLabel = "View all news",
 }: LatestCarNewsSectionProps) {
   if (!data.length) return null;
   console.log("data from blogs", data);
   return (
     <section className="w-full" aria-label="Latest car news">
-      <SectionTitle title={title} ctaLabel={actionLabel} href={actionHref} />
+      <SectionTitle title={title} />
 
       <GridPagesSlider
         items={data}
