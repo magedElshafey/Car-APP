@@ -1,7 +1,7 @@
 export const apiUrl: string = "https://q-car.dev.qutell.net/api/site";
 export const baseUrl: string = "https://q-car.dev.qutell.net";
 export const apiRoutes = {
-  about: "about",
+  about: "aboutus",
   cities: "cities",
   leaflets: "leaflets",
   setting: "settings",
@@ -49,4 +49,6 @@ export const apiRoutes = {
   changePassword: "auth/changePassword",
   checkOTP: "auth/check_otp",
   sliders: "sliders",
+  static: "static-pages",
+  profile: "profile",
 };

@@ -53,10 +53,27 @@ export const websiteRoutes: RouteObject = {
       },
     },
     {
+      path: "static/:slug",
+      element: lazyLoad(
+        () => import("../features/static-pages/pages/StaticPageDetails"),
+      ),
+      handle: {
+        breadcrumb: "static page name name",
+        queryKey: [apiRoutes.static],
+      },
+    },
+    {
       path: "/car-browse",
       element: lazyLoad(() => import("../features/browse/pages/car-browse")),
       handle: {
         breadcrumb: "browse",
+      },
+    },
+    {
+      path: "/about",
+      element: lazyLoad(() => import("../features/about/pages/AboutPage")),
+      handle: {
+        breadcrumb: "about us",
       },
     },
     {

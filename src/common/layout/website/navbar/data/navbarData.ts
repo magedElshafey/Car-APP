@@ -34,4 +34,9 @@ export const DEFAULT_LINKS: NavLinkItem[] = [
       },
     ],
   },
+  {
+    id: "about us",
+    label: "about us",
+    href: "/about",
+  },
 ];
