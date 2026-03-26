@@ -28,8 +28,7 @@ const useRegisterLogic = () => {
       password: "",
       phone: "",
       password_confirmation: "",
-      rememberMe: false,
-      agree_on_terms: false,
+
       email: "",
     },
   });

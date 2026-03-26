@@ -13,8 +13,7 @@ const Register = () => {
   const { register, errors, handleSubmit, onSubmit, isPending } =
     useRegisterLogic();
   const { t } = useTranslation();
-  // const navigate = useNavigate();
-  // const handleNavigateClick = () => navigate("/static/3-terms-and-conditions");
+
   return (
     <AuthCard
       title="Create a new account"

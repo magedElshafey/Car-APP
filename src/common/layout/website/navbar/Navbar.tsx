@@ -106,14 +106,14 @@ const Navbar: React.FC<Props> = ({ links = DEFAULT_LINKS }) => {
                     {userInitial}
                   </div>
 
-                  <div className="max-w-[140px] pe-1">
+                  <Link to="/profile" className="max-w-[140px] pe-1">
                     <p className="text-xs truncate text-text-muted">
                       {t("Signed in")}
                     </p>
                     <p className="text-sm font-semibold truncate text-text-muted">
                       {userLabel}
                     </p>
-                  </div>
+                  </Link>
 
                   <LogoutButton>
                     <button
