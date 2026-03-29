@@ -42,6 +42,10 @@
       "years": {
         "title": "Years",
         "search": "Search years"
+      },
+      "trims": {
+        "title": "Trims",
+        "search": "Search Trims"
       }
     },
     "pricing": {
@@ -154,6 +158,58 @@
         "label": "عدد الكيلومترات بالسيارة",
         "placeholder": "Enter how many kilometers the car has moved"
       },
+      "wheelbase_mm": {
+        "label": "Wheelbase (mm)",
+        "placeholder": "e.g. 2700"
+      },
+      "height_mm": {
+        "label": "Car Height (mm)",
+        "placeholder": "e.g. 1500"
+      },
+      "width_mm": {
+        "label": "Car Width (mm)",
+        "placeholder": "e.g. 1800"
+      },
+      "length_mm": {
+        "label": "Car Length (mm)",
+        "placeholder": "e.g. 4500"
+      },
+      "cylinders": {
+        "label": "Number of Cylinders",
+        "placeholder": "e.g. 4"
+      },
+      "seats": {
+        "label": "Number of Seats",
+        "placeholder": "e.g. 5"
+      },
+      "fuel_tank_capacity_l": {
+        "label": "Fuel Tank Capacity (L)",
+        "placeholder": "e.g. 50"
+      },
+      "warranty_km": {
+        "label": "Warranty (km)",
+        "placeholder": "e.g. 100000"
+      },
+      "top_speed_kmh": {
+        "label": "Top Speed (km/h)",
+        "placeholder": "e.g. 200"
+      },
+      "subtype": {
+        "label": "Car Subtype",
+        "placeholder": "Select car subtype"
+      },
+      "vehicle_type": {
+        "label": "Car Type",
+        "placeholder": "Select car type"
+      },
+      "power_hp": {
+        "label": "Engine Power (HP)",
+        "placeholder": "e.g. 150"
+      },
+      "torque_nm": {
+        "label": "Engine Torque (Nm)",
+        "placeholder": "e.g. 150"
+      },
       "description": {
         "label": "Description",
         "placeholder": "Describe your car condition, mileage, and key details"
@@ -233,7 +289,6 @@
       "monthlyInstallmentRequired": "Please enter monthly installment"
     }
   },
-
   "Home": "Home",
   "New Cars": "New Cars",
   "Used Cars": "Used Cars",
@@ -271,7 +326,6 @@
   "Password changed successfully": "Password changed successfully",
   "Keep your password confidential": "Keep your password confidential",
   "shop now": "shop now",
-
   "carDetails": {
     "pageTitle": "Car Details",
     "table": {
@@ -308,7 +362,6 @@
     "notFoundDescription": "The requested car may have been removed, is unavailable, or the link is no longer valid.",
     "backToBrowse": "Back to cars"
   },
-
   "browse": {
     "empty": {
       "title": "There are no results",
@@ -382,19 +435,16 @@
     "badge": "Support & Contact",
     "title": "Need Help? Contact Us",
     "subtitle": "Choose the most convenient way to reach us, and we’ll assist you as quickly as possible.",
-
     "address": {
       "title": "Address",
       "fallback": "No address available at the moment",
       "aria": "View company address"
     },
-
     "sales": {
       "title": "Contact Sales",
       "fallback": "Sales phone number is not available",
       "ariaWithPhone": "Contact sales via WhatsApp at {{phone}}"
     },
-
     "email": {
       "title": "Email",
       "fallback": "Email is not available",

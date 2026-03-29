@@ -1,35 +1,83 @@
 import { z } from "zod";
 
 export const createCarAdSchema = z.object({
-  trim_id: z.number().int().positive().optional(),
+  trim_id: z.number().int().positive(),
   city_id: z.number().int().positive().optional(),
+
+  sub_type: z.string().trim().optional(),
+  vehicle_type: z.string().trim().optional(),
+
   condition: z.enum(["new", "used"], {
     message: "createCarAd.validation.conditionRequired",
   }),
-  car_type: z.enum(["automatic", "manual"], {
+
+  transmission: z.enum(["automatic", "manual"], {
     message: "createCarAd.validation.carTypeRequired",
   }),
-  fuel_type: z.string().trim().min(1, "createCarAd.validation.fuelTypeRequired"),
-  city: z.string().trim().min(1, "createCarAd.validation.locationRequired"),
-  color: z.string().trim().min(1, "createCarAd.validation.colorRequired"),
+
+  fuel_type: z
+    .string()
+    .trim()
+    .min(1, "createCarAd.validation.fuelTypeRequired"),
+
+  city: z
+    .string()
+    .trim()
+    .min(1, "createCarAd.validation.locationRequired"),
+
+  color: z
+    .string()
+    .trim()
+    .min(1, "createCarAd.validation.colorRequired"),
+
   mileage_km: z.string().trim().optional(),
+
+  // boolean flags
   is_special_needs: z.boolean().optional(),
   is_taxi: z.boolean().optional(),
   is_imported: z.boolean().optional(),
   whatsapp_allowed: z.boolean().optional(),
+
   contact_phone: z
     .string()
     .trim()
     .min(1, "createCarAd.validation.contactPhoneRequired")
     .regex(/^\+?[0-9]{7,15}$/, "createCarAd.validation.contactPhoneInvalid"),
+
   description: z.string().trim().optional(),
-  price: z.string().trim().min(1, "createCarAd.validation.priceRequired"),
+
+  price: z
+    .string()
+    .trim()
+    .min(1, "createCarAd.validation.priceRequired"),
+
+  // financing (flat as requested)
   can_be_financed: z.enum(["yes", "no"], {
     message: "createCarAd.validation.canBeFinancedRequired",
   }),
   down_payment: z.string().trim().optional(),
   duration_months: z.string().trim().optional(),
   monthly_installment: z.string().trim().optional(),
+
+  // additional specs (all optional & flat)
+  cylinders: z.string().trim().optional(),
+  drive_type: z.string().trim().optional(),
+  fuel_tank_capacity_l: z.string().trim().optional(),
+  height_mm: z.string().trim().optional(),
+  length_mm: z.string().trim().optional(),
+  width_mm: z.string().trim().optional(),
+  wheelbase_mm: z.string().trim().optional(),
+
+  power_hp: z.string().trim().optional(),
+  torque_nm: z.string().trim().optional(),
+  top_speed_kmh: z.string().trim().optional(),
+
+  seats: z.string().trim().optional(),
+  warranty_km: z.string().trim().optional(),
+
+  // arrays
+  feature_option_ids: z.array(z.number()).optional(),
+  highlight_type_ids: z.array(z.number()).optional(),
 }).superRefine((data, ctx) => {
   if (!data.trim_id) {
     ctx.addIssue({
