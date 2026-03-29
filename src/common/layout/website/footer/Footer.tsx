@@ -13,7 +13,16 @@ type FooterProps = {
   navLinks?: NavLinkItem[];
 };
 
-const Footer: React.FC<FooterProps> = ({ navLinks = DEFAULT_LINKS }) => {
+const Footer: React.FC<FooterProps> = ({
+  navLinks = [
+    ...DEFAULT_LINKS,
+    {
+      id: "about us",
+      label: "about us",
+      href: "/about",
+    },
+  ],
+}) => {
   const footerGroups = useMemo(
     () => buildFooterGroups({ navLinks }),
     [navLinks],
