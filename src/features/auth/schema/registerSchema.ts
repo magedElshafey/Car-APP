@@ -7,8 +7,11 @@ export const registerSchema = loginSchema
     email: emailSchema,
     phone: z
       .string()
-      .min(1, "phone is required")
-      .regex(/^05\d{8}$/, "Phone must start with 05 followed by 8 digits"),
+      .transform((val) => val.replace(/\s+/g, "").replace(/^(\+20|0020)/, "0"))
+      .refine(
+        (val) => /^(010|011|012|015)\d{8}$/.test(val),
+        "invalid Egyptian phone number",
+      ),
     password_confirmation: z.string(),
     // agree_on_terms: z
     //   .boolean()

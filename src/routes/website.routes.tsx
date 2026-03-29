@@ -41,7 +41,17 @@ export const websiteRoutes: RouteObject = {
         breadcrumb: "create car ad",
       },
     },
-
+    {
+      path: "profile",
+      element: (
+        <Guard requireAuth>
+          {lazyLoad(() => import("../features/auth/pages/MyProfile"))}
+        </Guard>
+      ),
+      handle: {
+        breadcrumb: "create car ad",
+      },
+    },
     {
       path: "blogs/:slug",
       element: lazyLoad(

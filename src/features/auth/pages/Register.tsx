@@ -36,7 +36,7 @@ const Register = () => {
           <MainInput
             required={true}
             Icon={MdOutlinePhoneEnabled}
-            placeholder="0574896520"
+            placeholder="01XXXXXXXXX"
             label="phone"
             enableAutocomplete
             {...register("phone")}

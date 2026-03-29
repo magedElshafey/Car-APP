@@ -58,7 +58,12 @@ const MainBtn: React.FC<ButtonProps> = ({
 }) => {
   return (
     <button
-      className={twMerge(baseClasses, variantClasses[variant], className)}
+      className={twMerge(
+        baseClasses,
+        variantClasses[variant],
+        className,
+        "duration-200 disabled:cursor-not-allowed disabled:opacity-55",
+      )}
       {...props}
     >
       {children}

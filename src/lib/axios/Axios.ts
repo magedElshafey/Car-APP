@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
 import { apiUrl } from "../../services/api-routes/apiRoutes";
 import i18n from "../i18n/i18n";
-
+import { getUserFromAnyStorage } from "@/features/auth/utils";
 export const Axios = axios.create({
   baseURL: apiUrl,
   headers: {
@@ -12,6 +12,11 @@ export const Axios = axios.create({
 });
 
 Axios.interceptors.request.use((config) => {
+  const user = getUserFromAnyStorage();
+  if (user) {
+    const token = user?.token || undefined;
+    if (token) config.headers["Authorization"] = `Bearer ${token}`;
+  }
   config.headers["Accept-Language"] = i18n.language;
   return config;
 });
@@ -26,7 +31,7 @@ const AxiosConfig = () => {
       },
       (error) => {
         return Promise.reject(error);
-      }
+      },
     );
 
     return () => {

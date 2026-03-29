@@ -51,4 +51,5 @@ export const apiRoutes = {
   sliders: "sliders",
   static: "static-pages",
   profile: "profile",
+  updateProfile: "update_profile",
 };
