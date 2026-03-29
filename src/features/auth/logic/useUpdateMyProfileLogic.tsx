@@ -36,7 +36,6 @@ const useUpdateMyProfileLogic = () => {
 
       try {
         const response = await mutateAsync(values);
-        console.log("res from update profile", response);
         if (response?.status) {
           toast.success(response?.message);
           updateUser(values);

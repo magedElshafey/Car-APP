@@ -14,7 +14,6 @@ const useGetBrands = () => {
       const response: Response<AxiosResponse<Brand[]>> = await Axios.get(
         apiRoutes.brands,
       );
-      console.log("response from brands", response?.data?.data);
       return response.data.data;
     },
   });

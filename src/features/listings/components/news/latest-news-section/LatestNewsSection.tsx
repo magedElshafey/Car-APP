@@ -13,7 +13,6 @@ export default function LatestCarNewsSection({
   title = "Latest car news",
 }: LatestCarNewsSectionProps) {
   if (!data.length) return null;
-  console.log("data from blogs", data);
   return (
     <section className="w-full" aria-label="Latest car news">
       <SectionTitle title={title} />

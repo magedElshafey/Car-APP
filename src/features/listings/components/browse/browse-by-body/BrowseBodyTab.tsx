@@ -10,7 +10,6 @@ import BrowseCardSkeletonList from "@/common/components/loader/skeltons/BrowseCa
 export default function BrowseBodyTab() {
   const navigate = useNavigate();
   const { data, isLoading, isError } = useGetCarTypes();
-  console.log("data from car body", data);
   const items = useMemo(() => {
     return mapBodyToBrowseCards(data ?? []);
   }, [data]);

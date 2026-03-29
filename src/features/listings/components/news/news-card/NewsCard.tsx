@@ -31,7 +31,6 @@ export default function NewsCard({
   } = useTranslation();
 
   const isRtl = dir() === "rtl";
-  console.log("desc", desc);
   return (
     <Link
       to={href}

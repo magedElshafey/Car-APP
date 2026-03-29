@@ -105,10 +105,6 @@ const BlogSidebar = memo(function BlogSidebar({
   );
 });
 
-// =========================
-// Main Page
-// =========================
-
 export default function BlogDetailsPage() {
   const { t } = useTranslation();
   const { slug } = useParams();
