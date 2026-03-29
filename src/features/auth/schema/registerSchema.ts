@@ -19,7 +19,7 @@ export const registerSchema = loginSchema
   })
   .refine((data) => data.password === data.password_confirmation, {
     path: ["password_confirmation"],
-    error: "passwords_do_not_match",
+    message: "Passwords do not match",
   });
 
 export type RegisterSchemaType = z.infer<typeof registerSchema>;

@@ -424,5 +424,15 @@
   "All changes saved": "تم حفظ جميع التغييرات",
   "You have unsaved changes": "لديك تغييرات غير محفوظة",
   "Manage your personal information": "إدارة معلوماتك الشخصية",
-  "My Profile": "حسابي"
+  "My Profile": "حسابي",
+  "invalid email address": "البريد الإلكتروني غير صالح",
+  "Password must be at least 8 characters long": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+  "Please confirm your password": "يرجى تأكيد كلمة المرور الخاصة بك",
+  "password is required": "كلمة المرور مطلوبة",
+  "Passwords do not match": "كلمات المرور غير متطابقة",
+  "user name is required": "حقل الإسم مطلوب",
+  "invalid Egyptian phone number": "رقم هاتف مصري غير صالح",
+  "OTP must be exactly 6 digits": "يجب أن يتكون رمز التحقق من 6 أرقام بالضبط",
+  "OTP must contain only numbers": "يجب أن يحتوي رمز التحقق على أرقام فقط",
+  "name must be at least 3 characters": "يجب أن يتكون الاسم من 3 أحرف على الأقل"
 }

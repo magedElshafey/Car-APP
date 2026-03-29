@@ -424,5 +424,15 @@
   "All changes saved": "All changes saved",
   "You have unsaved changes": "You have unsaved changes",
   "Manage your personal information": "Manage your personal information",
-  "My Profile": "My Profile"
+  "My Profile": "My Profile",
+  "invalid email address": "invalid email address",
+  "Password must be at least 8 characters long": "Password must be at least 8 characters long",
+  "Please confirm your password": "Please confirm your password",
+  "password is required": "password is required",
+  "Passwords do not match": "Passwords do not match",
+  "user name is required": "user name is required",
+  "invalid Egyptian phone number": "invalid Egyptian phone number",
+  "OTP must be exactly 6 digits": "OTP must be exactly 6 digits",
+  "OTP must contain only numbers": "OTP must contain only numbers",
+  "name must be at least 3 characters": "name must be at least 3 characters"
 }
