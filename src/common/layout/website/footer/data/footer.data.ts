@@ -5,13 +5,6 @@ type BuildFooterGroupsParams = {
   navLinks: NavLinkItem[];
 };
 
-export const STATIC_SITE_PAGES = [
-  { label: "Home", href: "/" },
-  { label: "Contact us", href: "/contact-us" },
-  { label: "terms and conditions", href: "/terms" },
-  { label: "privacy policy", href: "/privacy-policy" },
-] as const;
-
 export function buildFooterGroups({
   navLinks,
 }: BuildFooterGroupsParams): FooterLinkGroup[] {

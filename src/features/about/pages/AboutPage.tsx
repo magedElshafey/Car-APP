@@ -1,7 +1,8 @@
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import useGetAboutPage from "@/features/about/api/useGetAboutPage";
-import { cn } from "@/lib/utils";
+import HtmlConverter from "@/common/components/htmlConverter/HtmlConverter";
+// import { cn } from "@/lib/utils";
 
 /* ============================= */
 /* ===== Skeleton ============== */
@@ -91,7 +92,7 @@ const AboutPage = () => {
                     </h1>
 
                     <p className="text-base leading-relaxed text-text-muted">
-                      {description}
+                      <HtmlConverter html={description} />
                     </p>
                   </div>
 
@@ -117,7 +118,7 @@ const AboutPage = () => {
             {/* ============================= */}
             {/* ===== About Content ========= */}
             {/* ============================= */}
-            <section>
+            {/* <section>
               <article
                 className={cn(
                   "rounded-2xl border border-border bg-surface p-6 md:p-8 shadow-sm",
@@ -129,7 +130,7 @@ const AboutPage = () => {
               >
                 <p>{description}</p>
               </article>
-            </section>
+            </section> */}
           </>
         )}
       </div>

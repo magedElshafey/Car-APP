@@ -33,114 +33,6 @@ function formatPhoneForDisplay(phone?: string | null, locale = "en") {
   return locale.startsWith("ar") ? toArabicDigits(normalized) : normalized;
 }
 
-// export default function ContactHelpSection() {
-//   const { settings, isLoading } = useWebsiteSettings();
-//   const {
-//     i18n: { language, dir },
-//   } = useTranslation();
-
-//   const phone = settings?.contact_phone?.trim() ?? "";
-//   const email = settings?.contact_email?.trim() ?? "";
-//   const address = settings?.contact_address?.trim() ?? "";
-
-//   const displayPhone = formatPhoneForDisplay(phone, language);
-//   const whatsappPhone = normalizePhoneForWhatsapp(phone);
-
-//   const items = useMemo<ContactHelpItem[]>(
-//     () => [
-//       {
-//         id: "address",
-//         title: "العنوان",
-//         description: address || "لا يوجد عنوان متاح حالياً",
-//         icon: <FiMapPin className="w-5 h-5" aria-hidden="true" />,
-
-//         external: false,
-//         ariaLabel: "عرض عنوان الشركة",
-//       },
-//       {
-//         id: "sales",
-//         title: "اتصل بالمبيعات",
-//         description: displayPhone || "رقم المبيعات غير متاح حالياً",
-//         icon: <FiHeadphones className="w-5 h-5" aria-hidden="true" />,
-//         href: whatsappPhone
-//           ? `https://wa.me/${whatsappPhone.replace("+", "")}`
-//           : undefined,
-//         external: true,
-//         ariaLabel: displayPhone
-//           ? `التواصل مع المبيعات عبر واتساب على الرقم ${displayPhone}`
-//           : "رقم المبيعات غير متاح حالياً",
-//       },
-//       {
-//         id: "email",
-//         title: "البريد الإلكتروني",
-//         description: email || "البريد الإلكتروني غير متاح حالياً",
-//         icon: <FiMail className="w-5 h-5" aria-hidden="true" />,
-//         href: email ? `mailto:${email}` : undefined,
-//         external: true,
-//         ariaLabel: email
-//           ? `إرسال بريد إلكتروني إلى ${email}`
-//           : "البريد الإلكتروني غير متاح حالياً",
-//       },
-//     ],
-//     [displayPhone, email, whatsappPhone, address],
-//   );
-
-//   return (
-//     <section className="w-full" aria-labelledby="contact-help-heading">
-//       <div className="max-w-2xl mx-auto mb-8 text-center">
-//         <span
-//           className={cn(
-//             "mb-3 inline-flex items-center rounded-full border border-primary/15",
-//             "bg-primary/5 px-3 py-1 text-xs font-medium text-primary",
-//           )}
-//         >
-//           الدعم والتواصل
-//         </span>
-
-//         <h2
-//           id="contact-help-heading"
-//           className="text-2xl font-bold tracking-tight text-text md:text-3xl"
-//         >
-//           محتاج مساعدة؟ تواصل معنا
-//         </h2>
-
-//         <p className="mt-3 text-sm leading-6 text-text-muted md:text-base">
-//           اختر الطريقة الأنسب للتواصل، وسنعمل على مساعدتك بأسرع وقت ممكن.
-//         </p>
-//       </div>
-
-//       <div
-//         className={cn("grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3")}
-//         role="list"
-//         aria-busy={isLoading}
-//       >
-//         {items.map((item) => (
-//           <div key={item.id} role="listitem">
-//             <SupportCard
-//               title={item.title}
-//               description={item.description}
-//               icon={item.icon}
-//               href={item.href}
-//               external={item.external}
-//               ariaLabel={item.ariaLabel}
-//               trailingIcon={
-//                 <FiChevronLeft
-//                   className={cn(
-//                     "h-4 w-4 shrink-0 text-text-muted transition-transform duration-300",
-//                     dir() === "rtl"
-//                       ? "group-hover:-translate-x-1"
-//                       : "rotate-180 group-hover:translate-x-1",
-//                   )}
-//                   aria-hidden="true"
-//                 />
-//               }
-//             />
-//           </div>
-//         ))}
-//       </div>
-//     </section>
-//   );
-// }
 export default function ContactHelpSection() {
   const { settings, isLoading } = useWebsiteSettings();
   const {
@@ -229,6 +121,7 @@ export default function ContactHelpSection() {
         {items.map((item) => (
           <div key={item.id} role="listitem">
             <SupportCard
+              id={item?.id}
               title={item.title}
               description={item.description}
               icon={item.icon}

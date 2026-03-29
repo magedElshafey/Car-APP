@@ -13,6 +13,7 @@ import MainBtn from "@/common/components/buttons/MainBtn";
 import { useAuth } from "@/store/AuthProvider";
 import LogoutButton from "@/features/auth/components/LogoutButton";
 import { useWebsiteSettings } from "@/store/WebsiteSettingsProvider";
+import { CiLogout } from "react-icons/ci";
 
 type Props = {
   links?: NavLinkItem[];
@@ -118,9 +119,9 @@ const Navbar: React.FC<Props> = ({ links = DEFAULT_LINKS }) => {
                   <LogoutButton>
                     <button
                       type="button"
-                      className="inline-flex items-center justify-center px-3 text-sm font-medium text-white transition rounded-full h-9 bg-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-surface"
+                      className="inline-flex items-center justify-center font-medium text-white transition rounded-full h-7 w-7 bg-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-bg-surface"
                     >
-                      {t("logout")}
+                      <CiLogout size={15} />
                     </button>
                   </LogoutButton>
                 </div>
