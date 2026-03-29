@@ -25,12 +25,7 @@ const CreateCarAdPage: React.FC = () => {
   const { t } = useTranslation();
   const [uploadedImages, setUploadedImages] = useState<File[]>([]);
   const [imagesError, setImagesError] = useState<string>("");
-  const [carDetails, setCarDetails] = useState<CarDetailsValue>({
-    brand: "",
-    model: "",
-    year: "",
-    trim_id: null,
-  });
+  const [carDetails, setCarDetails] = useState<CarDetailsValue>({});
   const [isFeaturesDialogOpen, setIsFeaturesDialogOpen] = useState(false);
   const [selectedFeatureIds, setSelectedFeatureIds] = useState<number[]>([]);
   const [draftFeatureIds, setDraftFeatureIds] = useState<number[]>([]);
@@ -46,6 +41,7 @@ const CreateCarAdPage: React.FC = () => {
     setValue,
     trigger,
     formState: { errors },
+    register,
   } = useCreateCarAdForm();
 
   const { data: fuelTypes, isLoading: fuelTypesLoading } = useGetFuelTypes();
@@ -57,14 +53,14 @@ const CreateCarAdPage: React.FC = () => {
   const { mutateAsync: createCar, isPending: isCreatingCar } = useCreateCar();
 
   const condition = useWatch({ control, name: "condition" });
-  const carType = useWatch({ control, name: "car_type" });
+  const carType = useWatch({ control, name: "transmission" });
   const color = useWatch({ control, name: "color" });
   const price = useWatch({ control, name: "price" });
   const contactPhone = useWatch({ control, name: "contact_phone" });
 
   const carDetailsText = useMemo(
-    () => [carDetails.brand, carDetails.model, carDetails.year].filter(Boolean).join(" • "),
-    [carDetails.brand, carDetails.model, carDetails.year],
+    () => [carDetails.brand?.name, carDetails.model?.name, carDetails.year, carDetails.trim?.name].filter(Boolean).join(" • "),
+    [carDetails.brand, carDetails.model, carDetails.year, carDetails.trim],
   );
 
   const remainingSlots = useMemo(
@@ -218,7 +214,7 @@ const CreateCarAdPage: React.FC = () => {
   const handleFormReset = useCallback(() => {
     reset();
     clearUploadedImages();
-    setCarDetails({ brand: "", model: "", year: "", trim_id: null });
+    setCarDetails({});
     setSelectedFeatureIds([]);
     setDraftFeatureIds([]);
     setSelectedAttributeIds([]);
@@ -227,11 +223,13 @@ const CreateCarAdPage: React.FC = () => {
 
   const handleCarDetailsChange = useCallback((value: CarDetailsValue) => {
     setCarDetails(value);
-    setValue("trim_id", value.trim_id ?? undefined, {
-      shouldValidate: true,
-      shouldDirty: true,
-      shouldTouch: true,
-    });
+    if(value?.trim?.id) {
+      setValue("trim_id", value.trim?.id, {
+        shouldValidate: true,
+        shouldDirty: true,
+        shouldTouch: true,
+      });
+    }
   }, [setValue]);
 
   const onSubmit = useCallback(async (values: CreateCarAdSchemaType) => {
@@ -257,30 +255,68 @@ const CreateCarAdPage: React.FC = () => {
     const financingAvailable = values.can_be_financed === "yes";
 
     const payload: CreateCarPayload = {
-      trim_id: values.trim_id,
+      trim_id: values.trim_id!,
       city_id: cityId,
-      condition: values.condition,
-      mileage_km: values.condition === "used" ? Number(values.mileage_km) : 0,
-      transmission: values.car_type,
-      fuel_type: values.fuel_type,
-      color: values.color,
+      sub_type: values.sub_type || undefined,
+      vehicle_type: values.vehicle_type || undefined,
+
+      contact_phone: values.contact_phone,
+      whatsapp_allowed: values.whatsapp_allowed ? 1 : 0,
+
       price: Number(values.price),
-      financing_available: financingAvailable,
+
+      financing_available: financingAvailable ? 1 : 0,
       financing: financingAvailable
         ? {
-            down_payment: Number(values.down_payment),
-            duration_months: Number(values.duration_months),
-            monthly_installment: Number(values.monthly_installment),
-          }
+          down_payment: Number(values.down_payment),
+          duration_months: Number(values.duration_months),
+          monthly_installment: Number(values.monthly_installment),
+        }
         : null,
+
       feature_option_ids: selectedFeatureIds,
       highlight_type_ids: selectedAttributeIds,
-      is_imported: values.is_imported ?? false,
-      is_taxi: values.is_taxi ?? false,
-      is_special_needs: values.is_special_needs ?? false,
-      contact_phone: values.contact_phone,
-      whatsapp_allowed: values.whatsapp_allowed ?? false,
+
       images: uploadedImages,
+
+      details: {
+        condition: values.condition,
+        color: values.color,
+        transmission: values.transmission,
+        fuel_type: values.fuel_type,
+
+        mileage_km:
+          values.condition === "used" ? Number(values.mileage_km || 0) : undefined,
+
+        // booleans
+        is_imported: values.is_imported ? 1 : 0,
+        is_taxi: values.is_taxi ? 1 : 0,
+        is_special_needs: values.is_special_needs ? 1 : 0,
+
+        // specs (convert safely)
+        cylinders: values.cylinders ? Number(values.cylinders) : undefined,
+        drive_type: values.drive_type || undefined,
+        fuel_tank_capacity_l: values.fuel_tank_capacity_l
+          ? Number(values.fuel_tank_capacity_l)
+          : undefined,
+        height_mm: values.height_mm ? Number(values.height_mm) : undefined,
+        length_mm: values.length_mm ? Number(values.length_mm) : undefined,
+        width_mm: values.width_mm ? Number(values.width_mm) : undefined,
+        wheelbase_mm: values.wheelbase_mm
+          ? Number(values.wheelbase_mm)
+          : undefined,
+
+        power_hp: values.power_hp ? Number(values.power_hp) : undefined,
+        torque_nm: values.torque_nm ? Number(values.torque_nm) : undefined,
+        top_speed_kmh: values.top_speed_kmh
+          ? Number(values.top_speed_kmh)
+          : undefined,
+
+        seats: values.seats ? Number(values.seats) : undefined,
+        warranty_km: values.warranty_km
+          ? Number(values.warranty_km)
+          : undefined,
+      },
     };
 
     try {
@@ -337,6 +373,7 @@ const CreateCarAdPage: React.FC = () => {
               citiesLoading={citiesLoading}
               fuelTypes={fuelTypes ?? []}
               fuelTypesLoading={fuelTypesLoading}
+              register={register}
             />
 
             <PricingSection control={control} setValue={setValue} trigger={trigger} errors={errors} />

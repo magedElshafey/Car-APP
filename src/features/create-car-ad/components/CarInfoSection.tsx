@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Control, FieldErrors, UseFormSetValue, UseFormTrigger, useWatch } from "react-hook-form";
+import { Control, FieldErrors, UseFormRegister, UseFormSetValue, UseFormTrigger, useWatch } from "react-hook-form";
 import MainInput from "@/common/components/inputs/MainInput";
 import MainSelect from "@/common/components/inputs/MainSelect";
 import MainTextArea from "@/common/components/inputs/MainTextArea";
@@ -8,6 +8,9 @@ import CarDetails, { CarDetailsValue } from "./CarDetails";
 import { CityOption } from "@/features/browse/hooks/use-get-cities";
 import { FuelType } from "@/features/browse/types/fuel-type.types";
 import { CreateCarAdSchemaType } from "../schema/createCarAd.schema";
+import useGetVehicleType from "@/features/browse/hooks/use-get-vehicle-type";
+import { useLocation } from "react-router-dom";
+import useGetVehicleSubtype from "@/features/browse/hooks/use-get-vehicle-subtype";
 
 const PREDEFINED_COLORS = [
   { value: "white", hexColor: "#FFFFFF" },
@@ -31,6 +34,7 @@ type CarInfoSectionProps = {
   citiesLoading: boolean;
   fuelTypes: FuelType[];
   fuelTypesLoading: boolean;
+  register: UseFormRegister<CreateCarAdSchemaType>
 };
 
 const CarInfoSection: React.FC<CarInfoSectionProps> = ({
@@ -44,16 +48,51 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
   citiesLoading,
   fuelTypes,
   fuelTypesLoading,
+  register
 }) => {
   const { t } = useTranslation();
 
   const selectedCondition = useWatch({ control, name: "condition" });
-  const selectedCarType = useWatch({ control, name: "car_type" });
+  const selectedCarType = useWatch({ control, name: "transmission" });
   const selectedFuelType = useWatch({ control, name: "fuel_type" });
   const selectedCityId = useWatch({ control, name: "city_id" });
+  const selectedVehicleType = useWatch({ control, name: "vehicle_type" });
   const selectedColor = useWatch({ control, name: "color" });
   const mileageKm = useWatch({ control, name: "mileage_km" });
   const description = useWatch({ control, name: "description" });
+  const selectedSubtype = useWatch({ control, name: "sub_type" });
+
+  const pathname = useLocation().pathname;
+  const isCarCreate = pathname === "/create-car-ad"
+
+  const {
+    data: vehicleTypes,
+    isLoading: vehicleTypesLoading
+  } = useGetVehicleType();
+
+  const {
+    data: subtypes,
+    isLoading: subtypesLoading
+  } = useGetVehicleSubtype(selectedVehicleType);
+
+  const vehicleTypesOptions = useMemo(() => {
+    if (vehicleTypes) return vehicleTypes.map(type => ({
+      name: type.label,
+      value: type.value,
+      id: type.value
+    }));
+    return [];
+  }, [vehicleTypes])
+
+  const subTypesOptions = useMemo(() => {
+    if(subtypes) return subtypes.map(type => ({
+      name: type.label,
+      value: type.value,
+      id: type.value
+    }));
+
+    return [];
+  }, [subtypes]);
 
   return (
     <section className="rounded-card rounded-2xl border border-slate-300 bg-bg-surface p-6 shadow-soft md:p-8">
@@ -68,13 +107,48 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
             brand={carDetails.brand}
             model={carDetails.model}
             year={carDetails.year}
-            trim_id={carDetails.trim_id}
+            trim={carDetails.trim}
             onChange={onCarDetailsChange}
           />
           {errors.trim_id?.message && (
             <p className="mt-2 text-xs text-red-500">{t(errors.trim_id.message)}</p>
           )}
         </div>
+        <MainSelect
+          loading={vehicleTypesLoading}
+          options={vehicleTypesOptions}
+          label="createCarAd.fields.vehicle_type.label"
+          placeholder="createCarAd.fields.vehicle_type.placeholder"
+          disabled={isCarCreate}
+          onSelect={(option) => {
+            setValue("vehicle_type", option.value, {
+              shouldDirty: true,
+              shouldTouch: true,
+              shouldValidate: true,
+            });
+
+            setValue("sub_type", undefined);
+
+            void trigger(["vehicle_type", "sub_type"])
+          }}
+          value={selectedVehicleType || null}
+        />
+        <MainSelect
+          loading={subtypesLoading}
+          options={subTypesOptions}
+          label="createCarAd.fields.subtype.label"
+          placeholder="createCarAd.fields.subtype.placeholder"
+          onSelect={(option) => {
+            setValue("sub_type", option.value, {
+              shouldDirty: true,
+              shouldTouch: true,
+              shouldValidate: true,
+            });
+
+            void trigger("sub_type")
+          }}
+          value={selectedSubtype || null}
+        />
 
         <div>
           <h3 className="mb-3 text-sm font-semibold text-text-main">{t("createCarAd.fields.condition.label")}</h3>
@@ -85,11 +159,10 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
                 <button
                   key={option}
                   type="button"
-                  className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${
-                    isActive
-                      ? "border-blue-400 bg-blue-50 text-blue-500"
-                      : "border-slate-300 text-stone-600 hover:border-slate-400"
-                  }`}
+                  className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${isActive
+                    ? "border-blue-400 bg-blue-50 text-blue-500"
+                    : "border-slate-300 text-stone-600 hover:border-slate-400"
+                    }`}
                   onClick={() => {
                     setValue("condition", option as "new" | "used", {
                       shouldValidate: true,
@@ -159,18 +232,17 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
                 <button
                   key={option}
                   type="button"
-                  className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${
-                    isActive
-                      ? "border-blue-400 bg-blue-50 text-blue-500"
-                      : "border-slate-300 text-stone-600 hover:border-slate-400"
-                  }`}
+                  className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${isActive
+                    ? "border-blue-400 bg-blue-50 text-blue-500"
+                    : "border-slate-300 text-stone-600 hover:border-slate-400"
+                    }`}
                   onClick={() => {
-                    setValue("car_type", option as "automatic" | "manual", {
+                    setValue("transmission", option as "automatic" | "manual", {
                       shouldValidate: true,
                       shouldDirty: true,
                       shouldTouch: true,
                     });
-                    void trigger("car_type");
+                    void trigger("transmission");
                   }}
                 >
                   {t(`createCarAd.fields.carType.options.${option}`)}
@@ -178,8 +250,8 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
               );
             })}
           </div>
-          {errors.car_type?.message && (
-            <p className="mt-2 text-xs text-red-500">{t(errors.car_type.message)}</p>
+          {errors.transmission?.message && (
+            <p className="mt-2 text-xs text-red-500">{t(errors.transmission.message)}</p>
           )}
         </div>
 
@@ -195,11 +267,10 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
                   <button
                     key={item.value}
                     type="button"
-                    className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${
-                      isActive
-                        ? "border-blue-400 bg-blue-50 text-blue-500"
-                        : "border-slate-300 text-stone-600 hover:border-slate-400"
-                    }`}
+                    className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${isActive
+                      ? "border-blue-400 bg-blue-50 text-blue-500"
+                      : "border-slate-300 text-stone-600 hover:border-slate-400"
+                      }`}
                     onClick={() => {
                       setValue("fuel_type", item.value, {
                         shouldValidate: true,
@@ -240,9 +311,8 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
                   }}
                 >
                   <span
-                    className={`h-11 w-full rounded-md border transition-all ${
-                      isActive ? "border-blue-500 ring-2 ring-blue-200" : "border-slate-300"
-                    }`}
+                    className={`h-11 w-full rounded-md border transition-all ${isActive ? "border-blue-500 ring-2 ring-blue-200" : "border-slate-300"
+                      }`}
                     style={{ backgroundColor: item.hexColor }}
                     aria-hidden="true"
                   />
@@ -273,6 +343,69 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
             rows={5}
           />
         </div>
+        <MainInput
+          label="createCarAd.fields.power_hp.label"
+          placeholder="createCarAd.fields.power_hp.placeholder"
+          {...register("power_hp")}
+        />
+        <MainInput
+          label="createCarAd.fields.torque_nm.label"
+          placeholder="createCarAd.fields.torque_nm.placeholder"
+          {...register("torque_nm")}
+        />
+        <MainInput
+          label="createCarAd.fields.wheelbase_mm.label"
+          placeholder="createCarAd.fields.wheelbase_mm.placeholder"
+          {...register("wheelbase_mm")}
+        />
+
+        <MainInput
+          label="createCarAd.fields.height_mm.label"
+          placeholder="createCarAd.fields.height_mm.placeholder"
+          {...register("height_mm")}
+        />
+
+        <MainInput
+          label="createCarAd.fields.width_mm.label"
+          placeholder="createCarAd.fields.width_mm.placeholder"
+          {...register("width_mm")}
+        />
+
+        <MainInput
+          label="createCarAd.fields.length_mm.label"
+          placeholder="createCarAd.fields.length_mm.placeholder"
+          {...register("length_mm")}
+        />
+
+        <MainInput
+          label="createCarAd.fields.cylinders.label"
+          placeholder="createCarAd.fields.cylinders.placeholder"
+          {...register("cylinders")}
+        />
+
+        <MainInput
+          label="createCarAd.fields.seats.label"
+          placeholder="createCarAd.fields.seats.placeholder"
+          {...register("seats")}
+        />
+
+        <MainInput
+          label="createCarAd.fields.fuel_tank_capacity_l.label"
+          placeholder="createCarAd.fields.fuel_tank_capacity_l.placeholder"
+          {...register("fuel_tank_capacity_l")}
+        />
+
+        <MainInput
+          label="createCarAd.fields.warranty_km.label"
+          placeholder="createCarAd.fields.warranty_km.placeholder"
+          {...register("warranty_km")}
+        />
+
+        <MainInput
+          label="createCarAd.fields.top_speed_kmh.label"
+          placeholder="createCarAd.fields.top_speed_kmh.placeholder"
+          {...register("top_speed_kmh")}
+        />
       </div>
     </section>
   );

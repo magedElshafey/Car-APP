@@ -42,6 +42,10 @@
       "years": {
         "title": "السنوات",
         "search": "ابحث عن السنة"
+      },
+      "trims": {
+        "title": "فئات",
+        "search": "ابحث عن الفئة"
       }
     },
     "pricing": {
@@ -70,6 +74,58 @@
         "monthlyInstallment": {
           "label": "القسط الشهري",
           "placeholder": "أدخل القسط الشهري"
+        },
+        "power_hp": {
+          "label": "قوة المحرك (حصان)",
+          "placeholder": "مثال: 150"
+        },
+        "torque_nm": {
+          "label": "عزم المحرك (نيوتن متر)",
+          "placeholder": "مثال: 150"
+        },
+        "wheelbase_mm": {
+          "label": "قاعدة العجلات (مم)",
+          "placeholder": "مثال: 2700"
+        },
+        "height_mm": {
+          "label": "ارتفاع السيارة (مم)",
+          "placeholder": "مثال: 1500"
+        },
+        "width_mm": {
+          "label": "عرض السيارة (مم)",
+          "placeholder": "مثال: 1800"
+        },
+        "length_mm": {
+          "label": "طول السيارة (مم)",
+          "placeholder": "مثال: 4500"
+        },
+        "cylinders": {
+          "label": "عدد الأسطوانات",
+          "placeholder": "مثال: 4"
+        },
+        "seats": {
+          "label": "عدد المقاعد",
+          "placeholder": "مثال: 5"
+        },
+        "fuel_tank_capacity_l": {
+          "label": "سعة خزان الوقود (لتر)",
+          "placeholder": "مثال: 50"
+        },
+        "warranty_km": {
+          "label": "ضمان السيارة (كم)",
+          "placeholder": "مثال: 100000"
+        },
+        "top_speed_kmh": {
+          "label": "السرعة القصوى (كم/س)",
+          "placeholder": "مثال: 200"
+        },
+        "subtype": {
+          "label": "النوع الفرعي للسيارة",
+          "placeholder": "اختر النوع الفرعي"
+        },
+        "vehicle_type": {
+          "label": "نوع السيارة",
+          "placeholder": "اختر نوع السيارة"
         }
       },
       "financing": {
@@ -232,7 +288,6 @@
       "monthlyInstallmentRequired": "أدخل القسط الشهري"
     }
   },
-
   "Home": "الرئيسية",
   "New Cars": "السيارات الجديدة",
   "Used Cars": "السيارات المستعملة",
@@ -270,7 +325,6 @@
   "Password changed successfully": "تم تغيير كلمة المرور بنجاح",
   "Keep your password confidential": "حافظ على سرية كلمة مرورك",
   "shop now": "ابدأ التصفح",
-
   "carDetails": {
     "pageTitle": "تفاصيل السيارة",
     "table": {
@@ -307,7 +361,6 @@
     "notFoundDescription": "قد تكون السيارة المطلوبة محذوفة أو غير متاحة أو أن الرابط لم يعد صالحاً.",
     "backToBrowse": "العودة إلى السيارات"
   },
-
   "browse": {
     "empty": {
       "title": "لا توجد نتائج",
@@ -381,19 +434,16 @@
     "badge": "الدعم والتواصل",
     "title": "محتاج مساعدة؟ تواصل معنا",
     "subtitle": "اختر الطريقة الأنسب للتواصل، وسنعمل على مساعدتك بأسرع وقت ممكن.",
-
     "address": {
       "title": "العنوان",
       "fallback": "لا يوجد عنوان متاح حالياً",
       "aria": "عرض عنوان الشركة"
     },
-
     "sales": {
       "title": "اتصل بالمبيعات",
       "fallback": "رقم المبيعات غير متاح حالياً",
       "ariaWithPhone": "التواصل مع المبيعات عبر واتساب على الرقم {{phone}}"
     },
-
     "email": {
       "title": "البريد الإلكتروني",
       "fallback": "البريد الإلكتروني غير متاح حالياً",
