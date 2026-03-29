@@ -10,6 +10,7 @@ type SupportCardProps = {
   external?: boolean;
   ariaLabel?: string;
   trailingIcon?: React.ReactNode;
+  id: string;
 };
 
 function SupportCardComponent({
@@ -20,6 +21,7 @@ function SupportCardComponent({
   external = false,
   ariaLabel,
   trailingIcon,
+  id,
 }: SupportCardProps) {
   const cardContent = (
     <article
@@ -56,7 +58,7 @@ function SupportCardComponent({
         ) : null}
       </div>
 
-      {trailingIcon ? (
+      {trailingIcon && id !== "address" ? (
         <div className="flex items-center justify-center">{trailingIcon}</div>
       ) : null}
 

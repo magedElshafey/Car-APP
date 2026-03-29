@@ -23,11 +23,7 @@ const HtmlConverter: React.FC<Props> = ({
 
   return (
     <div
-      className={[
-        "prose max-w-full !text-xs md:!text-sm",
-        "!text-text-muted",
-        className,
-      ].join(" ")}
+      className={[className].join(" ")}
       dangerouslySetInnerHTML={{ __html: safeHtml }}
     />
   );

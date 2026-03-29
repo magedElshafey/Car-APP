@@ -7,17 +7,18 @@ const LangBtn = () => {
   const { language, changeLanguage } = useLanguage();
   const { t } = useTranslation();
 
-  // Get current language and other available languages (same pattern as Navbar)
-  const { currentLang, otherLangs } = useMemo(() => {
-    const current = LANGUAGES.find((l) => l.label === language)!;
+  // Get current language a nd other available languages (same pattern as Navbar)
+  const { otherLangs } = useMemo(() => {
+    const current = LANGUAGES.find((l) => l.label === language);
     const others = LANGUAGES.filter((l) => l.label !== language);
     return { currentLang: current, otherLangs: others };
   }, [language]);
 
-  // Get the language to switch to (the first available alternative)
-  const nextLang = otherLangs[0];
+  const nextLang = otherLangs?.[0];
 
-  if (!currentLang || !nextLang) return null;
+  // if (!currentLang || !nextLang) return null;
+
+  // Get the language to switch to (the first available alternative)
 
   const handleLanguageChange = () => {
     // Use the same changeLanguage pattern as Navbar
