@@ -9,13 +9,13 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FiCheck, FiChevronRight } from "react-icons/fi";
 import { formatPrice } from "@/utils/formatPrice";
-import { CarListing } from "../types/car.types";
+import { CarDetails } from "../types/car.types";
 
 interface CarCompareSearchInputProps {
   label: string;
   placeholder: string;
-  selectedCar: CarListing | null;
-  onSelect: (car: CarListing) => void;
+  selectedCar: CarDetails| null;
+  onSelect: (car: CarDetails) => void;
 }
 
 const CarCompareSearchInput = ({
@@ -40,7 +40,7 @@ const CarCompareSearchInput = ({
   const { data: carsResponse, isLoading: carsLoading } = useQuery({
     queryKey: [apiRoutes.cars, "compare-dialog", selectedBrandId, selectedModelId],
     queryFn: async () => {
-      const response = await Axios.get<PaginatedResponse<CarListing[]>>(
+      const response = await Axios.get<PaginatedResponse<CarDetails[]>>(
         apiRoutes.cars,
         {
           params: {

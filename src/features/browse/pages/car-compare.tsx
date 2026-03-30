@@ -5,13 +5,13 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FiCheck, FiX } from "react-icons/fi";
 import CarCompareSearchInput from "../components/car-compare-search-input.tsx";
-import { CarDetails, CarListing } from "../types/car.types";
+import { CarDetails } from "../types/car.types";
 
 const CompareCarHeader = ({
   car,
   title,
 }: {
-  car: CarListing | null;
+  car: CarDetails | null;
   title: string;
 }) => {
   const { t, i18n } = useTranslation();

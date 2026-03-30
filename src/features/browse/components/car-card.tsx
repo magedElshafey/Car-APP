@@ -66,19 +66,24 @@ const BrowseCarCard = ({ car }: BrowseCarCardProps) => {
           <span className="text-xl ms-1">{t("EGP")}</span>
         </div>
 
-        <p className="text-sm line-clamp-1 text-stone-500">
-          <HiOutlineLocationMarker className="inline me-1" size={16} />
-          {locationLine}
-        </p>
-
+        <div className="flex flex-wrap gap-2">
+          <Link className="text-xs rounded p-1 border-stone-300 hover:bg-blue-50 duration-75 cursor-pointer border hover:border-blue-100 hover:text-blue-400" to={`/car-browse?filter-vehicle_type=car&filter-city_id=${car.city_id}`}>
+            {car.city}
+          </Link>
+          <Link className="text-xs rounded p-1 border-stone-300 hover:bg-blue-50 duration-75 cursor-pointer border hover:border-blue-100 hover:text-blue-400" to={`/car-browse?filter-vehicle_type=car&filter-brand=${car.car.brand_id}`}>
+            {car.car.brand}
+          </Link>
+          <Link className="text-xs rounded p-1 border-stone-300 hover:bg-blue-50 duration-75 cursor-pointer border hover:border-blue-100 hover:text-blue-400" to={`/car-browse?filter-vehicle_type=car&filter-brand=${car.car.brand_id}&filter-model=${car.car.model_id}`}>
+            {car.car.model}
+          </Link>
+        </div>
         <div className="grid grid-cols-2 gap-2 pt-1">
           <a
             href={hasPhone ? `tel:${normalizedPhone}` : undefined}
-            className={`inline-flex items-center justify-center gap-2 rounded-md border border-stone-300 px-3 py-2 text-sm font-semibold transition-colors ${
-              hasPhone
+            className={`inline-flex items-center justify-center gap-2 rounded-md border border-stone-300 px-3 py-2 text-sm font-semibold transition-colors ${hasPhone
                 ? "bg-white text-stone-700 hover:bg-stone-100"
                 : "cursor-not-allowed bg-stone-100 text-stone-400"
-            }`}
+              }`}
             aria-disabled={!hasPhone}
           >
             <FiPhoneCall size={16} />
@@ -88,11 +93,10 @@ const BrowseCarCard = ({ car }: BrowseCarCardProps) => {
             href={car.whatsapp_allowed && hasPhone ? whatsappLink : undefined}
             target={car.whatsapp_allowed && hasPhone ? "_blank" : undefined}
             rel={car.whatsapp_allowed && hasPhone ? "noreferrer" : undefined}
-            className={`inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-semibold transition-colors ${
-              car.whatsapp_allowed && hasPhone
+            className={`inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-semibold transition-colors ${car.whatsapp_allowed && hasPhone
                 ? "bg-green-600 text-white hover:bg-green-700"
                 : "cursor-not-allowed bg-stone-200 text-stone-500"
-            }`}
+              }`}
             aria-disabled={!car.whatsapp_allowed || !hasPhone}
           >
             <IoLogoWhatsapp size={17} />
