@@ -7,7 +7,7 @@ import { MdBrokenImage } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { CarListing } from "../types/car.types";
-
+import FavoriteButton from "@/features/browse/components/FavoriteButton";
 interface BrowseCarCardProps {
   car: CarListing;
 }
@@ -33,9 +33,15 @@ const BrowseCarCard = ({ car }: BrowseCarCardProps) => {
     `${car.car.brand} ${car.car.model} - ${formatPrice(Number(car.price), i18n.language)} ${t("EGP")}`,
   );
   const whatsappLink = `https://wa.me/${phoneWithoutPlus}?text=${whatsappMessage}`;
-
+  console.log("car fav", car);
   return (
-    <article className="overflow-hidden transition-shadow bg-white border shadow-sm rounded-xl border-stone-200 hover:shadow-md">
+    <article className="relative overflow-hidden transition-shadow bg-white border shadow-sm rounded-xl border-stone-200 hover:shadow-md">
+      <FavoriteButton
+        productId={car.id}
+        showLabel={false}
+        className="absolute top-2 right-2 border border-border rounded-[50%] w-7 h-7 text-primary flex items-center justify-center"
+        isInWishlist={car.is_fav}
+      />
       <Link to={`/cars/${car.id}`} className="block">
         <div className="aspect-[16/10] bg-stone-100">
           {imageError ? (

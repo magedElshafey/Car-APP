@@ -55,4 +55,7 @@ export const apiRoutes = {
   static: "static-pages",
   profile: "profile",
   updateProfile: "update_profile",
+  favorites: "favorites/list",
+  wishlist: "favorites/toggle",
+  myCars: "my-cars",
 };

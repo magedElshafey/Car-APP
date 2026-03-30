@@ -20,6 +20,7 @@ import NewsCarsSection from "@/features/home/components/NewsCarsSection";
 const Home = () => {
   const heroQuery = useGetHeroSection();
   const slidersQuery = useGetSliders();
+  console.log("sliders query", slidersQuery?.data?.data);
   const blogQuery = useGetBlogs();
   const heroItems = useMemo(() => {
     if (!heroQuery.data) return [];
@@ -40,6 +41,7 @@ const Home = () => {
       imageAltPrefix: "Promotional slider",
     });
   }, [slidersQuery.data]);
+  console.log("sliderItems", sliderItems);
   const usedCarsQuery = useGetUsedCars();
   const newCarsQuery = useGetNewCars();
   return (

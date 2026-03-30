@@ -114,33 +114,23 @@ export function mapSliderBannerResponse(
   const items = response?.data?.filter((item) => item?.is_active) ?? [];
   if (!items.length) return [];
 
-  const media = items.flatMap((item) =>
-    createMedia({
+  return items.map((item) => ({
+    id: item.id,
+    title: item.title?.trim() || options.titleFallback,
+    description: stripHtml(item.description),
+    href: options.href,
+    ctaLabel: options.ctaLabel,
+    overlayClassName: options.overlayClassName,
+    variant: options.variant ?? "full-hero",
+    isActive: item.is_active,
+    media: createMedia({
       id: item.id,
       image: item.image,
       video: item.video,
       mediaType: item.media_type,
       alt: `${options.imageAltPrefix ?? options.titleFallback} ${item.id}`,
     }),
-  );
-
-  const firstWithTitle = items.find((item) => item.title?.trim());
-  const firstWithDescription = items.find((item) => item.description?.trim());
-
-  return [
-    {
-      id: `slider-${items.map((item) => item.id).join("-")}`,
-      title: firstWithTitle?.title?.trim() || options.titleFallback,
-
-      description: stripHtml(firstWithDescription?.description),
-      href: options.href,
-      ctaLabel: options.ctaLabel,
-      overlayClassName: options.overlayClassName,
-      variant: options.variant ?? "full-hero",
-      isActive: true,
-      media,
-    },
-  ];
+  }));
 }
 
 export function mapUnknownBannerResponse(

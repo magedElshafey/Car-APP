@@ -9,7 +9,9 @@ import { useTranslation } from "react-i18next";
 import useGetMyProfileData from "@/features/auth/api/useGetMyProfileData";
 import useUpdateMyProfileLogic from "@/features/auth/logic/useUpdateMyProfileLogic";
 import { updateProfileSchema, UpdateProfileFormValues } from "../schema/schema";
-
+import useGetMyCars from "@/features/auth/api/useGetMyCars";
+import BrowseCarsSkeleton from "@/features/browse/components/browse-cars-skeleton";
+import BrowseCarCard from "@/features/browse/components/car-card";
 const MyProfile = () => {
   const { data } = useGetMyProfileData();
   const { t } = useTranslation();
@@ -39,9 +41,10 @@ const MyProfile = () => {
       });
     }
   }, [data, reset]);
+  const { data: cars, isLoading } = useGetMyCars();
 
   return (
-    <div className="py-10 app-container">
+    <div className="py-10 space-y-4 app-container">
       <div className="max-w-3xl mx-auto">
         <div className="p-6 border shadow-md bg-surface rounded-2xl border-border md:p-8">
           {/* Header */}
@@ -102,6 +105,23 @@ const MyProfile = () => {
           </form>
         </div>
       </div>
+      {isLoading ? (
+        <BrowseCarsSkeleton />
+      ) : cars && cars?.length ? (
+        <div className="max-w-3xl mx-auto">
+          <div className="p-6 border shadow-md bg-surface rounded-2xl border-border md:p-8">
+            {/* Header */}
+            <h2 className="mb-4 text-xl font-semibold text-text">
+              {t("My cars")}
+            </h2>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+              {cars.map((car) => (
+                <BrowseCarCard key={car.id} car={car} />
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

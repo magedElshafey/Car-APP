@@ -503,5 +503,7 @@
   "nm": "Nm",
   "kmh": "km/h",
   "liter": "L",
-  "mm": "mm"
+  "mm": "mm",
+  "login_required": "you need to login first",
+  "you need to login first , before adding cars to your wishlist": "you need to login first , before adding cars to your wishlist"
 }

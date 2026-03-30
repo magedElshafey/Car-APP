@@ -503,5 +503,7 @@
   "invalid Egyptian phone number": "رقم هاتف مصري غير صالح",
   "OTP must be exactly 6 digits": "يجب أن يتكون رمز التحقق من 6 أرقام بالضبط",
   "OTP must contain only numbers": "يجب أن يحتوي رمز التحقق على أرقام فقط",
-  "name must be at least 3 characters": "يجب أن يتكون الاسم من 3 أحرف على الأقل"
+  "name must be at least 3 characters": "يجب أن يتكون الاسم من 3 أحرف على الأقل",
+  "login_required": "يرجي تسجيل الدخول اولا",
+  "you need to login first , before adding cars to your wishlist": "يجب عليك تسجيل الدخول أولاً قبل إضافة السيارات إلى قائمة رغباتك"
 }

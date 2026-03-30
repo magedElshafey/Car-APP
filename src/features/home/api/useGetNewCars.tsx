@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 const useGetNewCars = () => {
   const { i18n } = useTranslation();
   return useQuery({
-    queryKey: [apiRoutes?.cars, "used", i18n.language],
+    queryKey: [apiRoutes?.cars, "new", i18n.language],
     queryFn: async () => {
       const { data } = await Axios.get(`${apiRoutes.cars}?condition=new`);
       return data?.data as CarListing[];
