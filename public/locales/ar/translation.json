@@ -1,4 +1,9 @@
 {
+  "hp": "حصان",
+  "nm": "نيوتن متر",
+  "kmh": "كم/س",
+  "liter": "لتر",
+  "mm": "مم",
   "createCarAd": {
     "seo": {
       "title": "إنشاء إعلان سيارة",
@@ -340,7 +345,19 @@
       "mileage": "الممشى",
       "price": "السعر",
       "publishedAt": "تاريخ النشر",
-      "updatedAt": "آخر تحديث"
+      "updatedAt": "آخر تحديث",
+      "power": "القوة",
+      "torque": "عزم الدوران",
+      "topSpeed": "السرعة القصوى",
+      "driveType": "نظام الدفع",
+      "cylinders": "عدد الأسطوانات",
+      "seats": "عدد المقاعد",
+      "fuelTank": "سعة خزان الوقود",
+      "warranty": "الضمان",
+      "length": "الطول",
+      "width": "العرض",
+      "height": "الارتفاع",
+      "wheelbase": "قاعدة العجلات"
     },
     "description": "الوصف",
     "features": "المميزات",

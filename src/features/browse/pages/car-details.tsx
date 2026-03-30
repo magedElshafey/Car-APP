@@ -40,17 +40,9 @@ const CarDetails = () => {
       value: formatDate(car.created_at),
     },
     { label: t("carDetails.table.model"), value: car.car.model },
-    ...(car.updated_at
-      ? [
-          {
-            label: t("carDetails.table.updatedAt"),
-            value: formatDate(car.updated_at),
-          },
-        ]
-      : [{ label: "", value: "" }]),
     {
       label: t("carDetails.table.condition"),
-      value: t(`createCarAd.fields.condition.options.${car.condition}`),
+      value: t(`createCarAd.fields.condition.options.${car.details.condition}`),
     },
     { label: t("carDetails.table.location"), value: car.city },
     { label: t("carDetails.table.color"), value: car.details.color_label },
@@ -66,11 +58,11 @@ const CarDetails = () => {
       value: car.details.fuel_type_label,
     },
     { label: t("carDetails.table.year"), value: String(car.car.year) },
-    ...(car.mileage_km
+    ...(car.details.mileage_km
       ? [
           {
             label: t("carDetails.table.mileage"),
-            value: `${formatPrice(car.mileage_km, i18n.language)} ${t("km")}`,
+            value: `${formatPrice(car.details.mileage_km, i18n.language)} ${t("km")}`,
           },
         ]
       : []),
@@ -78,6 +70,114 @@ const CarDetails = () => {
       label: t("carDetails.table.price"),
       value: `${formatPrice(Number(car.price), i18n.language)} ${t("EGP")}`,
     },
+    ...(car.details.power_hp
+    ? [
+        {
+          label: t("carDetails.table.power"),
+          value: `${car.details.power_hp} ${t("hp")}`,
+        },
+      ]
+    : []),
+
+  ...(car.details.torque_nm
+    ? [
+        {
+          label: t("carDetails.table.torque"),
+          value: `${car.details.torque_nm} ${t("nm")}`,
+        },
+      ]
+    : []),
+
+  ...(car.details.top_speed_kmh
+    ? [
+        {
+          label: t("carDetails.table.topSpeed"),
+          value: `${car.details.top_speed_kmh} ${t("kmh")}`,
+        },
+      ]
+    : []),
+
+  ...(car.details.drive_type_label
+    ? [
+        {
+          label: t("carDetails.table.driveType"),
+          value: car.details.drive_type_label,
+        },
+      ]
+    : []),
+
+  ...(car.details.cylinders
+    ? [
+        {
+          label: t("carDetails.table.cylinders"),
+          value: String(car.details.cylinders),
+        },
+      ]
+    : []),
+
+  ...(car.details.seats
+    ? [
+        {
+          label: t("carDetails.table.seats"),
+          value: String(car.details.seats),
+        },
+      ]
+    : []),
+
+  ...(car.details.fuel_tank_capacity_l
+    ? [
+        {
+          label: t("carDetails.table.fuelTank"),
+          value: `${car.details.fuel_tank_capacity_l} ${t("liter")}`,
+        },
+      ]
+    : []),
+
+  ...(car.details.warranty_km
+    ? [
+        {
+          label: t("carDetails.table.warranty"),
+          value: `${formatPrice(car.details.warranty_km, i18n.language)} ${t("km")}`,
+        },
+      ]
+    : []),
+
+  // Dimensions
+  ...(car.details.length_mm
+    ? [
+        {
+          label: t("carDetails.table.length"),
+          value: `${car.details.length_mm} ${t("mm")}`,
+        },
+      ]
+    : []),
+
+  ...(car.details.width_mm
+    ? [
+        {
+          label: t("carDetails.table.width"),
+          value: `${car.details.width_mm} ${t("mm")}`,
+        },
+      ]
+    : []),
+
+  ...(car.details.height_mm
+    ? [
+        {
+          label: t("carDetails.table.height"),
+          value: `${car.details.height_mm} ${t("mm")}`,
+        },
+      ]
+    : []),
+
+  ...(car.details.wheelbase_mm
+    ? [
+        {
+          label: t("carDetails.table.wheelbase"),
+          value: `${car.details.wheelbase_mm} ${t("mm")}`,
+        },
+      ]
+    : []),
   ];
 
   // Pair rows for 4-column table layout

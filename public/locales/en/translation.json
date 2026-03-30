@@ -341,7 +341,19 @@
       "mileage": "Mileage",
       "price": "Price",
       "publishedAt": "Published",
-      "updatedAt": "Last Updated"
+      "updatedAt": "Last Updated",
+      "power": "Power",
+      "torque": "Torque",
+      "topSpeed": "Top Speed",
+      "driveType": "Drive Type",
+      "cylinders": "Cylinders",
+      "seats": "Seats",
+      "fuelTank": "Fuel Tank Capacity",
+      "warranty": "Warranty",
+      "length": "Length",
+      "width": "Width",
+      "height": "Height",
+      "wheelbase": "Wheelbase"
     },
     "description": "Description",
     "features": "Features",
@@ -486,5 +498,10 @@
   "invalid Egyptian phone number": "invalid Egyptian phone number",
   "OTP must be exactly 6 digits": "OTP must be exactly 6 digits",
   "OTP must contain only numbers": "OTP must contain only numbers",
-  "name must be at least 3 characters": "name must be at least 3 characters"
+  "name must be at least 3 characters": "name must be at least 3 characters",
+  "hp": "hp",
+  "nm": "Nm",
+  "kmh": "km/h",
+  "liter": "L",
+  "mm": "mm"
 }

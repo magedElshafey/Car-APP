@@ -49,6 +49,71 @@ export interface CarListing {
     updated_at?: string;
 }
 
-export interface CarDetails extends CarListing {
-    seller?: CarSeller | null;
-}
+export type CarDetails = {
+  id: number;
+
+  car: {
+    brand: string;
+    model: string;
+    year: number;
+    trim: string;
+    vehicle_type: string;
+    vehicle_type_label: string;
+    sub_type: string;
+    sub_type_label: string;
+  };
+
+  details: {
+    condition: string;
+    condition_label: string;
+    mileage_km: number;
+    transmission: string;
+    transmission_label: string;
+    fuel_type: string;
+    fuel_type_label: string;
+    color: string;
+    color_label: string;
+    is_imported: boolean;
+    is_taxi: boolean;
+    is_special_needs: boolean;
+    power_hp: number;
+    torque_nm: number;
+    top_speed_kmh: number;
+    fuel_tank_capacity_l: number;
+    warranty_km: number;
+    seats: number;
+    drive_type: string;
+    drive_type_label: string;
+    cylinders: number;
+    length_mm: string;
+    width_mm: string;
+    height_mm: string;
+    wheelbase_mm: string;
+  };
+
+  description: string;
+  city: string;
+  price: string;
+
+  financing_available: boolean;
+  financing?: CarFinancing;
+
+  features: {
+    category: string;
+    options: string[];
+  }[];
+
+  highlights: string[];
+
+  contact_phone: string;
+  whatsapp_allowed: boolean;
+
+  images: string[];
+
+  seller: CarSeller;
+
+  status: string | null;
+  status_label: string | null;
+
+  created_at: string;
+};
