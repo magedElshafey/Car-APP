@@ -5,7 +5,7 @@ import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FiCheck, FiX } from "react-icons/fi";
 import CarCompareSearchInput from "../components/car-compare-search-input.tsx";
-import { CarListing } from "../types/car.types";
+import { CarDetails, CarListing } from "../types/car.types";
 
 const CompareCarHeader = ({
   car,
@@ -60,86 +60,90 @@ const boolToLabel = (value: boolean | undefined, t: (key: string) => string) =>
 
 const CarComparePage = () => {
   const { t } = useTranslation();
-  const [leftCar, setLeftCar] = useState<CarListing | null>(null);
-  const [rightCar, setRightCar] = useState<CarListing | null>(null);
+  const [leftCar, setLeftCar] = useState<CarDetails | null>(null);
+  const [rightCar, setRightCar] = useState<CarDetails | null>(null);
 
   const { data: groupedFeatures = {} } = useGetCarFeatures();
   const { data: highlightTypes = [] } = useGetHighlightTypes();
 
   const basicRows = useMemo(() => {
     return [
-      {
-        id: "price",
-        label: t("compare.price"),
-        left: leftCar ? `${leftCar.price} ${t("EGP")}` : "-",
-        right: rightCar ? `${rightCar.price} ${t("EGP")}` : "-",
-      },
-      {
-        id: "condition",
-        label: t("compare.condition"),
-        left: normalize(leftCar?.condition),
-        right: normalize(rightCar?.condition),
-      },
-      {
-        id: "transmission",
-        label: t("compare.transmission"),
-        left: normalize(leftCar?.transmission),
-        right: normalize(rightCar?.transmission),
-      },
-      {
-        id: "fuel",
-        label: t("compare.fuelType"),
-        left: normalize(leftCar?.fuel_type),
-        right: normalize(rightCar?.fuel_type),
-      },
-      {
-        id: "color",
-        label: t("compare.color"),
-        left: normalize(leftCar?.color),
-        right: normalize(rightCar?.color),
-      },
-      {
-        id: "mileage",
-        label: t("compare.mileage"),
-        left: leftCar ? `${leftCar.mileage_km} ${t("km")}` : "-",
-        right: rightCar ? `${rightCar.mileage_km} ${t("km")}` : "-",
-      },
-      {
-        id: "city",
-        label: t("compare.city"),
-        left: normalize(leftCar?.city),
-        right: normalize(rightCar?.city),
-      },
-      {
-        id: "imported",
-        label: t("compare.imported"),
-        left: boolToLabel(leftCar?.is_imported, t),
-        right: boolToLabel(rightCar?.is_imported, t),
-      },
-      {
-        id: "taxi",
-        label: t("compare.taxi"),
-        left: boolToLabel(leftCar?.is_taxi, t),
-        right: boolToLabel(rightCar?.is_taxi, t),
-      },
-      {
-        id: "special-needs",
-        label: t("compare.specialNeeds"),
-        left: boolToLabel(leftCar?.is_special_needs, t),
-        right: boolToLabel(rightCar?.is_special_needs, t),
-      },
-      {
-        id: "whatsapp",
-        label: t("compare.whatsappAllowed"),
-        left: boolToLabel(leftCar?.whatsapp_allowed, t),
-        right: boolToLabel(rightCar?.whatsapp_allowed, t),
-      },
-      {
-        id: "financing",
-        label: t("compare.financingAvailable"),
-        left: boolToLabel(leftCar?.financing_available, t),
-        right: boolToLabel(rightCar?.financing_available, t),
-      },
+          {
+      id: "price",
+      label: t("compare.price"),
+      left: leftCar ? `${leftCar.price} ${t("EGP")}` : "-",
+      right: rightCar ? `${rightCar.price} ${t("EGP")}` : "-",
+    },
+    {
+      id: "condition",
+      label: t("compare.condition"),
+      left: normalize(leftCar?.details.condition_label),
+      right: normalize(rightCar?.details.condition_label),
+    },
+    {
+      id: "transmission",
+      label: t("compare.transmission"),
+      left: normalize(leftCar?.details.transmission_label),
+      right: normalize(rightCar?.details.transmission_label),
+    },
+    {
+      id: "fuel",
+      label: t("compare.fuelType"),
+      left: normalize(leftCar?.details.fuel_type_label),
+      right: normalize(rightCar?.details.fuel_type_label),
+    },
+    {
+      id: "color",
+      label: t("compare.color"),
+      left: normalize(leftCar?.details.color_label),
+      right: normalize(rightCar?.details.color_label),
+    },
+    {
+      id: "mileage",
+      label: t("compare.mileage"),
+      left: leftCar
+        ? `${leftCar.details.mileage_km} ${t("km")}`
+        : "-",
+      right: rightCar
+        ? `${rightCar.details.mileage_km} ${t("km")}`
+        : "-",
+    },
+    {
+      id: "city",
+      label: t("compare.city"),
+      left: normalize(leftCar?.city),
+      right: normalize(rightCar?.city),
+    },
+    {
+      id: "imported",
+      label: t("compare.imported"),
+      left: boolToLabel(leftCar?.details.is_imported, t),
+      right: boolToLabel(rightCar?.details.is_imported, t),
+    },
+    {
+      id: "taxi",
+      label: t("compare.taxi"),
+      left: boolToLabel(leftCar?.details.is_taxi, t),
+      right: boolToLabel(rightCar?.details.is_taxi, t),
+    },
+    {
+      id: "special-needs",
+      label: t("compare.specialNeeds"),
+      left: boolToLabel(leftCar?.details.is_special_needs, t),
+      right: boolToLabel(rightCar?.details.is_special_needs, t),
+    },
+    {
+      id: "whatsapp",
+      label: t("compare.whatsappAllowed"),
+      left: boolToLabel(leftCar?.whatsapp_allowed, t),
+      right: boolToLabel(rightCar?.whatsapp_allowed, t),
+    },
+    {
+      id: "financing",
+      label: t("compare.financingAvailable"),
+      left: boolToLabel(leftCar?.financing_available, t),
+      right: boolToLabel(rightCar?.financing_available, t),
+    },
     ];
   }, [leftCar, rightCar, t]);
 

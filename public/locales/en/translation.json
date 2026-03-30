@@ -353,7 +353,10 @@
       "length": "Length",
       "width": "Width",
       "height": "Height",
-      "wheelbase": "Wheelbase"
+      "wheelbase": "Wheelbase",
+      "isImported": "Imported",
+      "isTaxi": "Previously Used as Taxi",
+      "specialNeeds": "Special Needs"
     },
     "description": "Description",
     "features": "Features",
@@ -507,5 +510,7 @@
   "nm": "Nm",
   "kmh": "km/h",
   "liter": "L",
-  "mm": "mm"
+  "mm": "mm",
+  "yes": "Yes",
+  "no": "No"
 }

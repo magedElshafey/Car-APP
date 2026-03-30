@@ -357,7 +357,10 @@
       "length": "الطول",
       "width": "العرض",
       "height": "الارتفاع",
-      "wheelbase": "قاعدة العجلات"
+      "wheelbase": "قاعدة العجلات",
+      "isImported": "مستورد",
+      "isTaxi": "استخدام سابق كتاكسي",
+      "specialNeeds": "مجهز لذوي الاحتياجات الخاصة"
     },
     "description": "الوصف",
     "features": "المميزات",
@@ -507,5 +510,7 @@
   "invalid Egyptian phone number": "رقم هاتف مصري غير صالح",
   "OTP must be exactly 6 digits": "يجب أن يتكون رمز التحقق من 6 أرقام بالضبط",
   "OTP must contain only numbers": "يجب أن يحتوي رمز التحقق على أرقام فقط",
-  "name must be at least 3 characters": "يجب أن يتكون الاسم من 3 أحرف على الأقل"
+  "name must be at least 3 characters": "يجب أن يتكون الاسم من 3 أحرف على الأقل",
+  "yes": "نعم",
+  "no": "لا"
 }
