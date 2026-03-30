@@ -1,13 +1,13 @@
 import { GridPagesSlider } from "@/common/components/sliders/GridPagesSlider";
 import BrowseCarCard from "@/features/browse/components/car-card";
-import { CarListing } from "@/features/browse/types/car.types";
+import { CarDetails } from "@/features/browse/types/car.types";
 import { cn } from "@/lib/utils";
 import React from "react";
 
 import SectionTitle from "@/common/components/section-title/SectionTitle";
 
 type UsedCarSectionProps = {
-  data: CarListing[];
+  data: CarDetails[];
   title?: string;
 
   actionHref?: string;
