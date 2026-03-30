@@ -353,7 +353,10 @@
       "length": "Length",
       "width": "Width",
       "height": "Height",
-      "wheelbase": "Wheelbase"
+      "wheelbase": "Wheelbase",
+      "isImported": "Imported",
+      "isTaxi": "Previously Used as Taxi",
+      "specialNeeds": "Special Needs"
     },
     "description": "Description",
     "features": "Features",
@@ -396,13 +399,17 @@
       "price": "Price",
       "reset": "Reset filters",
       "location": "Location",
+      "vehicle_type": "Vehicle Type",
+      "sub_type": "Subtype",
       "search": {
         "brand": "Search brand",
         "model": "Search model",
         "fuel_type": "Search fuel type",
         "color": "Search color",
         "car_type": "Search car type",
-        "city_id": "Search location"
+        "city_id": "Search location",
+        "sub_type": "Search Subtype",
+        "vehicle_type": "Search Vehicle Type"
       }
     }
   },
@@ -504,6 +511,8 @@
   "kmh": "km/h",
   "liter": "L",
   "mm": "mm",
+  "yes": "Yes",
+  "no": "No",
   "login_required": "you need to login first",
   "you need to login first , before adding cars to your wishlist": "you need to login first , before adding cars to your wishlist"
 }

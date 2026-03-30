@@ -62,6 +62,8 @@ export type CarDetails = {
     vehicle_type_label: string;
     sub_type: string;
     sub_type_label: string;
+    model_id: number;
+    brand_id: number;
   };
 
   details: {
@@ -94,6 +96,7 @@ export type CarDetails = {
 
   description: string;
   city: string;
+  city_id: number;
   price: string;
 
   financing_available: boolean;

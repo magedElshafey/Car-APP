@@ -357,7 +357,10 @@
       "length": "الطول",
       "width": "العرض",
       "height": "الارتفاع",
-      "wheelbase": "قاعدة العجلات"
+      "wheelbase": "قاعدة العجلات",
+      "isImported": "مستورد",
+      "isTaxi": "استخدام سابق كتاكسي",
+      "specialNeeds": "مجهز لذوي الاحتياجات الخاصة"
     },
     "description": "الوصف",
     "features": "المميزات",
@@ -400,13 +403,17 @@
       "price": "السعر",
       "reset": "إعادة تعيين الفلاتر",
       "location": "الموقع",
+      "sub_type": "النوع الفرعي",
+      "vehicle_type": "نوع المركبة",
       "search": {
         "brand": "ابحث عن الماركة",
         "model": "ابحث عن الموديل",
         "fuel_type": "ابحث عن نوع الوقود",
         "color": "ابحث عن اللون",
         "car_type": "ابحث عن نوع السيارة",
-        "city_id": "ابحث عن مدينة"
+        "city_id": "ابحث عن مدينة",
+        "sub_type": "ابحث النوع الفرعي",
+        "vehicle_type": "ابحث نوع المركبة"
       }
     }
   },
@@ -504,6 +511,8 @@
   "OTP must be exactly 6 digits": "يجب أن يتكون رمز التحقق من 6 أرقام بالضبط",
   "OTP must contain only numbers": "يجب أن يحتوي رمز التحقق على أرقام فقط",
   "name must be at least 3 characters": "يجب أن يتكون الاسم من 3 أحرف على الأقل",
+  "yes": "نعم",
+  "no": "لا",
   "login_required": "يرجي تسجيل الدخول اولا",
   "you need to login first , before adding cars to your wishlist": "يجب عليك تسجيل الدخول أولاً قبل إضافة السيارات إلى قائمة رغباتك"
 }

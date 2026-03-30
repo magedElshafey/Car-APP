@@ -80,6 +80,13 @@ export const websiteRoutes: RouteObject = {
       },
     },
     {
+      path: "/other-vehicles",
+      element: lazyLoad(() => import("../features/browse/pages/car-browse")),
+      handle: {
+        breadcrumb: "browse",
+      },
+    },
+    {
       path: "/about",
       element: lazyLoad(() => import("../features/about/pages/AboutPage")),
       handle: {

@@ -60,124 +60,150 @@ const CarDetails = () => {
     { label: t("carDetails.table.year"), value: String(car.car.year) },
     ...(car.details.mileage_km
       ? [
-          {
-            label: t("carDetails.table.mileage"),
-            value: `${formatPrice(car.details.mileage_km, i18n.language)} ${t("km")}`,
-          },
-        ]
+        {
+          label: t("carDetails.table.mileage"),
+          value: `${formatPrice(car.details.mileage_km, i18n.language)} ${t("km")}`,
+        },
+      ]
       : []),
     {
       label: t("carDetails.table.price"),
       value: `${formatPrice(Number(car.price), i18n.language)} ${t("EGP")}`,
     },
     ...(car.details.power_hp
-    ? [
+      ? [
         {
           label: t("carDetails.table.power"),
           value: `${car.details.power_hp} ${t("hp")}`,
         },
       ]
-    : []),
+      : []),
 
-  ...(car.details.torque_nm
-    ? [
+    ...(car.details.torque_nm
+      ? [
         {
           label: t("carDetails.table.torque"),
           value: `${car.details.torque_nm} ${t("nm")}`,
         },
       ]
-    : []),
+      : []),
 
-  ...(car.details.top_speed_kmh
-    ? [
+    ...(car.details.top_speed_kmh
+      ? [
         {
           label: t("carDetails.table.topSpeed"),
           value: `${car.details.top_speed_kmh} ${t("kmh")}`,
         },
       ]
-    : []),
+      : []),
 
-  ...(car.details.drive_type_label
-    ? [
+    ...(car.details.drive_type_label
+      ? [
         {
           label: t("carDetails.table.driveType"),
           value: car.details.drive_type_label,
         },
       ]
-    : []),
+      : []),
 
-  ...(car.details.cylinders
-    ? [
+    ...(car.details.cylinders
+      ? [
         {
           label: t("carDetails.table.cylinders"),
           value: String(car.details.cylinders),
         },
       ]
-    : []),
+      : []),
 
-  ...(car.details.seats
-    ? [
+    ...(car.details.seats
+      ? [
         {
           label: t("carDetails.table.seats"),
           value: String(car.details.seats),
         },
       ]
-    : []),
+      : []),
 
-  ...(car.details.fuel_tank_capacity_l
-    ? [
+    ...(car.details.fuel_tank_capacity_l
+      ? [
         {
           label: t("carDetails.table.fuelTank"),
           value: `${car.details.fuel_tank_capacity_l} ${t("liter")}`,
         },
       ]
-    : []),
+      : []),
 
-  ...(car.details.warranty_km
-    ? [
+    ...(car.details.warranty_km
+      ? [
         {
           label: t("carDetails.table.warranty"),
           value: `${formatPrice(car.details.warranty_km, i18n.language)} ${t("km")}`,
         },
       ]
-    : []),
+      : []),
 
-  // Dimensions
-  ...(car.details.length_mm
-    ? [
+    // Dimensions
+    ...(car.details.length_mm
+      ? [
         {
           label: t("carDetails.table.length"),
           value: `${car.details.length_mm} ${t("mm")}`,
         },
       ]
-    : []),
+      : []),
 
-  ...(car.details.width_mm
-    ? [
+    ...(car.details.width_mm
+      ? [
         {
           label: t("carDetails.table.width"),
           value: `${car.details.width_mm} ${t("mm")}`,
         },
       ]
-    : []),
+      : []),
 
-  ...(car.details.height_mm
-    ? [
+    ...(car.details.height_mm
+      ? [
         {
           label: t("carDetails.table.height"),
           value: `${car.details.height_mm} ${t("mm")}`,
         },
       ]
-    : []),
+      : []),
 
-  ...(car.details.wheelbase_mm
-    ? [
+    ...(car.details.wheelbase_mm
+      ? [
         {
           label: t("carDetails.table.wheelbase"),
           value: `${car.details.wheelbase_mm} ${t("mm")}`,
         },
       ]
-    : []),
+      : []),
+    ...(typeof car.details.is_imported === "boolean"
+      ? [
+        {
+          label: t("carDetails.table.isImported"),
+          value: car.details.is_imported ? t("yes") : t("no"),
+        },
+      ]
+      : []),
+
+    ...(typeof car.details.is_taxi === "boolean"
+      ? [
+        {
+          label: t("carDetails.table.isTaxi"),
+          value: car.details.is_taxi ? t("yes") : t("no"),
+        },
+      ]
+      : []),
+
+    ...(typeof car.details.is_special_needs === "boolean"
+      ? [
+        {
+          label: t("carDetails.table.specialNeeds"),
+          value: car.details.is_special_needs ? t("yes") : t("no"),
+        },
+      ]
+      : []),
   ];
 
   // Pair rows for 4-column table layout
@@ -231,11 +257,10 @@ const CarDetails = () => {
                 href={
                   hasSellerPhone ? `tel:${normalizedSellerPhone}` : undefined
                 }
-                className={`flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold ${
-                  hasSellerPhone
+                className={`flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold ${hasSellerPhone
                     ? "bg-blue-600 text-white hover:bg-blue-700"
                     : "cursor-not-allowed bg-stone-200 text-stone-500"
-                }`}
+                  }`}
                 aria-disabled={!hasSellerPhone}
               >
                 <FiPhoneCall size={16} />
@@ -250,11 +275,10 @@ const CarDetails = () => {
                   }
                   target={hasSellerPhone ? "_blank" : undefined}
                   rel={hasSellerPhone ? "noopener noreferrer" : undefined}
-                  className={`flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold ${
-                    hasSellerPhone
+                  className={`flex w-full items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold ${hasSellerPhone
                       ? "border border-green-500 bg-green-50 text-green-700 hover:bg-green-100"
                       : "cursor-not-allowed bg-stone-200 text-stone-500"
-                  }`}
+                    }`}
                   aria-disabled={!hasSellerPhone}
                 >
                   <IoLogoWhatsapp size={17} />
@@ -333,11 +357,10 @@ const CarDetails = () => {
                     key={idx}
                     type="button"
                     onClick={() => setActiveImage(idx)}
-                    className={`aspect-square overflow-hidden rounded-md border-2 transition-all ${
-                      activeImage === idx
+                    className={`aspect-square overflow-hidden rounded-md border-2 transition-all ${activeImage === idx
                         ? "border-blue-500 ring-1 ring-blue-300"
                         : "border-stone-200 hover:border-stone-400"
-                    }`}
+                      }`}
                   >
                     <img
                       src={src}

@@ -1,15 +1,15 @@
 import { formatPrice } from "@/utils/formatPrice";
 import { useState } from "react";
 import { FiPhoneCall } from "react-icons/fi";
-import { HiOutlineLocationMarker } from "react-icons/hi";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { MdBrokenImage } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { CarListing } from "../types/car.types";
+import { CarDetails } from "../types/car.types";
 import FavoriteButton from "@/features/browse/components/FavoriteButton";
+
 interface BrowseCarCardProps {
-  car: CarListing;
+  car: CarDetails;
 }
 
 const BrowseCarCard = ({ car }: BrowseCarCardProps) => {
@@ -17,15 +17,13 @@ const BrowseCarCard = ({ car }: BrowseCarCardProps) => {
   const [imageError, setImageError] = useState(false);
   const image = car.images[0] || "/images/cars/car-1.png";
   const mileageInEnglishDigits = new Intl.NumberFormat("en-US").format(
-    car.mileage_km,
+    car.details.mileage_km,
   );
   const details = [
-    car.fuel_type,
-    car.car_type || "-",
+    car.details.fuel_type_label,
     `${mileageInEnglishDigits} ${t("km")}`,
     String(car.car.year),
   ].join(" | ");
-  const locationLine = [car.city, car.car.brand, car.car.model].join(" | ");
   const normalizedPhone = car.contact_phone.replace(/[^\d+]/g, "");
   const phoneWithoutPlus = normalizedPhone.replace(/^\+/, "");
   const hasPhone = Boolean(phoneWithoutPlus);
@@ -73,11 +71,26 @@ const BrowseCarCard = ({ car }: BrowseCarCardProps) => {
           <span className="text-xl ms-1">{t("EGP")}</span>
         </div>
 
-        <p className="text-sm line-clamp-1 text-stone-500">
-          <HiOutlineLocationMarker className="inline me-1" size={16} />
-          {locationLine}
-        </p>
-
+        <div className="flex flex-wrap gap-2">
+          <Link
+            className="p-1 text-xs duration-75 border rounded cursor-pointer border-stone-300 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-400"
+            to={`/car-browse?filter-vehicle_type=car&filter-city_id=${car.city_id}`}
+          >
+            {car.city}
+          </Link>
+          <Link
+            className="p-1 text-xs duration-75 border rounded cursor-pointer border-stone-300 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-400"
+            to={`/car-browse?filter-vehicle_type=car&filter-brand=${car.car.brand_id}`}
+          >
+            {car.car.brand}
+          </Link>
+          <Link
+            className="p-1 text-xs duration-75 border rounded cursor-pointer border-stone-300 hover:bg-blue-50 hover:border-blue-100 hover:text-blue-400"
+            to={`/car-browse?filter-vehicle_type=car&filter-brand=${car.car.brand_id}&filter-model=${car.car.model_id}`}
+          >
+            {car.car.model}
+          </Link>
+        </div>
         <div className="grid grid-cols-2 gap-2 pt-1">
           <a
             href={hasPhone ? `tel:${normalizedPhone}` : undefined}
