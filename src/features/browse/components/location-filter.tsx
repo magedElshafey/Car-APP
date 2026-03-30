@@ -35,7 +35,7 @@ const LocationMenu = () => {
         if (cities && city_id?.value && !city_id.label) {
             const active = cities.find(item => item.value === city_id.value);
             if (active) {
-                handleUniqueChange("color", {
+                handleUniqueChange("city_id", {
                     label: active.name,
                     value: city_id.value
                 });
@@ -52,7 +52,7 @@ const LocationMenu = () => {
                     className={`py-2 block w-full text-start rounded px-2 duration-75 cursor-pointer font-semibold text-sm ${activeColor === item.value ? "text-blue-400 bg-blue-50" : "hover:bg-slate-300"}`}
                     key={item.value}
                     onClick={() => {
-                        handleUniqueChange("color", {
+                        handleUniqueChange("city_id", {
                             label: item.name,
                             value: item.value
                         });

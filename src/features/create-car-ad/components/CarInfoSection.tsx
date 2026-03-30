@@ -9,7 +9,6 @@ import { CityOption } from "@/features/browse/hooks/use-get-cities";
 import { FuelType } from "@/features/browse/types/fuel-type.types";
 import { CreateCarAdSchemaType } from "../schema/createCarAd.schema";
 import useGetVehicleType from "@/features/browse/hooks/use-get-vehicle-type";
-import { useLocation } from "react-router-dom";
 import useGetVehicleSubtype from "@/features/browse/hooks/use-get-vehicle-subtype";
 
 const PREDEFINED_COLORS = [
@@ -61,9 +60,6 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
   const mileageKm = useWatch({ control, name: "mileage_km" });
   const description = useWatch({ control, name: "description" });
   const selectedSubtype = useWatch({ control, name: "sub_type" });
-
-  const pathname = useLocation().pathname;
-  const isCarCreate = pathname === "/create-car-ad"
 
   const {
     data: vehicleTypes,
@@ -119,7 +115,6 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
           options={vehicleTypesOptions}
           label="createCarAd.fields.vehicle_type.label"
           placeholder="createCarAd.fields.vehicle_type.placeholder"
-          disabled={isCarCreate}
           onSelect={(option) => {
             setValue("vehicle_type", option.value, {
               shouldDirty: true,
