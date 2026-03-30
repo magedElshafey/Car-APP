@@ -396,13 +396,17 @@
       "price": "Price",
       "reset": "Reset filters",
       "location": "Location",
+      "vehicle_type": "Vehicle Type",
+      "sub_type": "Subtype",
       "search": {
         "brand": "Search brand",
         "model": "Search model",
         "fuel_type": "Search fuel type",
         "color": "Search color",
         "car_type": "Search car type",
-        "city_id": "Search location"
+        "city_id": "Search location",
+        "sub_type": "Search Subtype",
+        "vehicle_type": "Search Vehicle Type"
       }
     }
   },

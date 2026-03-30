@@ -10,12 +10,12 @@ export const DEFAULT_LINKS: NavLinkItem[] = [
   {
     id: "new-cars",
     label: "New Cars",
-    href: "/car-browse?filter-condition=new",
+    href: "/car-browse?filter-condition=new&filter-vehicle_type=car",
   },
   {
     id: "used-cars",
     label: "Used Cars",
-    href: "/car-browse?filter-condition=used",
+    href: "/car-browse?filter-condition=used&filter-vehicle_type=car",
   },
   {
     id: "other-vehicles",
@@ -25,12 +25,12 @@ export const DEFAULT_LINKS: NavLinkItem[] = [
       {
         id: "motorcycles",
         label: "Motorcycles",
-        href: "/other-vehicles/motorcycles",
+        href: "/other-vehicles?filter-vehicle_type=motorcycle",
       },
       {
         id: "trucks",
         label: "Trucks",
-        href: "/other-vehicles/trucks",
+        href: "/other-vehicles?filter-vehicle_type=truck",
       },
     ],
   },

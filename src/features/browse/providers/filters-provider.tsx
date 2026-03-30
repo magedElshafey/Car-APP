@@ -14,11 +14,13 @@ import {
   rangeFilterParamKeys,
   stringFilterKeys,
 } from "../types/filters.types";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { DEBOUNCE_DELAY } from "../config";
 
 const FilterContextProvider: FC<PropsWithChildren> = ({ children }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
+  const isCarBrowse = location.pathname === "/car-browse";
 
   function getInitialFilters() {
     const params = searchParams;
@@ -46,6 +48,11 @@ const FilterContextProvider: FC<PropsWithChildren> = ({ children }) => {
         };
       }
     }
+
+    if(isCarBrowse && !filters["vehicle_type"]) filters["vehicle_type"] = {
+      label: undefined,
+      value: "car"
+    };
 
     return filters;
   }
@@ -129,6 +136,10 @@ const FilterContextProvider: FC<PropsWithChildren> = ({ children }) => {
     }, DEBOUNCE_DELAY);
   }, [filters, setSearchParams]);
 
+  useEffect(() => {
+    setFilters(getInitialFilters());
+  }, [searchParams]);
+ 
   return (
     <FiltersContext.Provider
       value={{

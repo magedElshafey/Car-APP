@@ -6,10 +6,10 @@ import { IoLogoWhatsapp } from "react-icons/io";
 import { MdBrokenImage } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
-import { CarListing } from "../types/car.types";
+import { CarDetails } from "../types/car.types";
 
 interface BrowseCarCardProps {
-  car: CarListing;
+  car: CarDetails;
 }
 
 const BrowseCarCard = ({ car }: BrowseCarCardProps) => {
@@ -17,11 +17,10 @@ const BrowseCarCard = ({ car }: BrowseCarCardProps) => {
   const [imageError, setImageError] = useState(false);
   const image = car.images[0] || "/images/cars/car-1.png";
   const mileageInEnglishDigits = new Intl.NumberFormat("en-US").format(
-    car.mileage_km,
+    car.details.mileage_km,
   );
   const details = [
-    car.fuel_type,
-    car.car_type || "-",
+    car.details.fuel_type_label,
     `${mileageInEnglishDigits} ${t("km")}`,
     String(car.car.year),
   ].join(" | ");
