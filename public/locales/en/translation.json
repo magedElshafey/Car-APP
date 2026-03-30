@@ -383,12 +383,14 @@
       "year": "Year",
       "price": "Price",
       "reset": "Reset filters",
+      "location": "Location",
       "search": {
         "brand": "Search brand",
         "model": "Search model",
         "fuel_type": "Search fuel type",
         "color": "Search color",
-        "car_type": "Search car type"
+        "car_type": "Search car type",
+        "city_id": "Search location"
       }
     }
   },

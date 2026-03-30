@@ -6,6 +6,7 @@ export const stringFilterKeys = [
     "car_type",
     "transmission",
     "condition",
+    "city_id"
 ] as const;
 
 export const rangeFilterKeys = [

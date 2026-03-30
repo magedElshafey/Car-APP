@@ -7,6 +7,7 @@ import ModelFilter from "./models-filter";
 import PriceFilter from "./price-filter";
 import TransmissionFilter from "./transmission-filter";
 import YearFilter from "./year-filter";
+import LocationFilter from "./location-filter";
 
 const CarFilters = () => {
     return (
@@ -20,6 +21,7 @@ const CarFilters = () => {
             <ConditionFilter />
             <YearFilter />
             <PriceFilter />
+            <LocationFilter />
         </>
     );
 }
