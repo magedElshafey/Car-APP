@@ -47,12 +47,11 @@ export interface CarListing {
   status: string;
   created_at: string;
   updated_at?: string;
-  is_fav: boolean;
 }
 
 export type CarDetails = {
   id: number;
-
+  is_fav: boolean;
   car: {
     brand: string;
     model: string;
