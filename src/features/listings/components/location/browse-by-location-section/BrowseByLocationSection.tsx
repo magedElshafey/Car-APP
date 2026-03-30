@@ -25,7 +25,7 @@ export default function BrowseByLocationSection({
 
   const handleBrandClick = useCallback(
     (typeId: string) => {
-      navigate(`/car-browse?filter-city=${typeId}`);
+      navigate(`/car-browse?filter-city_id=${typeId}`);
     },
     [navigate],
   );
