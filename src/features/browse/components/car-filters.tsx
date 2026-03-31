@@ -15,28 +15,23 @@ import { useLocation } from "react-router-dom";
 import VehicleTypeFilter from "./vehicle-type-filter";
 
 const CarFilters = () => {
-    const location = useLocation();
-    const isOtherVehicles = location.pathname === "/other-vehicles";
-    return (
-        <>
-            <BrandFilter />
-            <ModelFilter />
-            <FuelTypeFilter />
-            <ColorFilter />
-            <CarTypeFilter />
-            <TransmissionFilter />
-            <ConditionFilter />
-            <YearFilter />
-            <PriceFilter />
-            <LocationFilter />
-            {
-                isOtherVehicles && (
-                    <VehicleTypeFilter />
-                )
-            }
-            <SubtypeFilter />
-        </>
-    );
-}
+  const location = useLocation();
+  const isOtherVehicles = location.pathname === "/other-vehicles";
+  return (
+    <>
+      <BrandFilter />
+      <ModelFilter />
+      <FuelTypeFilter />
+      <ColorFilter />
+      <TransmissionFilter />
+      <ConditionFilter />
+      <YearFilter />
+      <PriceFilter />
+      <LocationFilter />
+      {isOtherVehicles && <VehicleTypeFilter />}
+      <SubtypeFilter />
+    </>
+  );
+};
 
 export default CarFilters;
