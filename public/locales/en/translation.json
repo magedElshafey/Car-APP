@@ -514,5 +514,43 @@
   "yes": "Yes",
   "no": "No",
   "login_required": "you need to login first",
-  "you need to login first , before adding cars to your wishlist": "you need to login first , before adding cars to your wishlist"
+  "you need to login first , before adding cars to your wishlist": "you need to login first , before adding cars to your wishlist",
+  "contact-us": {
+    "title": "Contact Us",
+    "description": "We’d love to hear from you. Reach out to us for any inquiries or support.",
+    "contact-info": "Contact Information",
+    "form": {
+      "title": "Send Us a Message"
+    },
+    "phoneRequired": "Phone number is required",
+    "invalidPhone": "Invalid phone number",
+    "emailRequired": "Email is required",
+    "invalidEmail": "Invalid email address",
+    "subjectMin": "Subject must be at least 3 characters",
+    "subjectMax": "Subject is too long",
+    "messageMin": "Message must be at least 10 characters",
+    "messageMax": "Message is too long",
+    "fields": {
+      "phone": {
+        "label": "Phone Number",
+        "placeholder": "Enter your phone number"
+      },
+      "fullName": {
+        "label": "Full Name",
+        "placeholder": "Enter your full name"
+      },
+      "email": {
+        "label": "Email Address",
+        "placeholder": "Enter your email address"
+      },
+      "subject": {
+        "label": "Subject",
+        "placeholder": "Enter subject"
+      },
+      "message": {
+        "label": "Message"
+      }
+    }
+  },
+  "submit": "Submit"
 }

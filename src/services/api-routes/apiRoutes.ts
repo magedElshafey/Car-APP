@@ -58,4 +58,5 @@ export const apiRoutes = {
   favorites: "favorites/list",
   wishlist: "favorites/toggle",
   myCars: "my-cars",
+  contactUs: "/contact-messages",
 };

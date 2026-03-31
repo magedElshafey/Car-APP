@@ -514,5 +514,43 @@
   "yes": "نعم",
   "no": "لا",
   "login_required": "يرجي تسجيل الدخول اولا",
-  "you need to login first , before adding cars to your wishlist": "يجب عليك تسجيل الدخول أولاً قبل إضافة السيارات إلى قائمة رغباتك"
+  "you need to login first , before adding cars to your wishlist": "يجب عليك تسجيل الدخول أولاً قبل إضافة السيارات إلى قائمة رغباتك",
+  "contact-us": {
+    "title": "تواصل معنا",
+    "description": "يسعدنا تواصلك معنا. لا تتردد في مراسلتنا لأي استفسار أو طلب دعم.",
+    "contact-info": "معلومات التواصل",
+    "form": {
+      "title": "أرسل لنا رسالة"
+    },
+    "phoneRequired": "رقم الهاتف مطلوب",
+    "invalidPhone": "رقم الهاتف غير صالح",
+    "emailRequired": "البريد الإلكتروني مطلوب",
+    "invalidEmail": "البريد الإلكتروني غير صالح",
+    "subjectMin": "يجب أن يكون الموضوع على الأقل 3 أحرف",
+    "subjectMax": "الموضوع طويل جدًا",
+    "messageMin": "يجب أن تكون الرسالة على الأقل 10 أحرف",
+    "messageMax": "الرسالة طويلة جدًا",
+    "fields": {
+      "fullName": {
+        "label": "الاسم الكامل",
+        "placeholder": "أدخل اسمك الكامل"
+      },
+      "phone": {
+        "label": "رقم الهاتف",
+        "placeholder": "أدخل رقم هاتفك"
+      },
+      "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "أدخل بريدك الإلكتروني"
+      },
+      "subject": {
+        "label": "الموضوع",
+        "placeholder": "أدخل الموضوع"
+      },
+      "message": {
+        "label": "الرسالة"
+      }
+    }
+  },
+  "submit": "إرسال"
 }
