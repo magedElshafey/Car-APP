@@ -29,9 +29,12 @@ const CreateCarAdPage: React.FC = () => {
   const [isFeaturesDialogOpen, setIsFeaturesDialogOpen] = useState(false);
   const [selectedFeatureIds, setSelectedFeatureIds] = useState<number[]>([]);
   const [draftFeatureIds, setDraftFeatureIds] = useState<number[]>([]);
-  const [activeFeatureCategory, setActiveFeatureCategory] = useState<string>("");
+  const [activeFeatureCategory, setActiveFeatureCategory] =
+    useState<string>("");
   const [isAttributesDialogOpen, setIsAttributesDialogOpen] = useState(false);
-  const [selectedAttributeIds, setSelectedAttributeIds] = useState<number[]>([]);
+  const [selectedAttributeIds, setSelectedAttributeIds] = useState<number[]>(
+    [],
+  );
   const [draftAttributeIds, setDraftAttributeIds] = useState<number[]>([]);
 
   const {
@@ -59,7 +62,15 @@ const CreateCarAdPage: React.FC = () => {
   const contactPhone = useWatch({ control, name: "contact_phone" });
 
   const carDetailsText = useMemo(
-    () => [carDetails.brand?.name, carDetails.model?.name, carDetails.year, carDetails.trim?.name].filter(Boolean).join(" • "),
+    () =>
+      [
+        carDetails.brand?.name,
+        carDetails.model?.name,
+        carDetails.year,
+        carDetails.trim?.name,
+      ]
+        .filter(Boolean)
+        .join(" • "),
     [carDetails.brand, carDetails.model, carDetails.year, carDetails.trim],
   );
 
@@ -113,37 +124,43 @@ const CreateCarAdPage: React.FC = () => {
     );
   }, [selectedAttributeIds, sortedHighlightTypes]);
 
-  const handleImagesChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = Array.from(event.target.files || []);
+  const handleImagesChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const selectedFiles = Array.from(event.target.files || []);
 
-    if (!selectedFiles.length) {
-      return;
-    }
+      if (!selectedFiles.length) {
+        return;
+      }
 
-    const imageFiles = selectedFiles.filter((file) =>
-      file.type.startsWith("image/"),
-    );
-    const invalidFilesCount = selectedFiles.length - imageFiles.length;
-    const acceptedFiles = imageFiles.slice(0, remainingSlots);
-    const overflowCount = Math.max(0, imageFiles.length - remainingSlots);
+      const imageFiles = selectedFiles.filter((file) =>
+        file.type.startsWith("image/"),
+      );
+      const invalidFilesCount = selectedFiles.length - imageFiles.length;
+      const acceptedFiles = imageFiles.slice(0, remainingSlots);
+      const overflowCount = Math.max(0, imageFiles.length - remainingSlots);
 
-    if (invalidFilesCount > 0) {
-      toast.error(t("createCarAd.toasts.imagesOnly"));
-    }
+      if (invalidFilesCount > 0) {
+        toast.error(t("createCarAd.toasts.imagesOnly"));
+      }
 
-    if (overflowCount > 0) {
-      toast.error(t("createCarAd.toasts.maxImages", { count: MAX_IMAGES }));
-    }
+      if (overflowCount > 0) {
+        toast.error(t("createCarAd.toasts.maxImages", { count: MAX_IMAGES }));
+      }
 
-    if (!acceptedFiles.length) {
+      if (!acceptedFiles.length) {
+        event.target.value = "";
+        return;
+      }
+
+      setUploadedImages((currentImages) => [
+        ...currentImages,
+        ...acceptedFiles,
+      ]);
+      setImagesError("");
       event.target.value = "";
-      return;
-    }
-
-    setUploadedImages((currentImages) => [...currentImages, ...acceptedFiles]);
-    setImagesError("");
-    event.target.value = "";
-  }, [remainingSlots, t]);
+    },
+    [remainingSlots, t],
+  );
 
   const removeImage = useCallback((imageIndex: number) => {
     setUploadedImages((currentImages) => {
@@ -167,14 +184,17 @@ const CreateCarAdPage: React.FC = () => {
     });
   }, []);
 
-  const handleFeaturesDialogChange = useCallback((opened: boolean) => {
-    setIsFeaturesDialogOpen(opened);
-    setDraftFeatureIds(selectedFeatureIds);
+  const handleFeaturesDialogChange = useCallback(
+    (opened: boolean) => {
+      setIsFeaturesDialogOpen(opened);
+      setDraftFeatureIds(selectedFeatureIds);
 
-    if (opened && featureCategories.length && !activeFeatureCategory) {
-      setActiveFeatureCategory(featureCategories[0][0]);
-    }
-  }, [activeFeatureCategory, featureCategories, selectedFeatureIds]);
+      if (opened && featureCategories.length && !activeFeatureCategory) {
+        setActiveFeatureCategory(featureCategories[0][0]);
+      }
+    },
+    [activeFeatureCategory, featureCategories, selectedFeatureIds],
+  );
 
   const applyFeatureSelection = useCallback(() => {
     setSelectedFeatureIds(draftFeatureIds);
@@ -182,7 +202,9 @@ const CreateCarAdPage: React.FC = () => {
   }, [draftFeatureIds]);
 
   const removeSelectedFeature = useCallback((featureId: number) => {
-    setSelectedFeatureIds((current) => current.filter((id) => id !== featureId));
+    setSelectedFeatureIds((current) =>
+      current.filter((id) => id !== featureId),
+    );
   }, []);
 
   const toggleDraftAttribute = useCallback((attributeId: number) => {
@@ -195,10 +217,13 @@ const CreateCarAdPage: React.FC = () => {
     });
   }, []);
 
-  const handleAttributesDialogChange = useCallback((opened: boolean) => {
-    setIsAttributesDialogOpen(opened);
-    setDraftAttributeIds(selectedAttributeIds);
-  }, [selectedAttributeIds]);
+  const handleAttributesDialogChange = useCallback(
+    (opened: boolean) => {
+      setIsAttributesDialogOpen(opened);
+      setDraftAttributeIds(selectedAttributeIds);
+    },
+    [selectedAttributeIds],
+  );
 
   const applyAttributeSelection = useCallback(() => {
     setSelectedAttributeIds(draftAttributeIds);
@@ -221,115 +246,161 @@ const CreateCarAdPage: React.FC = () => {
     setDraftAttributeIds([]);
   }, [clearUploadedImages, reset]);
 
-  const handleCarDetailsChange = useCallback((value: CarDetailsValue) => {
-    setCarDetails(value);
-    if(value?.trim?.id) {
-      setValue("trim_id", value.trim?.id, {
-        shouldValidate: true,
-        shouldDirty: true,
-        shouldTouch: true,
-      });
-    }
-  }, [setValue]);
+  // const handleCarDetailsChange = useCallback(
+  //   (value: CarDetailsValue) => {
+  //     setCarDetails(value);
+  //     if (value?.trim?.id) {
+  //       setValue("trim_id", value.trim?.id, {
+  //         shouldValidate: true,
+  //         shouldDirty: true,
+  //         shouldTouch: true,
+  //       });
+  //     }
+  //   },
+  //   [setValue],
+  // );
+  const toNumberOrUndefined = (value: any) => {
+    if (value === "" || value === null || value === undefined) return undefined;
 
-  const onSubmit = useCallback(async (values: CreateCarAdSchemaType) => {
-    if (!uploadedImages.length) {
-      const message = "createCarAd.validation.imagesRequired";
-      setImagesError(message);
-      toast.error(t(message));
-      return;
-    }
+    const parsed = Number(value);
+    return isNaN(parsed) ? undefined : parsed;
+  };
+  const handleCarDetailsChange = useCallback(
+    (value: CarDetailsValue) => {
+      setCarDetails(value);
 
-    const cityId = values.city_id ?? cities?.find((item) => item.value === values.city)?.id;
+      // 👇 أهم جزء
+      if (value.brand?.id) {
+        setValue("brand_id", value.brand.id, { shouldValidate: true });
+      }
 
-    if (!values.trim_id) {
-      toast.error(t("createCarAd.validation.trimRequired"));
-      return;
-    }
+      if (value.model?.id) {
+        setValue("model_id", value.model.id, { shouldValidate: true });
+      }
 
-    if (!cityId) {
-      toast.error(t("createCarAd.validation.locationRequired"));
-      return;
-    }
+      if (value.year) {
+        setValue("year", value.year, { shouldValidate: true });
+      }
 
-    const financingAvailable = values.can_be_financed === "yes";
+      if (value.trim?.id) {
+        setValue("trim_id", value.trim.id, {
+          shouldValidate: true,
+          shouldDirty: true,
+          shouldTouch: true,
+        });
+      }
+    },
+    [setValue],
+  );
+  const onSubmit = useCallback(
+    async (values: CreateCarAdSchemaType) => {
+      console.log("values", values);
+      if (!uploadedImages.length) {
+        const message = "createCarAd.validation.imagesRequired";
+        setImagesError(message);
+        toast.error(t(message));
+        return;
+      }
 
-    const payload: CreateCarPayload = {
-      trim_id: values.trim_id!,
-      city_id: cityId,
-      sub_type: values.sub_type || undefined,
-      vehicle_type: values.vehicle_type || undefined,
+      const cityId =
+        values.city_id ??
+        cities?.find((item) => item.value === values.city)?.id;
 
-      contact_phone: values.contact_phone,
-      whatsapp_allowed: values.whatsapp_allowed ? 1 : 0,
+      // if (!values.trim_id) {
+      //   toast.error(t("createCarAd.validation.trimRequired"));
+      //   return;
+      // }
 
-      price: Number(values.price),
+      if (!cityId) {
+        toast.error(t("createCarAd.validation.locationRequired"));
+        return;
+      }
 
-      financing_available: financingAvailable ? 1 : 0,
-      financing: financingAvailable
-        ? {
-          down_payment: Number(values.down_payment),
-          duration_months: Number(values.duration_months),
-          monthly_installment: Number(values.monthly_installment),
-        }
-        : null,
+      // const financingAvailable = values.can_be_financed === "yes";
 
-      feature_option_ids: selectedFeatureIds,
-      highlight_type_ids: selectedAttributeIds,
+      const payload: CreateCarPayload = {
+        trim_id: values.trim_id!,
+        city_id: cityId,
+        sub_type: values.sub_type || undefined,
+        vehicle_type: values.vehicle_type || undefined,
+        contact_phone: values.contact_phone,
+        whatsapp_allowed: values.whatsapp_allowed ? 1 : 0,
 
-      images: uploadedImages,
+        price: toNumberOrUndefined(values.price) ?? 0,
 
-      details: {
-        condition: values.condition,
-        color: values.color,
-        transmission: values.transmission,
-        fuel_type: values.fuel_type,
+        // financing_available: financingAvailable ? 1 : 0,
+        // financing: financingAvailable
+        //   ? {
+        //       down_payment: Number(values.down_payment),
+        //       duration_months: Number(values.duration_months),
+        //       monthly_installment: Number(values.monthly_installment),
+        //     }
+        //   : null,
 
-        mileage_km:
-          values.condition === "used" ? Number(values.mileage_km || 0) : undefined,
+        feature_option_ids: selectedFeatureIds,
+        highlight_type_ids: selectedAttributeIds,
 
-        // booleans
-        is_imported: values.is_imported ? 1 : 0,
-        is_taxi: values.is_taxi ? 1 : 0,
-        is_special_needs: values.is_special_needs ? 1 : 0,
+        images: uploadedImages,
 
-        // specs (convert safely)
-        cylinders: values.cylinders ? Number(values.cylinders) : undefined,
-        drive_type: values.drive_type || undefined,
-        fuel_tank_capacity_l: values.fuel_tank_capacity_l
-          ? Number(values.fuel_tank_capacity_l)
-          : undefined,
-        height_mm: values.height_mm ? Number(values.height_mm) : undefined,
-        length_mm: values.length_mm ? Number(values.length_mm) : undefined,
-        width_mm: values.width_mm ? Number(values.width_mm) : undefined,
-        wheelbase_mm: values.wheelbase_mm
-          ? Number(values.wheelbase_mm)
-          : undefined,
+        details: {
+          condition: values.condition,
+          color: values.color,
+          transmission: values.transmission,
+          fuel_type: values.fuel_type,
 
-        power_hp: values.power_hp ? Number(values.power_hp) : undefined,
-        torque_nm: values.torque_nm ? Number(values.torque_nm) : undefined,
-        top_speed_kmh: values.top_speed_kmh
-          ? Number(values.top_speed_kmh)
-          : undefined,
+          mileage_km:
+            values.condition === "used"
+              ? Number(values.mileage_km || 0)
+              : undefined,
 
-        seats: values.seats ? Number(values.seats) : undefined,
-        warranty_km: values.warranty_km
-          ? Number(values.warranty_km)
-          : undefined,
-      },
-    };
+          // booleans
+          is_imported: values.is_imported ? 1 : 0,
+          is_taxi: values.is_taxi ? 1 : 0,
+          is_special_needs: values.is_special_needs ? 1 : 0,
 
-    try {
-      await createCar(payload);
-      toast.success(t("createCarAd.toasts.readyToSubmit"));
-      handleFormReset();
-    } catch (error) {
-      toastApiError(error as Error);
-    }
-  }, [cities, createCar, handleFormReset, selectedAttributeIds, selectedFeatureIds, t, uploadedImages]);
+          // specs (convert safely)
+          cylinders: toNumberOrUndefined(values.cylinders),
+          drive_type: values.drive_type || undefined,
+          fuel_tank_capacity_l: toNumberOrUndefined(
+            values.fuel_tank_capacity_l,
+          ),
+          height_mm: toNumberOrUndefined(values.height_mm),
+
+          length_mm: toNumberOrUndefined(values.length_mm),
+          width_mm: toNumberOrUndefined(values.width_mm),
+          wheelbase_mm: toNumberOrUndefined(values.wheelbase_mm),
+          power_hp: toNumberOrUndefined(values.power_hp),
+          torque_nm: toNumberOrUndefined(values.torque_nm),
+          top_speed_kmh: toNumberOrUndefined(values.top_speed_kmh),
+          seats: toNumberOrUndefined(values.seats),
+          warranty_km: toNumberOrUndefined(values.warranty_km),
+        },
+        brand_id: values.brand_id,
+        model_id: values.model_id,
+        year: values.year,
+      };
+
+      try {
+        await createCar(payload);
+        toast.success(t("createCarAd.toasts.readyToSubmit"));
+        handleFormReset();
+      } catch (error) {
+        toastApiError(error as Error);
+      }
+    },
+    [
+      cities,
+      createCar,
+      handleFormReset,
+      selectedAttributeIds,
+      selectedFeatureIds,
+      t,
+      uploadedImages,
+    ],
+  );
 
   return (
-    <div className="app-container py-10 space-y-4">
+    <div className="py-10 space-y-4 app-container">
       <PageSeo
         title="createCarAd.seo.title"
         description="createCarAd.seo.description"
@@ -337,13 +408,13 @@ const CreateCarAdPage: React.FC = () => {
       />
 
       <div className="max-w-3xl">
-        <span className="inline-flex rounded-full border border-primary/20 bg-white/80 px-4 py-1 text-sm font-semibold text-primary shadow-soft">
+        <span className="inline-flex px-4 py-1 text-sm font-semibold border rounded-full border-primary/20 bg-white/80 text-primary shadow-soft">
           {t("createCarAd.hero.badge")}
         </span>
         <h1 className="mt-5 text-3xl font-semibold text-text-main md:text-5xl">
           {t("createCarAd.hero.title")}
         </h1>
-        <p className="mt-4 max-w-2xl text-sm leading-7 text-text-muted md:text-base">
+        <p className="max-w-2xl mt-4 text-sm leading-7 text-text-muted md:text-base">
           {t("createCarAd.hero.description")}
         </p>
       </div>
@@ -352,7 +423,8 @@ const CreateCarAdPage: React.FC = () => {
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="grid gap-8 xl:grid-cols-[minmax(0,1.5fr)_360px]"
-          noValidate>
+          noValidate
+        >
           <div className="space-y-6">
             <CarImagesUpload
               files={uploadedImages}
@@ -376,7 +448,12 @@ const CreateCarAdPage: React.FC = () => {
               register={register}
             />
 
-            <PricingSection control={control} setValue={setValue} trigger={trigger} errors={errors} />
+            <PricingSection
+              control={control}
+              setValue={setValue}
+              trigger={trigger}
+              errors={errors}
+            />
 
             <FeaturesAttributesSection
               featureCategories={featureCategories}
@@ -407,7 +484,12 @@ const CreateCarAdPage: React.FC = () => {
               trigger={trigger}
             />
 
-            <ContactSection control={control} setValue={setValue} trigger={trigger} errors={errors} />
+            <ContactSection
+              control={control}
+              setValue={setValue}
+              trigger={trigger}
+              errors={errors}
+            />
           </div>
 
           <CreateCarAdSidebar

@@ -14,7 +14,7 @@ import { useAuth } from "@/store/AuthProvider";
 import LogoutButton from "@/features/auth/components/LogoutButton";
 import { useWebsiteSettings } from "@/store/WebsiteSettingsProvider";
 import { CiLogout } from "react-icons/ci";
-
+import { CarTypesProvider } from "@/store/CarTypesProvider";
 type Props = {
   links?: NavLinkItem[];
 };
@@ -71,7 +71,7 @@ const Navbar: React.FC<Props> = ({ links = DEFAULT_LINKS }) => {
   }, [userLabel]);
 
   return (
-    <>
+    <CarTypesProvider>
       <header
         className={[
           "py-2 bg-white",
@@ -158,7 +158,7 @@ const Navbar: React.FC<Props> = ({ links = DEFAULT_LINKS }) => {
         user={user}
         userLabel={userLabel}
       />
-    </>
+    </CarTypesProvider>
   );
 };
 

@@ -1,7 +1,6 @@
 "use client";
 
 import BrandFilter from "./brand-filter";
-import CarTypeFilter from "./car-type-filter";
 import ConditionFilter from "./condition-filter";
 import ColorFilter from "./color-filter";
 import FuelTypeFilter from "./fuel-type-filter";

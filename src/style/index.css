@@ -482,3 +482,23 @@ html {
 .filter-item-menu::-webkit-scrollbar {
     display: none;
 }
+
+.tag {
+    @apply px-2 py-1 text-xs transition border rounded-md border-border text-text-muted hover:bg-surface-2 hover:text-primary;
+}
+
+.btn {
+    @apply flex items-center justify-center gap-2 px-3 py-2 text-sm font-semibold transition rounded-md;
+}
+
+.btn-outline {
+    @apply border border-border bg-surface text-text hover:bg-surface-2;
+}
+
+.btn-success {
+    @apply text-white bg-success hover:opacity-90;
+}
+
+.btn-disabled {
+    @apply cursor-not-allowed bg-surface-2 text-text-muted;
+}

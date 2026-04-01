@@ -49,8 +49,8 @@
       }
     },
     "pricing": {
-      "title": "Car price and financing",
-      "description": "Set the selling price and choose if this car can be financed.",
+      "title": "Car price",
+      "description": "Set the selling price.",
       "fields": {
         "price": {
           "label": "Price",
@@ -552,5 +552,23 @@
       }
     }
   },
-  "submit": "Submit"
+  "submit": "Submit",
+  "view_all": "view all",
+  "km": "km",
+  "egp": "EGP",
+  "contact us": "contact us",
+  "My cars": "My cars",
+  "My favourites": "My wishlist",
+
+  "User Name": "User Name",
+  "Email": "Email",
+  "Phone": "Phone",
+
+  "Saving...": "Saving...",
+
+  "My Cars": "My Cars",
+  "No cars found": "No cars found",
+
+  "My Favourites": "My Favourites",
+  "No favourites yet": "No favourites yet"
 }

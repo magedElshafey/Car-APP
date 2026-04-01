@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { IoIosArrowDown } from "react-icons/io";
 import type { NavLinkItem } from "../data/navbarData";
 import { useTranslation } from "react-i18next";
+import { useCarTypes } from "@/store/CarTypesProvider";
 
 type NavbarLinksProps = {
   links: NavLinkItem[];
@@ -11,33 +12,54 @@ type NavbarLinksProps = {
 const NavbarLinks: React.FC<NavbarLinksProps> = ({ links }) => {
   const location = useLocation();
   const { t } = useTranslation();
-
+  const { types } = useCarTypes();
+  console.log("types is", types);
   const isActiveLink = (href: string) => {
-    const url = new URL(href, window.location.origin);
+    if (!href) return false; // إذا لا يوجد href لا نعتبره active
 
-    const targetPath = url.pathname;
-    const targetParams = url.searchParams;
+    try {
+      const url = new URL(href, window.location.origin);
+      const targetPath = url.pathname;
+      const targetParams = url.searchParams;
 
-    const currentPath = location.pathname;
-    const currentParams = new URLSearchParams(location.search);
+      const currentPath = location.pathname;
+      const currentParams = new URLSearchParams(location.search);
 
-    if (targetPath !== currentPath) return false;
+      if (targetPath !== currentPath) return false;
 
-    // check all params
-    for (const [key, value] of targetParams.entries()) {
-      if (currentParams.get(key) !== value) {
-        return false;
+      // تحقق من جميع البراميترز
+      for (const [key, value] of targetParams.entries()) {
+        if (currentParams.get(key) !== value) return false;
       }
+
+      return true;
+    } catch (e) {
+      console.log(e);
+      return false;
     }
-
-    return true;
   };
+  // ✅ Compose dynamic links
+  const dynamicLinks: NavLinkItem[] = useMemo(() => {
+    const otherVehicles = {
+      id: "other-vehicles",
+      label: t("Other Vehicles"),
+      href: "", // no href
+      list: types?.map((type) => ({
+        id: type.value,
+        label: type.label,
+        href: `/car-browse?filter-condition=used&filter-vehicle_type=${type.value}`,
+      })),
+    };
 
-  if (!links.length) return null;
+    return links
+      .filter((link) => link.id !== "other-vehicles")
+      .concat(otherVehicles);
+  }, [links, types, t]);
+  if (!dynamicLinks.length) return null;
 
   return (
     <ul className="flex items-center gap-4 lg:gap-6">
-      {links.map((link) => {
+      {dynamicLinks.map((link) => {
         const hasChildren = Boolean(link.list?.length);
         const isParentActive =
           isActiveLink(link.href) ||
@@ -76,16 +98,7 @@ const NavbarLinks: React.FC<NavbarLinksProps> = ({ links }) => {
                 "
               >
                 <div className="p-6 border shadow-xl rounded-2xl border-border bg-surface">
-                  <div className="mb-4">
-                    <p className="text-base font-semibold text-text-muted">
-                      {t(link.label)}
-                    </p>
-                    <p className="text-sm text-text-muted">
-                      {t("Browse all categories under")} {t(link.label)}
-                    </p>
-                  </div>
-
-                  <ul className="grid grid-cols-2 gap-3">
+                  <ul className="grid grid-cols-2 gap-3 md:grid-cols-3">
                     {link.list?.map((subLink) => {
                       const isSubActive = isActiveLink(subLink.href);
 
@@ -108,9 +121,6 @@ const NavbarLinks: React.FC<NavbarLinksProps> = ({ links }) => {
                               }`}
                             >
                               {t(subLink.label)}
-                            </p>
-                            <p className="mt-1 text-xs text-text-muted">
-                              {t("Explore")} {t(subLink.label)}
                             </p>
                           </NavLink>
                         </li>

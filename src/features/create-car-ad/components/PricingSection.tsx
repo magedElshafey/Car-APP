@@ -1,6 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Control, FieldErrors, UseFormSetValue, UseFormTrigger, useWatch } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  UseFormSetValue,
+  UseFormTrigger,
+  useWatch,
+} from "react-hook-form";
 import MainInput from "@/common/components/inputs/MainInput";
 import { CreateCarAdSchemaType } from "../schema/createCarAd.schema";
 
@@ -11,44 +17,50 @@ type PricingSectionProps = {
   errors: FieldErrors<CreateCarAdSchemaType>;
 };
 
-const PricingSection: React.FC<PricingSectionProps> = ({ control, setValue, trigger, errors,  }) => {
-
+const PricingSection: React.FC<PricingSectionProps> = ({
+  control,
+  setValue,
+  trigger,
+  errors,
+}) => {
   const { t } = useTranslation();
 
-  const selectedCanBeFinanced = useWatch({ control, name: "can_be_financed" });
+  // const selectedCanBeFinanced = useWatch({ control, name: "can_be_financed" });
   const price = useWatch({ control, name: "price" });
-  const downPayment = useWatch({ control, name: "down_payment" });
-  const durationMonths = useWatch({ control, name: "duration_months" });
-  const monthlyInstallment = useWatch({ control, name: "monthly_installment" });
+  // const downPayment = useWatch({ control, name: "down_payment" });
+  // const durationMonths = useWatch({ control, name: "duration_months" });
+  // const monthlyInstallment = useWatch({ control, name: "monthly_installment" });
 
   return (
-    <section className="rounded-card rounded-2xl border border-slate-300 bg-bg-surface p-6 shadow-soft md:p-8">
+    <section className="p-6 border rounded-card rounded-2xl border-slate-300 bg-bg-surface shadow-soft md:p-8">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-text-main">{t("createCarAd.pricing.title")}</h2>
-        <p className="mt-2 text-sm text-text-muted">{t("createCarAd.pricing.description")}</p>
+        <h2 className="text-xl font-semibold text-text-main">
+          {t("createCarAd.pricing.title")}
+        </h2>
+        <p className="mt-2 text-sm text-text-muted">
+          {t("createCarAd.pricing.description")}
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-        <MainInput
-          label="createCarAd.pricing.fields.price.label"
-          placeholder="createCarAd.pricing.fields.price.placeholder"
-          value={price}
-          onChange={(event) => {
-            setValue("price", event.target.value, {
-              shouldValidate: true,
-              shouldDirty: true,
-              shouldTouch: true,
-            });
-            void trigger("price");
-          }}
-          error={errors.price?.message}
-        />
+      <MainInput
+        label="createCarAd.pricing.fields.price.label"
+        placeholder="createCarAd.pricing.fields.price.placeholder"
+        value={price}
+        onChange={(event) => {
+          setValue("price", event.target.value, {
+            shouldValidate: true,
+            shouldDirty: true,
+            shouldTouch: true,
+          });
+          void trigger("price");
+        }}
+        error={errors.price?.message}
+      />
 
-        <div>
-          <h3 className="mb-3 text-sm font-semibold text-text-main">
+      {/* <h3 className="mb-3 text-sm font-semibold text-text-main">
             {t("createCarAd.pricing.fields.canBeFinanced.label")}
-          </h3>
-          <div className="flex flex-wrap gap-2 py-1">
+          </h3> */}
+      {/* <div className="flex flex-wrap gap-2 py-1">
             {["yes", "no"].map((option) => {
               const isActive = selectedCanBeFinanced === option;
               return (
@@ -68,7 +80,9 @@ const PricingSection: React.FC<PricingSectionProps> = ({ control, setValue, trig
                     if (option === "no") {
                       setValue("down_payment", "", { shouldValidate: true });
                       setValue("duration_months", "", { shouldValidate: true });
-                      setValue("monthly_installment", "", { shouldValidate: true });
+                      setValue("monthly_installment", "", {
+                        shouldValidate: true,
+                      });
                     }
 
                     void trigger([
@@ -79,18 +93,21 @@ const PricingSection: React.FC<PricingSectionProps> = ({ control, setValue, trig
                     ]);
                   }}
                 >
-                  {t(`createCarAd.pricing.fields.canBeFinanced.options.${option}`)}
+                  {t(
+                    `createCarAd.pricing.fields.canBeFinanced.options.${option}`,
+                  )}
                 </button>
               );
             })}
-          </div>
-          {errors.can_be_financed?.message && (
-            <p className="mt-2 text-xs text-red-500">{t(errors.can_be_financed.message)}</p>
-          )}
-        </div>
+          </div> */}
+      {/* {errors.can_be_financed?.message && (
+            <p className="mt-2 text-xs text-red-500">
+              {t(errors.can_be_financed.message)}
+            </p>
+          )} */}
 
-        {selectedCanBeFinanced === "yes" && (
-          <div className="md:col-span-2 rounded-2xl bg-slate-50/40 p-4">
+      {/* {selectedCanBeFinanced === "yes" && (
+          <div className="p-4 md:col-span-2 rounded-2xl bg-slate-50/40">
             <p className="mb-4 text-sm font-semibold text-text-main">
               {t("createCarAd.pricing.financing.title")}
             </p>
@@ -142,8 +159,7 @@ const PricingSection: React.FC<PricingSectionProps> = ({ control, setValue, trig
               />
             </div>
           </div>
-        )}
-      </div>
+        )} */}
     </section>
   );
 };

@@ -11,7 +11,10 @@ const useCreateCarAdForm = () => {
     mode: "onTouched",
     reValidateMode: "onChange",
     defaultValues: {
-           trim_id: undefined,
+      brand_id: undefined,
+      model_id: undefined,
+      year: "",
+      trim_id: undefined,
       city_id: undefined,
 
       sub_type: "",

@@ -21,6 +21,11 @@ const Footer: React.FC<FooterProps> = ({
       label: "about us",
       href: "/about",
     },
+    {
+      id: "contact us",
+      label: "contact us",
+      href: "/contact-us",
+    },
   ],
 }) => {
   const footerGroups = useMemo(

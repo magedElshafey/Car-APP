@@ -10,7 +10,7 @@ import useGetTrims from "@/features/browse/hooks/use-get-trims";
 type Option = {
   id: number;
   name: string;
-}
+};
 
 export type CarDetailsValue = {
   brand?: Option;
@@ -50,10 +50,11 @@ const CarDetails: React.FC<CarDetailsProps> = ({
     selectedBrandId ? String(selectedBrandId) : undefined,
   );
 
-  const {
-    data: trims = [],
-    isLoading: trimsLoading
-  } = useGetTrims(brand?.id, model?.id, year)
+  const { data: trims = [], isLoading: trimsLoading } = useGetTrims(
+    brand?.id,
+    model?.id,
+    year,
+  );
 
   const arrowClass = i18n.dir() === "rtl" ? "rotate-180" : "rotate-0";
 
@@ -108,7 +109,6 @@ const CarDetails: React.FC<CarDetailsProps> = ({
     return years.filter((item) => item.toLowerCase().includes(keyword));
   }, [yearSearch, years]);
 
-
   const filteredTrims = useMemo(() => {
     const keyword = trimSearch.trim().toLowerCase();
     if (!keyword) return trims;
@@ -117,7 +117,9 @@ const CarDetails: React.FC<CarDetailsProps> = ({
 
   const isEmptySelection = !brand?.id && !model?.id && !year;
 
-  const triggerValue = [brand?.name, model?.name, year, trim?.name].filter(Boolean).join(" • ");
+  const triggerValue = [brand?.name, model?.name, year, trim?.name]
+    .filter(Boolean)
+    .join(" • ");
 
   return (
     <>
@@ -132,19 +134,20 @@ const CarDetails: React.FC<CarDetailsProps> = ({
 
       {opened && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
+          className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/40"
           onClick={() => setOpened(false)}
         >
           <div
-            className={`rounded-2xl w-fit border-none outline-none h-[min(600px,90%)] bg-white shadow-lg ${isEmptySelection ? "max-w-md p-0" : "max-w-none"
-              }`}
+            className={`rounded-2xl w-fit border-none outline-none h-[min(600px,90%)] bg-white shadow-lg ${
+              isEmptySelection ? "max-w-md p-0" : "max-w-none"
+            }`}
             onClick={(event) => event.stopPropagation()}
           >
             <>
               <div className="border-none">
                 <div className="flex flex-col gap-4 md:flex-row">
                   <div className="min-w-0 flex-1 w-96 rounded-lg max-h-[500px] flex flex-col">
-                    <div className="border-b border-slate-200 px-3 py-3 text-center">
+                    <div className="px-3 py-3 text-center border-b border-slate-200">
                       <h4 className="text-2xl font-semibold text-text-main">
                         {t("createCarAd.carDetails.brands.title")}
                       </h4>
@@ -156,13 +159,15 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                         value={brandSearch}
                         onChange={(event) => setBrandSearch(event.target.value)}
                         placeholder={t("createCarAd.carDetails.brands.search")}
-                        className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-text-main outline-none focus:border-primary"
+                        className="w-full px-3 py-2 text-sm border rounded-lg outline-none border-slate-300 text-text-main focus:border-primary"
                       />
                     </div>
 
-                    <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-100">
+                    <div className="flex-1 min-h-0 overflow-y-auto border-t border-slate-100">
                       {brandsLoading ? (
-                        <p className="p-4 text-sm text-text-muted">{t("createCarAd.carDetails.loading")}</p>
+                        <p className="p-4 text-sm text-text-muted">
+                          {t("createCarAd.carDetails.loading")}
+                        </p>
                       ) : filteredBrands.length ? (
                         filteredBrands.map((item) => {
                           const isActive = draft.brand?.id === item.id;
@@ -180,20 +185,21 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                                   },
                                   model: undefined,
                                   year: "",
-                                  trim : undefined,
+                                  trim: undefined,
                                 };
                                 setDraft(next);
                                 setSelectedBrandId(item.id);
                                 onChange(next);
                               }}
-                              className={`group flex w-full items-center justify-between gap-3 px-3 py-2 text-sm transition-colors ${isActive
+                              className={`group flex w-full items-center justify-between gap-3 px-3 py-2 text-sm transition-colors ${
+                                isActive
                                   ? "bg-blue-100 text-text-main"
                                   : "hover:bg-slate-50 text-text-main"
-                                }`}
+                              }`}
                             >
                               <div className="flex items-center gap-2">
                                 {isActive && (
-                                  <span className="inline-flex h-5 w-5 items-center justify-center rounded-md bg-white text-blue-500">
+                                  <span className="inline-flex items-center justify-center w-5 h-5 text-blue-500 bg-white rounded-md">
                                     <FiCheck size={13} />
                                   </span>
                                 )}
@@ -208,14 +214,16 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                           );
                         })
                       ) : (
-                        <p className="p-4 text-sm text-text-muted">{t("createCarAd.carDetails.empty")}</p>
+                        <p className="p-4 text-sm text-text-muted">
+                          {t("createCarAd.carDetails.empty")}
+                        </p>
                       )}
                     </div>
                   </div>
 
                   {selectedBrandId && (
                     <div className="min-w-0 flex-1 max-w-2xl rounded-lg max-h-[500px] flex flex-col">
-                      <div className="border-b border-slate-200 px-3 py-3 text-center">
+                      <div className="px-3 py-3 text-center border-b border-slate-200">
                         <h4 className="text-2xl font-semibold text-text-main">
                           {t("createCarAd.carDetails.models.title")}
                         </h4>
@@ -225,13 +233,17 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                         <input
                           type="text"
                           value={modelSearch}
-                          onChange={(event) => setModelSearch(event.target.value)}
-                          placeholder={t("createCarAd.carDetails.models.search")}
-                          className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-text-main outline-none focus:border-primary"
+                          onChange={(event) =>
+                            setModelSearch(event.target.value)
+                          }
+                          placeholder={t(
+                            "createCarAd.carDetails.models.search",
+                          )}
+                          className="w-full px-3 py-2 text-sm border rounded-lg outline-none border-slate-300 text-text-main focus:border-primary"
                         />
                       </div>
 
-                      <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-100">
+                      <div className="flex-1 min-h-0 overflow-y-auto border-t border-slate-100">
                         {modelsLoading ? (
                           <p className="p-4 text-sm text-text-muted">
                             {t("createCarAd.carDetails.loading")}
@@ -249,7 +261,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                                     ...draft,
                                     model: {
                                       id: item.id,
-                                      name: item.name
+                                      name: item.name,
                                     },
                                     year: "",
                                     trim: undefined,
@@ -257,18 +269,21 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                                   setDraft(next);
                                   onChange(next);
                                 }}
-                                className={`group flex w-full items-center justify-between gap-3 px-3 py-2 text-sm transition-colors ${isActive
+                                className={`group flex w-full items-center justify-between gap-3 px-3 py-2 text-sm transition-colors ${
+                                  isActive
                                     ? "bg-blue-100 text-text-main"
                                     : "hover:bg-slate-50 text-text-main"
-                                  }`}
+                                }`}
                               >
                                 <div className="flex items-center gap-2">
                                   {isActive && (
-                                    <span className="inline-flex h-5 w-5 items-center justify-center rounded-md bg-white text-blue-500">
+                                    <span className="inline-flex items-center justify-center w-5 h-5 text-blue-500 bg-white rounded-md">
                                       <FiCheck size={13} />
                                     </span>
                                   )}
-                                  <span className="font-medium">{item.name}</span>
+                                  <span className="font-medium">
+                                    {item.name}
+                                  </span>
                                 </div>
                                 <FiChevronRight
                                   size={16}
@@ -278,7 +293,9 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                             );
                           })
                         ) : (
-                          <p className="p-4 text-sm text-text-muted">{t("createCarAd.carDetails.empty")}</p>
+                          <p className="p-4 text-sm text-text-muted">
+                            {t("createCarAd.carDetails.empty")}
+                          </p>
                         )}
                       </div>
                     </div>
@@ -286,7 +303,7 @@ const CarDetails: React.FC<CarDetailsProps> = ({
 
                   {draft.model?.id && (
                     <div className="min-w-0 flex-1 rounded-lg max-h-[500px] flex flex-col">
-                      <div className="border-b border-slate-200 px-3 py-3 text-center">
+                      <div className="px-3 py-3 text-center border-b border-slate-200">
                         <h4 className="text-2xl font-semibold text-text-main">
                           {t("createCarAd.carDetails.years.title")}
                         </h4>
@@ -296,13 +313,15 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                         <input
                           type="text"
                           value={yearSearch}
-                          onChange={(event) => setYearSearch(event.target.value)}
+                          onChange={(event) =>
+                            setYearSearch(event.target.value)
+                          }
                           placeholder={t("createCarAd.carDetails.years.search")}
-                          className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-text-main outline-none focus:border-primary"
+                          className="w-full px-3 py-2 text-sm border rounded-lg outline-none border-slate-300 text-text-main focus:border-primary"
                         />
                       </div>
 
-                      <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-100">
+                      <div className="flex-1 min-h-0 overflow-y-auto border-t border-slate-100">
                         {filteredYears.length ? (
                           filteredYears.map((item) => {
                             const isActive = draft.year === item;
@@ -320,14 +339,15 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                                   setDraft(next);
                                   onChange(next);
                                 }}
-                                className={`group flex w-full items-center justify-between gap-3 px-3 py-2 text-sm transition-colors ${isActive
+                                className={`group flex w-full items-center justify-between gap-3 px-3 py-2 text-sm transition-colors ${
+                                  isActive
                                     ? "bg-blue-100 text-text-main"
                                     : "hover:bg-slate-50 text-text-main"
-                                  }`}
+                                }`}
                               >
                                 <div className="flex items-center gap-2">
                                   {isActive && (
-                                    <span className="inline-flex h-5 w-5 items-center justify-center rounded-md bg-white text-blue-500">
+                                    <span className="inline-flex items-center justify-center w-5 h-5 text-blue-500 bg-white rounded-md">
                                       <FiCheck size={13} />
                                     </span>
                                   )}
@@ -341,14 +361,16 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                             );
                           })
                         ) : (
-                          <p className="p-4 text-sm text-text-muted">{t("createCarAd.carDetails.empty")}</p>
+                          <p className="p-4 text-sm text-text-muted">
+                            {t("createCarAd.carDetails.empty")}
+                          </p>
                         )}
                       </div>
                     </div>
                   )}
                   {draft.year && (
                     <div className="min-w-0 flex-1 rounded-lg max-h-[500px] flex flex-col">
-                      <div className="border-b border-slate-200 px-3 py-3 text-center">
+                      <div className="px-3 py-3 text-center border-b border-slate-200">
                         <h4 className="text-2xl font-semibold text-text-main">
                           {t("createCarAd.carDetails.trims.title")}
                         </h4>
@@ -358,15 +380,19 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                         <input
                           type="text"
                           value={yearSearch}
-                          onChange={(event) => setTrimSearch(event.target.value)}
+                          onChange={(event) =>
+                            setTrimSearch(event.target.value)
+                          }
                           placeholder={t("createCarAd.carDetails.years.search")}
-                          className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-text-main outline-none focus:border-primary"
+                          className="w-full px-3 py-2 text-sm border rounded-lg outline-none border-slate-300 text-text-main focus:border-primary"
                         />
                       </div>
 
-                      <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-100">
+                      <div className="flex-1 min-h-0 overflow-y-auto border-t border-slate-100">
                         {trimsLoading ? (
-                          <p className="p-4 text-sm text-text-muted">{t("createCarAd.carDetails.loading")}</p>
+                          <p className="p-4 text-sm text-text-muted">
+                            {t("createCarAd.carDetails.loading")}
+                          </p>
                         ) : filteredTrims.length ? (
                           filteredTrims.map((item) => {
                             const isActive = draft.trim?.id === item.id;
@@ -380,24 +406,27 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                                     ...draft,
                                     trim: {
                                       id: item.id,
-                                      name: item.name
+                                      name: item.name,
                                     },
                                   };
                                   setDraft(next);
                                   onChange(next);
                                 }}
-                                className={`group flex w-full items-center justify-between gap-3 px-3 py-2 text-sm transition-colors ${isActive
+                                className={`group flex w-full items-center justify-between gap-3 px-3 py-2 text-sm transition-colors ${
+                                  isActive
                                     ? "bg-blue-100 text-text-main"
                                     : "hover:bg-slate-50 text-text-main"
-                                  }`}
+                                }`}
                               >
                                 <div className="flex items-center gap-2">
                                   {isActive && (
-                                    <span className="inline-flex h-5 w-5 items-center justify-center rounded-md bg-white text-blue-500">
+                                    <span className="inline-flex items-center justify-center w-5 h-5 text-blue-500 bg-white rounded-md">
                                       <FiCheck size={13} />
                                     </span>
                                   )}
-                                  <span className="font-medium">{item.name}</span>
+                                  <span className="font-medium">
+                                    {item.name}
+                                  </span>
                                 </div>
                                 <FiChevronRight
                                   size={16}
@@ -407,16 +436,17 @@ const CarDetails: React.FC<CarDetailsProps> = ({
                             );
                           })
                         ) : (
-                          <p className="p-4 text-sm text-text-muted">{t("createCarAd.carDetails.empty")}</p>
+                          <p className="p-4 text-sm text-text-muted">
+                            {t("createCarAd.carDetails.empty")}
+                          </p>
                         )}
                       </div>
                     </div>
-
                   )}
                 </div>
               </div>
 
-              <div className="border-t border-slate-200 p-3">
+              <div className="p-3 border-t border-slate-200">
                 <MainBtn
                   type="button"
                   className="w-full"

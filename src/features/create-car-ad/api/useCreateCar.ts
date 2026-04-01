@@ -13,12 +13,12 @@ export type CreateCarPayload = {
 
   price: number;
 
-  financing_available: 0 | 1;
-  financing: {
-    down_payment: number;
-    duration_months: number;
-    monthly_installment: number;
-  } | null;
+  // financing_available: 0 | 1;
+  // financing: {
+  //   down_payment: number;
+  //   duration_months: number;
+  //   monthly_installment: number;
+  // } | null;
 
   feature_option_ids: number[];
   highlight_type_ids: number[];
@@ -54,6 +54,9 @@ export type CreateCarPayload = {
     seats?: number;
     warranty_km?: number;
   };
+  brand_id: number;
+  model_id: number;
+  year: string;
 };
 
 const useCreateCar = () => {

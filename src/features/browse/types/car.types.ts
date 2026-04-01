@@ -68,11 +68,11 @@ export type CarDetails = {
   details: {
     condition: string;
     condition_label: string;
-    mileage_km: number;
+    mileage_km?: number;
     transmission: string;
     transmission_label: string;
     fuel_type: string;
-    fuel_type_label: string;
+    fuel_type_label?: string;
     color: string;
     color_label: string;
     is_imported: boolean;
