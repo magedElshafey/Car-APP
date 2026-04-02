@@ -19,14 +19,8 @@ const useAddFavorite = () => {
     },
     onSuccess: async (response) => {
       toast.success(response.message);
-      const promises = [];
-      promises.push(
-        queryClient.invalidateQueries({ queryKey: [apiRoutes.cars] }),
-      );
-      promises.push(
-        queryClient.invalidateQueries({ queryKey: [apiRoutes.favorites] }),
-      );
-      await Promise.all(promises);
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.cars] });
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.favorites] });
     },
   });
 };

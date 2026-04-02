@@ -7,71 +7,73 @@ import { useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
 
 const BrandFilterMenu = () => {
-    const { 
-        states: {
-            brand
-        },
-        handlers: {
-            handleUniqueChange
-        }
-    } = useFilters();
-    const { value: search } = useFilterSearch();
-    const {t} = useTranslation();
+  const {
+    states: { brand },
+    handlers: { handleUniqueChange },
+  } = useFilters();
+  const { value: search } = useFilterSearch();
+  const { t } = useTranslation();
 
-    const {
-        data: brands,
-        isLoading: brandsLoading
-    } = useGetBrands();
+  const { data: brands, isLoading: brandsLoading } = useGetBrands();
 
-    const activeBrand = parseInt(brand?.value || "") || undefined;
-    const filteredBrands = useMemo(() => {
-        if(!search) return brands;
-        return brands?.filter(brand => brand.name.toLowerCase().includes(search.toLowerCase()));
-    }, [brands, search]);
-
-    useEffect(() => {
-        if(brands && brand?.value && !brand.label) {
-            const active = brands.find(b => b.id.toString() === brand.value);
-            if(active) {
-                handleUniqueChange("brand", {
-                    label: active.name,
-                    value: brand.value 
-                });
-            }
-        }
-    }, [brands, brand, handleUniqueChange]);
-
-    if(brandsLoading) return <SkeletonFilterList /> 
-
-    return (
-        <div className="bg-slate-100 rounded-sm p-1">
-            {Boolean(filteredBrands?.length) ? filteredBrands?.map(brand => (
-                <button 
-                    className={`py-2 block w-full text-start rounded px-2 duration-75 cursor-pointer font-semibold text-sm ${activeBrand === brand.id ? "text-blue-400 bg-blue-50" : "hover:bg-slate-300"}`} key={brand.id}
-                    onClick={() => {
-                        handleUniqueChange("brand", {
-                            label: brand.name,
-                            value: brand.id.toString()
-                        });
-                        handleUniqueChange("model", undefined);
-                    }}
-                >
-                    {brand.name}
-                </button>
-            )): <div className="py-2 block w-full text-start rounded px-2 text-sm text-gray-500">{t("no results found")}</div>}
-        </div>
+  const activeBrand = parseInt(brand?.value || "") || undefined;
+  const filteredBrands = useMemo(() => {
+    if (!search) return brands;
+    return brands?.filter((brand) =>
+      brand.name.toLowerCase().includes(search.toLowerCase()),
     );
-}
+  }, [brands, search]);
+
+  useEffect(() => {
+    if (brands && brand?.value && !brand.label) {
+      const active = brands.find((b) => b.id.toString() === brand.value);
+      if (active) {
+        handleUniqueChange("brand", {
+          label: active.name,
+          value: brand.value,
+        });
+      }
+    }
+  }, [brands, brand, handleUniqueChange]);
+
+  if (brandsLoading) return <SkeletonFilterList />;
+
+  return (
+    <div className="p-1 rounded-sm bg-slate-100">
+      {Boolean(filteredBrands?.length) ? (
+        filteredBrands?.map((brand) => (
+          <button
+            className={`py-2 block w-full text-start rounded px-2 duration-75 cursor-pointer font-semibold text-sm ${activeBrand === brand.id ? "text-blue-400 bg-blue-50" : "hover:bg-slate-300"}`}
+            key={brand.id}
+            onClick={() => {
+              handleUniqueChange("brand", {
+                label: brand.name,
+                value: brand.id.toString(),
+              });
+              handleUniqueChange("model", undefined);
+            }}
+          >
+            {brand.name}
+          </button>
+        ))
+      ) : (
+        <div className="block w-full px-2 py-2 text-sm text-gray-500 rounded text-start">
+          {t("no results found")}
+        </div>
+      )}
+    </div>
+  );
+};
 
 const BrandFilter = () => {
-    return (
-        <FilterItem filterKey="brand">
-            <FilterItem.Header showLabel title="browse.filters.brand" />
-            <FilterItem.Menu searchable>
-                <BrandFilterMenu />
-            </FilterItem.Menu>
-        </FilterItem>
-    );
+  return (
+    <FilterItem filterKey="brand">
+      <FilterItem.Header showLabel title="browse.filters.brand" />
+      <FilterItem.Menu searchable>
+        <BrandFilterMenu />
+      </FilterItem.Menu>
+    </FilterItem>
+  );
 };
 
 export default BrandFilter;

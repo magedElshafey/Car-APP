@@ -396,7 +396,7 @@
       "model": "الموديل",
       "fuelType": "نوع الوقود",
       "color": "اللون",
-      "carType": "نوع السيارة",
+      "carType": "نوع المركبة",
       "transmission": "ناقل الحركة",
       "condition": "الحالة",
       "year": "السنة",
@@ -570,5 +570,7 @@
   "No cars found": "لا توجد سيارات",
 
   "My Favourites": "المفضلة",
-  "No favourites yet": "لا توجد عناصر في المفضلة بعد"
+  "No favourites yet": "لا توجد عناصر في المفضلة بعد",
+  "cancel": "إلغاء",
+  "no results found": "تعثر العثور علي بيانات"
 }

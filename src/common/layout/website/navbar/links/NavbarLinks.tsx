@@ -47,7 +47,7 @@ const NavbarLinks: React.FC<NavbarLinksProps> = ({ links }) => {
       list: types?.map((type) => ({
         id: type.value,
         label: type.label,
-        href: `/car-browse?filter-condition=used&filter-vehicle_type=${type.value}`,
+        href: `/car-browse?filter-vehicle_type=${type.value}`,
       })),
     };
 
