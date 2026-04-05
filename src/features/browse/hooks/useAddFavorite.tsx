@@ -12,6 +12,7 @@ const useAddFavorite = () => {
     mutationFn: async (car_id: number) => {
       queryClient.cancelQueries({ queryKey: [apiRoutes.favorites] });
       queryClient.cancelQueries({ queryKey: [apiRoutes.cars] });
+      queryClient.cancelQueries({ queryKey: [apiRoutes.favs] });
       const { data } = await Axios.post<Response<unknown>>(apiRoutes.wishlist, {
         car_id,
       });
@@ -21,6 +22,7 @@ const useAddFavorite = () => {
       toast.success(response.message);
       queryClient.invalidateQueries({ queryKey: [apiRoutes.cars] });
       queryClient.invalidateQueries({ queryKey: [apiRoutes.favorites] });
+      queryClient.invalidateQueries({ queryKey: [apiRoutes.favs] });
     },
   });
 };

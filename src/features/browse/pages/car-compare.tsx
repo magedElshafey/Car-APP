@@ -18,23 +18,24 @@ const CompareCarHeader = ({
   const image = car?.images?.[0] || "/images/cars/car-1.png";
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-stone-200 bg-white">
-      <div className="border-b border-stone-100 px-5 py-3 text-center text-sm font-semibold text-stone-500">
+    <div className="overflow-hidden bg-white border rounded-2xl border-stone-200">
+      <div className="px-5 py-3 text-sm font-semibold text-center border-b border-stone-100 text-stone-500">
         {title}
       </div>
-      <div className="flex h-56 flex-col items-center justify-center px-5 py-4 text-center">
+      <div className="flex flex-col items-center justify-center h-56 px-5 py-4 text-center">
         {car ? (
           <>
             <img
               src={image}
               alt={`${car.car.brand} ${car.car.model}`}
-              className="mx-auto mb-3 h-24 w-auto object-contain"
+              className="object-contain w-auto h-24 mx-auto mb-3"
             />
             <p className="text-2xl font-extrabold text-stone-900">
               {car.car.brand} {car.car.model} {car.car.year}
             </p>
             <p className="mt-2 text-sm font-semibold text-stone-700">
-              {t("compare.startsFrom")} {formatPrice(Number(car.price), i18n.language)} {t("EGP")}
+              {t("compare.startsFrom")}{" "}
+              {formatPrice(Number(car.price), i18n.language)} {t("EGP")}
             </p>
           </>
         ) : (
@@ -53,7 +54,8 @@ const PresenceIcon = ({ active }: { active: boolean }) => {
   );
 };
 
-const normalize = (value?: string | null) => (value || "-").toString().trim() || "-";
+const normalize = (value?: string | null) =>
+  (value || "-").toString().trim() || "-";
 
 const boolToLabel = (value: boolean | undefined, t: (key: string) => string) =>
   value ? t("compare.yes") : t("compare.no");
@@ -68,82 +70,78 @@ const CarComparePage = () => {
 
   const basicRows = useMemo(() => {
     return [
-          {
-      id: "price",
-      label: t("compare.price"),
-      left: leftCar ? `${leftCar.price} ${t("EGP")}` : "-",
-      right: rightCar ? `${rightCar.price} ${t("EGP")}` : "-",
-    },
-    {
-      id: "condition",
-      label: t("compare.condition"),
-      left: normalize(leftCar?.details.condition_label),
-      right: normalize(rightCar?.details.condition_label),
-    },
-    {
-      id: "transmission",
-      label: t("compare.transmission"),
-      left: normalize(leftCar?.details.transmission_label),
-      right: normalize(rightCar?.details.transmission_label),
-    },
-    {
-      id: "fuel",
-      label: t("compare.fuelType"),
-      left: normalize(leftCar?.details.fuel_type_label),
-      right: normalize(rightCar?.details.fuel_type_label),
-    },
-    {
-      id: "color",
-      label: t("compare.color"),
-      left: normalize(leftCar?.details.color_label),
-      right: normalize(rightCar?.details.color_label),
-    },
-    {
-      id: "mileage",
-      label: t("compare.mileage"),
-      left: leftCar
-        ? `${leftCar.details.mileage_km} ${t("km")}`
-        : "-",
-      right: rightCar
-        ? `${rightCar.details.mileage_km} ${t("km")}`
-        : "-",
-    },
-    {
-      id: "city",
-      label: t("compare.city"),
-      left: normalize(leftCar?.city),
-      right: normalize(rightCar?.city),
-    },
-    {
-      id: "imported",
-      label: t("compare.imported"),
-      left: boolToLabel(leftCar?.details.is_imported, t),
-      right: boolToLabel(rightCar?.details.is_imported, t),
-    },
-    {
-      id: "taxi",
-      label: t("compare.taxi"),
-      left: boolToLabel(leftCar?.details.is_taxi, t),
-      right: boolToLabel(rightCar?.details.is_taxi, t),
-    },
-    {
-      id: "special-needs",
-      label: t("compare.specialNeeds"),
-      left: boolToLabel(leftCar?.details.is_special_needs, t),
-      right: boolToLabel(rightCar?.details.is_special_needs, t),
-    },
-    {
-      id: "whatsapp",
-      label: t("compare.whatsappAllowed"),
-      left: boolToLabel(leftCar?.whatsapp_allowed, t),
-      right: boolToLabel(rightCar?.whatsapp_allowed, t),
-    },
-    {
-      id: "financing",
-      label: t("compare.financingAvailable"),
-      left: boolToLabel(leftCar?.financing_available, t),
-      right: boolToLabel(rightCar?.financing_available, t),
-    },
+      {
+        id: "price",
+        label: t("compare.price"),
+        left: leftCar ? `${leftCar.price} ${t("EGP")}` : "-",
+        right: rightCar ? `${rightCar.price} ${t("EGP")}` : "-",
+      },
+      {
+        id: "condition",
+        label: t("compare.condition"),
+        left: normalize(leftCar?.details.condition_label),
+        right: normalize(rightCar?.details.condition_label),
+      },
+      {
+        id: "transmission",
+        label: t("compare.transmission"),
+        left: normalize(leftCar?.details.transmission_label),
+        right: normalize(rightCar?.details.transmission_label),
+      },
+      {
+        id: "fuel",
+        label: t("compare.fuelType"),
+        left: normalize(leftCar?.details.fuel_type_label),
+        right: normalize(rightCar?.details.fuel_type_label),
+      },
+      {
+        id: "color",
+        label: t("compare.color"),
+        left: normalize(leftCar?.details.color_label),
+        right: normalize(rightCar?.details.color_label),
+      },
+      {
+        id: "mileage",
+        label: t("compare.mileage"),
+        left: leftCar ? `${leftCar.details.mileage_km} ${t("km")}` : "-",
+        right: rightCar ? `${rightCar.details.mileage_km} ${t("km")}` : "-",
+      },
+      {
+        id: "city",
+        label: t("compare.city"),
+        left: normalize(leftCar?.city),
+        right: normalize(rightCar?.city),
+      },
+      {
+        id: "imported",
+        label: t("compare.imported"),
+        left: boolToLabel(leftCar?.details.is_imported, t),
+        right: boolToLabel(rightCar?.details.is_imported, t),
+      },
+      {
+        id: "taxi",
+        label: t("compare.taxi"),
+        left: boolToLabel(leftCar?.details.is_taxi, t),
+        right: boolToLabel(rightCar?.details.is_taxi, t),
+      },
+      {
+        id: "special-needs",
+        label: t("compare.specialNeeds"),
+        left: boolToLabel(leftCar?.details.is_special_needs, t),
+        right: boolToLabel(rightCar?.details.is_special_needs, t),
+      },
+      {
+        id: "whatsapp",
+        label: t("compare.whatsappAllowed"),
+        left: boolToLabel(leftCar?.whatsapp_allowed, t),
+        right: boolToLabel(rightCar?.whatsapp_allowed, t),
+      },
+      {
+        id: "financing",
+        label: t("compare.financingAvailable"),
+        left: boolToLabel(leftCar?.financing_available, t),
+        right: boolToLabel(rightCar?.financing_available, t),
+      },
     ];
   }, [leftCar, rightCar, t]);
 
@@ -162,7 +160,9 @@ const CarComparePage = () => {
   }, [leftCar]);
 
   const rightFeatureSet = useMemo(() => {
-    return new Set((rightCar?.features || []).flatMap((group) => group.options));
+    return new Set(
+      (rightCar?.features || []).flatMap((group) => group.options),
+    );
   }, [rightCar]);
 
   const leftHighlightSet = useMemo(() => {
@@ -174,14 +174,18 @@ const CarComparePage = () => {
   }, [rightCar]);
 
   return (
-    <section className="app-container py-8">
-      <div className="mx-auto max-w-7xl space-y-6">
+    <section className="py-8 app-container">
+      <div className="mx-auto space-y-6 max-w-7xl">
         <div>
-          <h1 className="text-2xl font-bold text-stone-900 md:text-3xl">{t("compare.title")}</h1>
-          <p className="mt-2 text-sm text-stone-600 md:text-base">{t("compare.subtitle")}</p>
+          <h1 className="text-2xl font-bold text-stone-900 md:text-3xl">
+            {t("compare.title")}
+          </h1>
+          <p className="mt-2 text-sm text-stone-600 md:text-base">
+            {t("compare.subtitle")}
+          </p>
         </div>
 
-        <div className="flex flex-col gap-4 justify-around items-start md:flex-row md:gap-6">
+        <div className="flex flex-col items-start justify-around gap-4 md:flex-row md:gap-6">
           <CarCompareSearchInput
             label={t("compare.firstCar")}
             placeholder={t("compare.searchPlaceholder")}
@@ -196,16 +200,16 @@ const CarComparePage = () => {
           />
         </div>
 
-        <div className="rounded-2xl border border-stone-200 bg-white p-4 lg:p-5">
+        <div className="p-4 bg-white border rounded-2xl border-stone-200 lg:p-5">
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[280px_minmax(0,1fr)_minmax(0,1fr)]">
             <div className="hidden lg:block" />
             <CompareCarHeader car={leftCar} title={t("compare.firstCar")} />
             <CompareCarHeader car={rightCar} title={t("compare.secondCar")} />
           </div>
 
-          <div className="mt-5 overflow-hidden rounded-2xl border border-stone-200 bg-white">
+          <div className="mt-5 overflow-hidden bg-white border rounded-2xl border-stone-200">
             <div className="grid grid-cols-1 border-b border-stone-200 bg-stone-50 lg:grid-cols-[280px_minmax(0,1fr)_minmax(0,1fr)]">
-              <div className="px-4 py-3 text-sm font-bold uppercase tracking-wide text-stone-500">
+              <div className="px-4 py-3 text-sm font-bold tracking-wide uppercase text-stone-500">
                 {t("compare.basicAttributes")}
               </div>
               <div />
@@ -216,14 +220,20 @@ const CarComparePage = () => {
                 key={row.id}
                 className="grid grid-cols-1 border-b border-stone-100 lg:grid-cols-[280px_minmax(0,1fr)_minmax(0,1fr)]"
               >
-                <div className="px-4 py-3 font-semibold text-stone-700">{row.label}</div>
-                <div className="px-4 py-3 text-center font-medium text-stone-800">{row.left}</div>
-                <div className="px-4 py-3 text-center font-medium text-stone-800">{row.right}</div>
+                <div className="px-4 py-3 font-semibold text-stone-700">
+                  {row.label}
+                </div>
+                <div className="px-4 py-3 font-medium text-center text-stone-800">
+                  {row.left}
+                </div>
+                <div className="px-4 py-3 font-medium text-center text-stone-800">
+                  {row.right}
+                </div>
               </div>
             ))}
 
             <div className="grid grid-cols-1 border-b border-t border-stone-200 bg-stone-50 lg:grid-cols-[280px_minmax(0,1fr)_minmax(0,1fr)]">
-              <div className="px-4 py-3 text-sm font-bold uppercase tracking-wide text-stone-500">
+              <div className="px-4 py-3 text-sm font-bold tracking-wide uppercase text-stone-500">
                 {t("compare.highlights")}
               </div>
               <div />
@@ -234,14 +244,20 @@ const CarComparePage = () => {
                 key={name}
                 className="grid grid-cols-1 border-b border-stone-100 lg:grid-cols-[280px_minmax(0,1fr)_minmax(0,1fr)]"
               >
-                <div className="px-4 py-3 font-semibold text-stone-700">{name}</div>
-                <div className="px-4 py-3"><PresenceIcon active={leftHighlightSet.has(name)} /></div>
-                <div className="px-4 py-3"><PresenceIcon active={rightHighlightSet.has(name)} /></div>
+                <div className="px-4 py-3 font-semibold text-stone-700">
+                  {name}
+                </div>
+                <div className="px-4 py-3">
+                  <PresenceIcon active={leftHighlightSet.has(name)} />
+                </div>
+                <div className="px-4 py-3">
+                  <PresenceIcon active={rightHighlightSet.has(name)} />
+                </div>
               </div>
             ))}
 
             <div className="grid grid-cols-1 border-b border-t border-stone-200 bg-stone-50 lg:grid-cols-[280px_minmax(0,1fr)_minmax(0,1fr)]">
-              <div className="px-4 py-3 text-sm font-bold uppercase tracking-wide text-stone-500">
+              <div className="px-4 py-3 text-sm font-bold tracking-wide uppercase text-stone-500">
                 {t("compare.features")}
               </div>
               <div />
@@ -252,9 +268,15 @@ const CarComparePage = () => {
                 key={name}
                 className="grid grid-cols-1 border-b border-stone-100 last:border-b-0 lg:grid-cols-[280px_minmax(0,1fr)_minmax(0,1fr)]"
               >
-                <div className="px-4 py-3 font-semibold text-stone-700">{name}</div>
-                <div className="px-4 py-3"><PresenceIcon active={leftFeatureSet.has(name)} /></div>
-                <div className="px-4 py-3"><PresenceIcon active={rightFeatureSet.has(name)} /></div>
+                <div className="px-4 py-3 font-semibold text-stone-700">
+                  {name}
+                </div>
+                <div className="px-4 py-3">
+                  <PresenceIcon active={leftFeatureSet.has(name)} />
+                </div>
+                <div className="px-4 py-3">
+                  <PresenceIcon active={rightFeatureSet.has(name)} />
+                </div>
               </div>
             ))}
           </div>
