@@ -175,7 +175,60 @@
         }
       }
     },
+
     "fields": {
+      "vehicle_type": {
+        "label": "نوع المركبة",
+        "placeholder": "اختر نوع المركبة"
+      },
+      "subtype": {
+        "label": "النوع الفرعي",
+        "placeholder": "اختر النوع الفرعي"
+      },
+      "power_hp": {
+        "label": "قوة المحرك (حصان)",
+        "placeholder": "مثال: 150"
+      },
+      "torque_nm": {
+        "label": "عزم المحرك (نيوتن.متر)",
+        "placeholder": "مثال: 150"
+      },
+      "wheelbase_mm": {
+        "label": "قاعدة العجلات (مم)",
+        "placeholder": "مثال: 2700"
+      },
+      "height_mm": {
+        "label": "ارتفاع السيارة (مم)",
+        "placeholder": "مثال: 1500"
+      },
+      "width_mm": {
+        "label": "عرض السيارة (مم)",
+        "placeholder": "مثال: 1800"
+      },
+      "length_mm": {
+        "label": "طول السيارة (مم)",
+        "placeholder": "مثال: 4500"
+      },
+      "cylinders": {
+        "label": "عدد الأسطوانات",
+        "placeholder": "مثال: 4"
+      },
+      "seats": {
+        "label": "عدد المقاعد",
+        "placeholder": "مثال: 5"
+      },
+      "fuel_tank_capacity_l": {
+        "label": "سعة خزان الوقود (لتر)",
+        "placeholder": "مثال: 50"
+      },
+      "warranty_km": {
+        "label": "الضمان (كم)",
+        "placeholder": "مثال: 100000"
+      },
+      "top_speed_kmh": {
+        "label": "السرعة القصوى (كم/س)",
+        "placeholder": "مثال: 200"
+      },
       "condition": {
         "label": "حالة السيارة",
         "options": {

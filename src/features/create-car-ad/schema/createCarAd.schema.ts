@@ -52,12 +52,12 @@ export const createCarAdSchema = z
     price: z.string().trim().min(1, "createCarAd.validation.priceRequired"),
 
     // financing (flat as requested)
-    can_be_financed: z.enum(["yes", "no"], {
-      message: "createCarAd.validation.canBeFinancedRequired",
-    }),
-    down_payment: z.string().trim().optional(),
-    duration_months: z.string().trim().optional(),
-    monthly_installment: z.string().trim().optional(),
+    // can_be_financed: z.enum(["yes", "no"], {
+    //   message: "createCarAd.validation.canBeFinancedRequired",
+    // }),
+    // down_payment: z.string().trim().optional(),
+    // duration_months: z.string().trim().optional(),
+    // monthly_installment: z.string().trim().optional(),
 
     // additional specs (all optional & flat)
     cylinders: z.string().trim().optional(),
@@ -112,31 +112,29 @@ export const createCarAdSchema = z
       }
     }
 
-    if (data.can_be_financed !== "yes") return;
+    // if (!data.down_payment?.trim()) {
+    //   ctx.addIssue({
+    //     code: z.ZodIssueCode.custom,
+    //     message: "createCarAd.validation.downPaymentRequired",
+    //     path: ["down_payment"],
+    //   });
+    // }
 
-    if (!data.down_payment?.trim()) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "createCarAd.validation.downPaymentRequired",
-        path: ["down_payment"],
-      });
-    }
+    // if (!data.duration_months?.trim()) {
+    //   ctx.addIssue({
+    //     code: z.ZodIssueCode.custom,
+    //     message: "createCarAd.validation.durationMonthsRequired",
+    //     path: ["duration_months"],
+    //   });
+    // }
 
-    if (!data.duration_months?.trim()) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "createCarAd.validation.durationMonthsRequired",
-        path: ["duration_months"],
-      });
-    }
-
-    if (!data.monthly_installment?.trim()) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "createCarAd.validation.monthlyInstallmentRequired",
-        path: ["monthly_installment"],
-      });
-    }
+    // if (!data.monthly_installment?.trim()) {
+    //   ctx.addIssue({
+    //     code: z.ZodIssueCode.custom,
+    //     message: "createCarAd.validation.monthlyInstallmentRequired",
+    //     path: ["monthly_installment"],
+    //   });
+    // }
   });
 
 export type CreateCarAdSchemaType = z.infer<typeof createCarAdSchema>;

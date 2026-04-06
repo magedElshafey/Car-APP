@@ -39,10 +39,10 @@ const useCreateCarAdForm = () => {
       price: "",
 
       // financing
-      can_be_financed: undefined,
-      down_payment: "",
-      duration_months: "",
-      monthly_installment: "",
+      // can_be_financed: undefined,
+      // down_payment: "",
+      // duration_months: "",
+      // monthly_installment: "",
 
       // additional specs
       cylinders: "",

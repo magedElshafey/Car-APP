@@ -1,19 +1,16 @@
 import useGetCarFeatures from "@/features/browse/hooks/use-get-car-features";
 import useGetHighlightTypes from "@/features/browse/hooks/use-get-highlight-types";
 import { formatPrice } from "@/utils/formatPrice";
-import { useMemo, useState } from "react";
+import { useMemo, useState, FC } from "react";
 import { useTranslation } from "react-i18next";
 import { FiCheck, FiX } from "react-icons/fi";
 import CarCompareSearchInput from "../components/car-compare-search-input.tsx";
 import { CarDetails } from "../types/car.types";
 
-const CompareCarHeader = ({
-  car,
-  title,
-}: {
+const CompareCarHeader: FC<{
   car: CarDetails | null;
   title: string;
-}) => {
+}> = ({ car, title }) => {
   const { t, i18n } = useTranslation();
   const image = car?.images?.[0] || "/images/cars/car-1.png";
 

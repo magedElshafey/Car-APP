@@ -1,6 +1,13 @@
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
-import { Control, FieldErrors, UseFormRegister, UseFormSetValue, UseFormTrigger, useWatch } from "react-hook-form";
+import {
+  Control,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormTrigger,
+  useWatch,
+} from "react-hook-form";
 import MainInput from "@/common/components/inputs/MainInput";
 import MainSelect from "@/common/components/inputs/MainSelect";
 import MainTextArea from "@/common/components/inputs/MainTextArea";
@@ -33,7 +40,7 @@ type CarInfoSectionProps = {
   citiesLoading: boolean;
   fuelTypes: FuelType[];
   fuelTypesLoading: boolean;
-  register: UseFormRegister<CreateCarAdSchemaType>
+  register: UseFormRegister<CreateCarAdSchemaType>;
 };
 
 const CarInfoSection: React.FC<CarInfoSectionProps> = ({
@@ -47,7 +54,7 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
   citiesLoading,
   fuelTypes,
   fuelTypesLoading,
-  register
+  register,
 }) => {
   const { t } = useTranslation();
 
@@ -61,40 +68,42 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
   const description = useWatch({ control, name: "description" });
   const selectedSubtype = useWatch({ control, name: "sub_type" });
 
-  const {
-    data: vehicleTypes,
-    isLoading: vehicleTypesLoading
-  } = useGetVehicleType();
+  const { data: vehicleTypes, isLoading: vehicleTypesLoading } =
+    useGetVehicleType();
 
-  const {
-    data: subtypes,
-    isLoading: subtypesLoading
-  } = useGetVehicleSubtype(selectedVehicleType);
+  const { data: subtypes, isLoading: subtypesLoading } =
+    useGetVehicleSubtype(selectedVehicleType);
 
   const vehicleTypesOptions = useMemo(() => {
-    if (vehicleTypes) return vehicleTypes.map(type => ({
-      name: type.label,
-      value: type.value,
-      id: type.value
-    }));
+    if (vehicleTypes)
+      return vehicleTypes.map((type) => ({
+        name: type.label,
+        value: type.value,
+        id: type.value,
+      }));
     return [];
-  }, [vehicleTypes])
+  }, [vehicleTypes]);
 
   const subTypesOptions = useMemo(() => {
-    if(subtypes) return subtypes.map(type => ({
-      name: type.label,
-      value: type.value,
-      id: type.value
-    }));
+    if (subtypes)
+      return subtypes.map((type) => ({
+        name: type.label,
+        value: type.value,
+        id: type.value,
+      }));
 
     return [];
   }, [subtypes]);
 
   return (
-    <section className="rounded-card rounded-2xl border border-slate-300 bg-bg-surface p-6 shadow-soft md:p-8">
+    <section className="p-6 border rounded-card rounded-2xl border-slate-300 bg-bg-surface shadow-soft md:p-8">
       <div className="mb-6">
-        <h2 className="text-xl font-semibold text-text-main">{t("createCarAd.form.title")}</h2>
-        <p className="mt-2 text-sm text-text-muted">{t("createCarAd.form.description")}</p>
+        <h2 className="text-xl font-semibold text-text-main">
+          {t("createCarAd.form.title")}
+        </h2>
+        <p className="mt-2 text-sm text-text-muted">
+          {t("createCarAd.form.description")}
+        </p>
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
@@ -107,7 +116,9 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
             onChange={onCarDetailsChange}
           />
           {errors.trim_id?.message && (
-            <p className="mt-2 text-xs text-red-500">{t(errors.trim_id.message)}</p>
+            <p className="mt-2 text-xs text-red-500">
+              {t(errors.trim_id.message)}
+            </p>
           )}
         </div>
         <MainSelect
@@ -124,7 +135,7 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
 
             setValue("sub_type", undefined);
 
-            void trigger(["vehicle_type", "sub_type"])
+            void trigger(["vehicle_type", "sub_type"]);
           }}
           value={selectedVehicleType || null}
         />
@@ -140,13 +151,15 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
               shouldValidate: true,
             });
 
-            void trigger("sub_type")
+            void trigger("sub_type");
           }}
           value={selectedSubtype || null}
         />
 
         <div>
-          <h3 className="mb-3 text-sm font-semibold text-text-main">{t("createCarAd.fields.condition.label")}</h3>
+          <h3 className="mb-3 text-sm font-semibold text-text-main">
+            {t("createCarAd.fields.condition.label")}
+          </h3>
           <div className="flex flex-wrap gap-2 py-1">
             {["new", "used"].map((option) => {
               const isActive = selectedCondition === option;
@@ -154,10 +167,11 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
                 <button
                   key={option}
                   type="button"
-                  className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${isActive
-                    ? "border-blue-400 bg-blue-50 text-blue-500"
-                    : "border-slate-300 text-stone-600 hover:border-slate-400"
-                    }`}
+                  className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${
+                    isActive
+                      ? "border-blue-400 bg-blue-50 text-blue-500"
+                      : "border-slate-300 text-stone-600 hover:border-slate-400"
+                  }`}
                   onClick={() => {
                     setValue("condition", option as "new" | "used", {
                       shouldValidate: true,
@@ -173,7 +187,9 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
             })}
           </div>
           {errors.condition?.message && (
-            <p className="mt-2 text-xs text-red-500">{t(errors.condition.message)}</p>
+            <p className="mt-2 text-xs text-red-500">
+              {t(errors.condition.message)}
+            </p>
           )}
         </div>
 
@@ -219,7 +235,9 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
         />
 
         <div>
-          <h3 className="mb-3 text-sm font-semibold text-text-main">{t("createCarAd.fields.carType.label")}</h3>
+          <h3 className="mb-3 text-sm font-semibold text-text-main">
+            {t("createCarAd.fields.carType.label")}
+          </h3>
           <div className="flex flex-wrap gap-2 py-1">
             {["automatic", "manual"].map((option) => {
               const isActive = selectedCarType === option;
@@ -227,10 +245,11 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
                 <button
                   key={option}
                   type="button"
-                  className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${isActive
-                    ? "border-blue-400 bg-blue-50 text-blue-500"
-                    : "border-slate-300 text-stone-600 hover:border-slate-400"
-                    }`}
+                  className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${
+                    isActive
+                      ? "border-blue-400 bg-blue-50 text-blue-500"
+                      : "border-slate-300 text-stone-600 hover:border-slate-400"
+                  }`}
                   onClick={() => {
                     setValue("transmission", option as "automatic" | "manual", {
                       shouldValidate: true,
@@ -246,14 +265,20 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
             })}
           </div>
           {errors.transmission?.message && (
-            <p className="mt-2 text-xs text-red-500">{t(errors.transmission.message)}</p>
+            <p className="mt-2 text-xs text-red-500">
+              {t(errors.transmission.message)}
+            </p>
           )}
         </div>
 
         <div>
-          <h3 className="mb-3 text-sm font-semibold text-text-main">{t("createCarAd.fields.fuelType.label")}</h3>
+          <h3 className="mb-3 text-sm font-semibold text-text-main">
+            {t("createCarAd.fields.fuelType.label")}
+          </h3>
           {fuelTypesLoading ? (
-            <p className="text-sm text-text-muted">{t("createCarAd.fields.fuelType.loading")}</p>
+            <p className="text-sm text-text-muted">
+              {t("createCarAd.fields.fuelType.loading")}
+            </p>
           ) : (
             <div className="flex flex-wrap gap-2 py-1">
               {fuelTypes.map((item) => {
@@ -262,10 +287,11 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
                   <button
                     key={item.value}
                     type="button"
-                    className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${isActive
-                      ? "border-blue-400 bg-blue-50 text-blue-500"
-                      : "border-slate-300 text-stone-600 hover:border-slate-400"
-                      }`}
+                    className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${
+                      isActive
+                        ? "border-blue-400 bg-blue-50 text-blue-500"
+                        : "border-slate-300 text-stone-600 hover:border-slate-400"
+                    }`}
                     onClick={() => {
                       setValue("fuel_type", item.value, {
                         shouldValidate: true,
@@ -282,13 +308,17 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
             </div>
           )}
           {errors.fuel_type?.message && (
-            <p className="mt-2 text-xs text-red-500">{t(errors.fuel_type.message)}</p>
+            <p className="mt-2 text-xs text-red-500">
+              {t(errors.fuel_type.message)}
+            </p>
           )}
         </div>
 
         <div className="md:col-span-2">
-          <h3 className="mb-3 text-sm font-semibold text-text-main">{t("createCarAd.fields.color.label")}</h3>
-          <div className="flex flex-wrap gap-x-5 gap-y-3 py-1">
+          <h3 className="mb-3 text-sm font-semibold text-text-main">
+            {t("createCarAd.fields.color.label")}
+          </h3>
+          <div className="flex flex-wrap py-1 gap-x-5 gap-y-3">
             {PREDEFINED_COLORS.map((item) => {
               const isActive = selectedColor === item.value;
               return (
@@ -306,18 +336,25 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
                   }}
                 >
                   <span
-                    className={`h-11 w-full rounded-md border transition-all ${isActive ? "border-blue-500 ring-2 ring-blue-200" : "border-slate-300"
-                      }`}
+                    className={`h-11 w-full rounded-md border transition-all ${
+                      isActive
+                        ? "border-blue-500 ring-2 ring-blue-200"
+                        : "border-slate-300"
+                    }`}
                     style={{ backgroundColor: item.hexColor }}
                     aria-hidden="true"
                   />
-                  <span className="text-sm text-text-main">{t(`createCarAd.fields.color.options.${item.value}`)}</span>
+                  <span className="text-sm text-text-main">
+                    {t(`createCarAd.fields.color.options.${item.value}`)}
+                  </span>
                 </button>
               );
             })}
           </div>
           {errors.color?.message && (
-            <p className="mt-2 text-xs text-red-500">{t(errors.color.message)}</p>
+            <p className="mt-2 text-xs text-red-500">
+              {t(errors.color.message)}
+            </p>
           )}
         </div>
 
