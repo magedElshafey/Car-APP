@@ -22,12 +22,14 @@ export const createCarAdSchema = z
       .min(1, "createCarAd.validation.fuelTypeRequired"),
 
     city: z.string().trim().min(1, "createCarAd.validation.locationRequired"),
-    brand_id: z.number().int().positive({
-      message: "createCarAd.validation.brandRequired",
-    }),
-    model_id: z.number().int().positive({
-      message: "createCarAd.validation.modelRequired",
-    }),
+    brand_id: z
+      .number({ message: "createCarAd.validation.brandRequired" })
+      .int()
+      .positive(),
+    model_id: z
+      .number({ message: "createCarAd.validation.modelRequired" })
+      .int()
+      .positive(),
     year: z.string().min(1, {
       message: "createCarAd.validation.yearRequired",
     }),
@@ -35,7 +37,6 @@ export const createCarAdSchema = z
 
     mileage_km: z.string().trim().optional(),
 
-    // boolean flags
     is_special_needs: z.boolean().optional(),
     is_taxi: z.boolean().optional(),
     is_imported: z.boolean().optional(),

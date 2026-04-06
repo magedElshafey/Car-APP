@@ -115,9 +115,19 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
             trim={carDetails.trim}
             onChange={onCarDetailsChange}
           />
-          {errors.trim_id?.message && (
+          {errors.brand_id?.message && (
             <p className="mt-2 text-xs text-red-500">
-              {t(errors.trim_id.message)}
+              {t(errors.brand_id.message)}
+            </p>
+          )}
+          {errors.model_id?.message && (
+            <p className="mt-2 text-xs text-red-500">
+              {t(errors.model_id.message)}
+            </p>
+          )}
+          {errors.year?.message && (
+            <p className="mt-2 text-xs text-red-500">
+              {t(errors.year.message)}
             </p>
           )}
         </div>
