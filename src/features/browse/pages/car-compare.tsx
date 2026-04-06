@@ -1,17 +1,35 @@
 import useGetCarFeatures from "@/features/browse/hooks/use-get-car-features";
 import useGetHighlightTypes from "@/features/browse/hooks/use-get-highlight-types";
 import { formatPrice } from "@/utils/formatPrice";
-import { useMemo, useState, FC } from "react";
+import { useMemo, useState, FC, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { FiCheck, FiX } from "react-icons/fi";
 import CarCompareSearchInput from "../components/car-compare-search-input.tsx";
 import { CarDetails } from "../types/car.types";
+import useGetCarById from "@/features/browse/hooks/useGetCarById.tsx";
 
 const CompareCarHeader: FC<{
   car: CarDetails | null;
   title: string;
-}> = ({ car, title }) => {
+  isLoading?: boolean;
+}> = ({ car, title, isLoading }) => {
   const { t, i18n } = useTranslation();
+
+  if (isLoading) {
+    return (
+      <div className="overflow-hidden bg-white border rounded-2xl border-stone-200 animate-pulse">
+        <div className="px-5 py-3 text-sm font-semibold text-center border-b border-stone-100 text-stone-500">
+          {title}
+        </div>
+        <div className="flex flex-col items-center justify-center h-56 px-5 py-4 text-center">
+          <div className="w-24 h-24 mb-3 rounded bg-stone-200" />
+          <div className="w-32 h-6 mb-2 rounded bg-stone-200" />
+          <div className="w-20 h-4 rounded bg-stone-200" />
+        </div>
+      </div>
+    );
+  }
+
   const image = car?.images?.[0] || "/images/cars/car-1.png";
 
   return (
@@ -58,89 +76,108 @@ const boolToLabel = (value: boolean | undefined, t: (key: string) => string) =>
   value ? t("compare.yes") : t("compare.no");
 
 const CarComparePage = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [leftCar, setLeftCar] = useState<CarDetails | null>(null);
   const [rightCar, setRightCar] = useState<CarDetails | null>(null);
 
   const { data: groupedFeatures = {} } = useGetCarFeatures();
   const { data: highlightTypes = [] } = useGetHighlightTypes();
-
+  const {
+    data: leftCarData,
+    refetch: refetchLeftCar,
+    isFetching: isLeftFetching,
+  } = useGetCarById(leftCar?.id);
+  const {
+    data: rightCarData,
+    refetch: refetchRightCar,
+    isFetching: isRightFetching,
+  } = useGetCarById(rightCar?.id);
+  useEffect(() => {
+    if (leftCar?.id) refetchLeftCar();
+    if (rightCar?.id) refetchRightCar();
+  }, [
+    i18n.language,
+    leftCar?.id,
+    rightCar?.id,
+    refetchLeftCar,
+    refetchRightCar,
+  ]);
+  const leftCarFinal = leftCarData || leftCar;
+  const rightCarFinal = rightCarData || rightCar;
   const basicRows = useMemo(() => {
     return [
       {
         id: "price",
         label: t("compare.price"),
-        left: leftCar ? `${leftCar.price} ${t("EGP")}` : "-",
-        right: rightCar ? `${rightCar.price} ${t("EGP")}` : "-",
+        left: leftCarFinal ? `${leftCarFinal.price} ${t("EGP")}` : "-",
+        right: rightCarFinal ? `${rightCarFinal?.price} ${t("EGP")}` : "-",
       },
       {
         id: "condition",
         label: t("compare.condition"),
-        left: normalize(leftCar?.details.condition_label),
-        right: normalize(rightCar?.details.condition_label),
+        left: normalize(leftCarFinal?.details?.condition_label),
+        right: normalize(rightCarFinal?.details?.condition_label),
       },
       {
         id: "transmission",
         label: t("compare.transmission"),
-        left: normalize(leftCar?.details.transmission_label),
-        right: normalize(rightCar?.details.transmission_label),
+        left: normalize(leftCarFinal?.details?.transmission_label),
+        right: normalize(rightCarFinal?.details?.transmission_label),
       },
       {
         id: "fuel",
         label: t("compare.fuelType"),
-        left: normalize(leftCar?.details.fuel_type_label),
-        right: normalize(rightCar?.details.fuel_type_label),
+        left: normalize(leftCarFinal?.details?.fuel_type_label),
+        right: normalize(rightCarFinal?.details?.fuel_type_label),
       },
       {
         id: "color",
         label: t("compare.color"),
-        left: normalize(leftCar?.details.color_label),
-        right: normalize(rightCar?.details.color_label),
+        left: normalize(leftCarFinal?.details?.color_label),
+        right: normalize(rightCarFinal?.details?.color_label),
       },
       {
         id: "mileage",
         label: t("compare.mileage"),
-        left: leftCar ? `${leftCar.details.mileage_km} ${t("km")}` : "-",
-        right: rightCar ? `${rightCar.details.mileage_km} ${t("km")}` : "-",
+        left: leftCarFinal
+          ? `${leftCarFinal?.details?.mileage_km} ${t("km")}`
+          : "-",
+        right: rightCarFinal
+          ? `${rightCarFinal?.details?.mileage_km} ${t("km")}`
+          : "-",
       },
       {
         id: "city",
         label: t("compare.city"),
-        left: normalize(leftCar?.city),
-        right: normalize(rightCar?.city),
+        left: normalize(leftCarFinal?.city),
+        right: normalize(rightCarFinal?.city),
       },
       {
         id: "imported",
         label: t("compare.imported"),
-        left: boolToLabel(leftCar?.details.is_imported, t),
-        right: boolToLabel(rightCar?.details.is_imported, t),
+        left: boolToLabel(leftCarFinal?.details?.is_imported, t),
+        right: boolToLabel(rightCarFinal?.details?.is_imported, t),
       },
       {
         id: "taxi",
         label: t("compare.taxi"),
-        left: boolToLabel(leftCar?.details.is_taxi, t),
-        right: boolToLabel(rightCar?.details.is_taxi, t),
+        left: boolToLabel(leftCarFinal?.details?.is_taxi, t),
+        right: boolToLabel(rightCarFinal?.details?.is_taxi, t),
       },
       {
         id: "special-needs",
         label: t("compare.specialNeeds"),
-        left: boolToLabel(leftCar?.details.is_special_needs, t),
-        right: boolToLabel(rightCar?.details.is_special_needs, t),
+        left: boolToLabel(leftCarFinal?.details?.is_special_needs, t),
+        right: boolToLabel(rightCarFinal?.details?.is_special_needs, t),
       },
       {
         id: "whatsapp",
         label: t("compare.whatsappAllowed"),
-        left: boolToLabel(leftCar?.whatsapp_allowed, t),
-        right: boolToLabel(rightCar?.whatsapp_allowed, t),
-      },
-      {
-        id: "financing",
-        label: t("compare.financingAvailable"),
-        left: boolToLabel(leftCar?.financing_available, t),
-        right: boolToLabel(rightCar?.financing_available, t),
+        left: boolToLabel(leftCarFinal?.whatsapp_allowed, t),
+        right: boolToLabel(rightCarFinal?.whatsapp_allowed, t),
       },
     ];
-  }, [leftCar, rightCar, t]);
+  }, [leftCarFinal, rightCarFinal, t]);
 
   const featureNames = useMemo(() => {
     return Object.values(groupedFeatures).flatMap((group) =>
@@ -200,8 +237,16 @@ const CarComparePage = () => {
         <div className="p-4 bg-white border rounded-2xl border-stone-200 lg:p-5">
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-[280px_minmax(0,1fr)_minmax(0,1fr)]">
             <div className="hidden lg:block" />
-            <CompareCarHeader car={leftCar} title={t("compare.firstCar")} />
-            <CompareCarHeader car={rightCar} title={t("compare.secondCar")} />
+            <CompareCarHeader
+              car={leftCarFinal}
+              title={t("compare.firstCar")}
+              isLoading={isLeftFetching}
+            />
+            <CompareCarHeader
+              car={rightCarFinal}
+              title={t("compare.secondCar")}
+              isLoading={isRightFetching}
+            />
           </div>
 
           <div className="mt-5 overflow-hidden bg-white border rounded-2xl border-stone-200">

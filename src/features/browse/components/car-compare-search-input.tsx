@@ -14,7 +14,7 @@ import { CarDetails } from "../types/car.types";
 interface CarCompareSearchInputProps {
   label: string;
   placeholder: string;
-  selectedCar: CarDetails| null;
+  selectedCar: CarDetails | null;
   onSelect: (car: CarDetails) => void;
 }
 
@@ -38,7 +38,12 @@ const CarCompareSearchInput = ({
   );
 
   const { data: carsResponse, isLoading: carsLoading } = useQuery({
-    queryKey: [apiRoutes.cars, "compare-dialog", selectedBrandId, selectedModelId],
+    queryKey: [
+      apiRoutes.cars,
+      "compare-dialog",
+      selectedBrandId,
+      selectedModelId,
+    ],
     queryFn: async () => {
       const response = await Axios.get<PaginatedResponse<CarDetails[]>>(
         apiRoutes.cars,
@@ -74,7 +79,8 @@ const CarCompareSearchInput = ({
     if (!keyword) return cars;
 
     return cars.filter((item) => {
-      const title = `${item.car.brand} ${item.car.model} ${item.car.year}`.toLowerCase();
+      const title =
+        `${item.car.brand} ${item.car.model} ${item.car.year}`.toLowerCase();
       return title.includes(keyword);
     });
   }, [carSearch, cars]);
@@ -96,17 +102,19 @@ const CarCompareSearchInput = ({
 
       {opened && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4"
+          className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/40"
           onClick={() => setOpened(false)}
         >
           <div
-            className="w-full max-w-5xl rounded-2xl bg-white shadow-lg"
+            className="w-full max-w-5xl bg-white shadow-lg rounded-2xl"
             onClick={(event) => event.stopPropagation()}
           >
             <div className="flex flex-col gap-4 md:flex-row">
               <div className="min-w-0 flex-1 rounded-lg max-h-[500px] flex flex-col">
-                <div className="border-b border-slate-200 px-3 py-3 text-center">
-                  <h4 className="text-2xl font-semibold text-text-main">{t("browse.filters.brand")}</h4>
+                <div className="px-3 py-3 text-center border-b border-slate-200">
+                  <h4 className="text-2xl font-semibold text-text-main">
+                    {t("browse.filters.brand")}
+                  </h4>
                 </div>
 
                 <div className="p-3">
@@ -115,13 +123,15 @@ const CarCompareSearchInput = ({
                     value={brandSearch}
                     onChange={(event) => setBrandSearch(event.target.value)}
                     placeholder={t("browse.filters.search.brand")}
-                    className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-text-main outline-none focus:border-primary"
+                    className="w-full px-3 py-2 text-sm border rounded-lg outline-none border-slate-300 text-text-main focus:border-primary"
                   />
                 </div>
 
-                <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-100">
+                <div className="flex-1 min-h-0 overflow-y-auto border-t border-slate-100">
                   {brandsLoading ? (
-                    <p className="p-4 text-sm text-text-muted">{t("compare.loading")}</p>
+                    <p className="p-4 text-sm text-text-muted">
+                      {t("compare.loading")}
+                    </p>
                   ) : filteredBrands.length ? (
                     filteredBrands.map((item) => {
                       const isActive = selectedBrandId === item.id;
@@ -144,27 +154,34 @@ const CarCompareSearchInput = ({
                         >
                           <div className="flex items-center gap-2">
                             {isActive && (
-                              <span className="inline-flex h-5 w-5 items-center justify-center rounded-md bg-white text-blue-500">
+                              <span className="inline-flex items-center justify-center w-5 h-5 text-blue-500 bg-white rounded-md">
                                 <FiCheck size={13} />
                               </span>
                             )}
                             <span className="font-medium">{item.name}</span>
                           </div>
 
-                          <FiChevronRight size={16} className="opacity-0 transition-all group-hover:opacity-100" />
+                          <FiChevronRight
+                            size={16}
+                            className="transition-all opacity-0 group-hover:opacity-100"
+                          />
                         </button>
                       );
                     })
                   ) : (
-                    <p className="p-4 text-sm text-text-muted">{t("compare.noResults")}</p>
+                    <p className="p-4 text-sm text-text-muted">
+                      {t("compare.noResults")}
+                    </p>
                   )}
                 </div>
               </div>
 
               {selectedBrandId && (
                 <div className="min-w-0 flex-1 rounded-lg max-h-[500px] flex flex-col">
-                  <div className="border-b border-slate-200 px-3 py-3 text-center">
-                    <h4 className="text-2xl font-semibold text-text-main">{t("browse.filters.model")}</h4>
+                  <div className="px-3 py-3 text-center border-b border-slate-200">
+                    <h4 className="text-2xl font-semibold text-text-main">
+                      {t("browse.filters.model")}
+                    </h4>
                   </div>
 
                   <div className="p-3">
@@ -173,13 +190,15 @@ const CarCompareSearchInput = ({
                       value={modelSearch}
                       onChange={(event) => setModelSearch(event.target.value)}
                       placeholder={t("browse.filters.search.model")}
-                      className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-text-main outline-none focus:border-primary"
+                      className="w-full px-3 py-2 text-sm border rounded-lg outline-none border-slate-300 text-text-main focus:border-primary"
                     />
                   </div>
 
-                  <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-100">
+                  <div className="flex-1 min-h-0 overflow-y-auto border-t border-slate-100">
                     {modelsLoading ? (
-                      <p className="p-4 text-sm text-text-muted">{t("compare.loading")}</p>
+                      <p className="p-4 text-sm text-text-muted">
+                        {t("compare.loading")}
+                      </p>
                     ) : filteredModels.length ? (
                       filteredModels.map((item) => {
                         const isActive = selectedModelId === item.id;
@@ -200,18 +219,23 @@ const CarCompareSearchInput = ({
                           >
                             <div className="flex items-center gap-2">
                               {isActive && (
-                                <span className="inline-flex h-5 w-5 items-center justify-center rounded-md bg-white text-blue-500">
+                                <span className="inline-flex items-center justify-center w-5 h-5 text-blue-500 bg-white rounded-md">
                                   <FiCheck size={13} />
                                 </span>
                               )}
                               <span className="font-medium">{item.name}</span>
                             </div>
-                            <FiChevronRight size={16} className="opacity-0 transition-all group-hover:opacity-100" />
+                            <FiChevronRight
+                              size={16}
+                              className="transition-all opacity-0 group-hover:opacity-100"
+                            />
                           </button>
                         );
                       })
                     ) : (
-                      <p className="p-4 text-sm text-text-muted">{t("compare.noResults")}</p>
+                      <p className="p-4 text-sm text-text-muted">
+                        {t("compare.noResults")}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -219,8 +243,10 @@ const CarCompareSearchInput = ({
 
               {selectedModelId && (
                 <div className="min-w-0 flex-1 rounded-lg max-h-[500px] flex flex-col">
-                  <div className="border-b border-slate-200 px-3 py-3 text-center">
-                    <h4 className="text-2xl font-semibold text-text-main">{t("compare.cars")}</h4>
+                  <div className="px-3 py-3 text-center border-b border-slate-200">
+                    <h4 className="text-2xl font-semibold text-text-main">
+                      {t("compare.cars")}
+                    </h4>
                   </div>
 
                   <div className="p-3">
@@ -229,13 +255,15 @@ const CarCompareSearchInput = ({
                       value={carSearch}
                       onChange={(event) => setCarSearch(event.target.value)}
                       placeholder={t("compare.searchCar")}
-                      className="w-full rounded-lg border border-slate-300 px-3 py-2 text-sm text-text-main outline-none focus:border-primary"
+                      className="w-full px-3 py-2 text-sm border rounded-lg outline-none border-slate-300 text-text-main focus:border-primary"
                     />
                   </div>
 
-                  <div className="min-h-0 flex-1 overflow-y-auto border-t border-slate-100">
+                  <div className="flex-1 min-h-0 overflow-y-auto border-t border-slate-100">
                     {carsLoading ? (
-                      <p className="p-4 text-sm text-text-muted">{t("compare.loading")}</p>
+                      <p className="p-4 text-sm text-text-muted">
+                        {t("compare.loading")}
+                      </p>
                     ) : filteredCars.length ? (
                       filteredCars.map((item) => {
                         const isActive = selectedCar?.id === item.id;
@@ -256,22 +284,26 @@ const CarCompareSearchInput = ({
                           >
                             <div className="flex items-center justify-between gap-2">
                               <p className="font-medium">
-                                {item.car.brand} {item.car.model} {item.car.year}
+                                {item.car.brand} {item.car.model}{" "}
+                                {item.car.year}
                               </p>
                               {isActive && (
-                                <span className="inline-flex h-5 w-5 items-center justify-center rounded-md bg-white text-blue-500">
+                                <span className="inline-flex items-center justify-center w-5 h-5 text-blue-500 bg-white rounded-md">
                                   <FiCheck size={13} />
                                 </span>
                               )}
                             </div>
                             <p className="mt-1 text-xs text-stone-600">
-                              {formatPrice(Number(item.price), i18n.language)} {t("EGP")}
+                              {formatPrice(Number(item.price), i18n.language)}{" "}
+                              {t("EGP")}
                             </p>
                           </button>
                         );
                       })
                     ) : (
-                      <p className="p-4 text-sm text-text-muted">{t("compare.noResults")}</p>
+                      <p className="p-4 text-sm text-text-muted">
+                        {t("compare.noResults")}
+                      </p>
                     )}
                   </div>
                 </div>

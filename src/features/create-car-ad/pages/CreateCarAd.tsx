@@ -294,7 +294,6 @@ const CreateCarAdPage: React.FC = () => {
   );
   const onSubmit = useCallback(
     async (values: CreateCarAdSchemaType) => {
-      console.log("values", values);
       if (!uploadedImages.length) {
         const message = "createCarAd.validation.imagesRequired";
         setImagesError(message);

@@ -10,10 +10,8 @@ const useGetCarById = (carId?: number | null) => {
     queryKey: ["car", carId, i18n.language],
     queryFn: async () => {
       if (!carId) return null;
-      const response = await Axios.get<CarDetails>(
-        `${apiRoutes.cars}/${carId}`,
-      );
-      return response.data;
+      const response = await Axios.get(`${apiRoutes.cars}/${carId}`);
+      return response?.data?.data as CarDetails;
     },
 
     enabled: !!carId,

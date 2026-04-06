@@ -25,7 +25,6 @@ const CarDetails = () => {
   if (!car) {
     return <CarDetailsNotFound />;
   }
-  console.log("data from car is", car);
   const images = car.images.length ? car.images : ["/images/cars/car-1.png"];
   const title = `${car.car.brand} ${car.car.model} ${car.car.year}`;
   const sellerPhone = car.seller?.phone || car.contact_phone;

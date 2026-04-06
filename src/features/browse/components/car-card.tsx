@@ -14,7 +14,6 @@ interface BrowseCarCardProps {
 }
 
 const BrowseCarCard = ({ car }: BrowseCarCardProps) => {
-  console.log("car", car);
   const { i18n, t } = useTranslation();
   const [imageError, setImageError] = useState(false);
 

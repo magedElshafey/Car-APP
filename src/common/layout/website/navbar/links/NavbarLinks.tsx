@@ -13,7 +13,6 @@ const NavbarLinks: React.FC<NavbarLinksProps> = ({ links }) => {
   const location = useLocation();
   const { t } = useTranslation();
   const { types } = useCarTypes();
-  console.log("types is", types);
   const isActiveLink = (href: string) => {
     if (!href) return false; // إذا لا يوجد href لا نعتبره active
 
@@ -34,7 +33,7 @@ const NavbarLinks: React.FC<NavbarLinksProps> = ({ links }) => {
 
       return true;
     } catch (e) {
-      console.log(e);
+      console.error(e);
       return false;
     }
   };
