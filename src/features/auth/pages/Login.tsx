@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import "../style/login-form.css";
 import MainBtn from "../../../common/components/buttons/MainBtn";
 import useLoginLogic from "../logic/useLoginLogic";
-import { MdAttachEmail } from "react-icons/md";
+import { MdOutlinePhoneEnabled } from "react-icons/md";
 
 const Login = () => {
   const { t } = useTranslation();
@@ -26,13 +26,12 @@ const Login = () => {
         <div className="mb-4">
           <MainInput
             required={true}
-            Icon={MdAttachEmail}
-            placeholder="example@example.com"
-            label="email"
+            Icon={MdOutlinePhoneEnabled}
+            placeholder="01XXXXXXXXX"
+            label="phone"
             enableAutocomplete
-            {...register("email")}
-            error={errors.email?.message}
-            storageKey="email"
+            {...register("phone")}
+            error={errors.phone?.message}
           />
         </div>
         <div className="mb-4">

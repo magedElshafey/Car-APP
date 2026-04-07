@@ -1,9 +1,14 @@
 import { z } from "zod";
 import { singlePasswordSchema } from "./passwordSchema";
-import { emailSchema } from "@/features/auth/schema/emailSchema";
 
 export const loginSchema = z.object({
-  email: emailSchema,
+  phone: z
+    .string()
+    .transform((val) => val.replace(/\s+/g, "").replace(/^(\+20|0020)/, "0"))
+    .refine(
+      (val) => /^(010|011|012|015)\d{8}$/.test(val),
+      "invalid Egyptian phone number",
+    ),
   password: singlePasswordSchema,
   rememberMe: z.boolean().optional(),
 });
