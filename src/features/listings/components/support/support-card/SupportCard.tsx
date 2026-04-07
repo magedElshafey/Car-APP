@@ -49,7 +49,7 @@ function SupportCardComponent({
         {description ? (
           <p
             className={cn(
-              "mt-1 text-sm leading-6 text-text-muted",
+              `mt-1 text-sm leading-6 text-text-muted ${id === "email" ? "lowercase" : ""}`,
               "break-words [unicode-bidi:plaintext]",
             )}
           >
