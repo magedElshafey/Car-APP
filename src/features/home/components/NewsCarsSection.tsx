@@ -27,6 +27,11 @@ const NewsCarsSection: React.FC<UsedCarSectionProps> = ({
 
       <GridPagesSlider
         items={data}
+        itemsPerPage={{
+          xs: 1,
+          md: 2,
+          lg: 8,
+        }}
         gridClassName="grid sm:grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4"
         slideClassName="pb-1"
         dotsClassName="mt-5"

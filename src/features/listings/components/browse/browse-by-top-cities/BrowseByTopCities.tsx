@@ -2,17 +2,17 @@ import { useMemo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { GridPagesSlider } from "@/common/components/sliders/GridPagesSlider";
 import BrowseCard from "@/features/listings/components/browse/browse-card/BrowseCard";
-import useGetBrands from "@/features/browse/hooks/use-get-brands";
-import { mapBrandsToBrowseCards } from "@/features/listings/mappers/mapBrandsToBrowseCards";
 import BrowseCardSkeletonList from "@/common/components/loader/skeltons/BrowseCardSkeletonList";
 import ErrorMessage from "@/common/components/error-message/ErrorMessage";
+import useGetTopCities from "@/features/browse/hooks/useGetTopCities";
+import { mapCitiesToBrowseCards } from "@/features/listings/mappers/mapCitiesToBrowseCards";
 
-export default function BrowseBrandsTab() {
+export default function BrowseByTopCities() {
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useGetBrands();
+  const { data, isLoading, isError } = useGetTopCities();
 
   const items = useMemo(() => {
-    return mapBrandsToBrowseCards(data ?? []);
+    return mapCitiesToBrowseCards(data ?? []);
   }, [data]);
 
   const handleBrandClick = useCallback(

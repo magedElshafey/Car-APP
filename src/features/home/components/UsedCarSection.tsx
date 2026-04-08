@@ -24,6 +24,11 @@ const UsedCarSection: React.FC<UsedCarSectionProps> = ({
       <SectionTitle title={title} ctaLabel={actionLabel} href={actionHref} />
 
       <GridPagesSlider
+        itemsPerPage={{
+          xs: 1,
+          md: 3,
+          lg: 4,
+        }}
         items={data}
         gridClassName="grid sm:grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4"
         slideClassName="pb-1"

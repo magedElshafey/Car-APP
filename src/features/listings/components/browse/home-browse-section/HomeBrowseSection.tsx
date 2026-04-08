@@ -6,8 +6,8 @@ import { TabbedSection } from "@/common/tabs/TabbedSection";
 import BrowseBrandsTab from "@/features/listings/components/browse/brwose-by-brands/BrowseBrandsTab";
 import BrowseFuelTypeTab from "@/features/listings/components/browse/browse-by-fuel-type/BrowseFuelTypeTab";
 import BrowseBodyTab from "@/features/listings/components/browse/browse-by-body/BrowseBodyTab";
-// import BrowsePopularModelsTab from "./tabs/BrowsePopularModelsTab";
-// import BrowseCitiesTab from "./tabs/BrowseCitiesTab";
+import BrowseByTopCities from "@/features/listings/components/browse/browse-by-top-cities/BrowseByTopCities";
+import BrowseBySubType from "@/features/listings/components/browse/browse-by-sub-type/BrowseBySubType";
 
 function renderTabContent(activeTab: BrowseTabKey) {
   switch (activeTab) {
@@ -18,7 +18,10 @@ function renderTabContent(activeTab: BrowseTabKey) {
 
     case "body":
       return <BrowseBodyTab />;
-
+    case "top-cities":
+      return <BrowseByTopCities />;
+    case "sub-type":
+      return <BrowseBySubType />;
     default:
       return null;
   }

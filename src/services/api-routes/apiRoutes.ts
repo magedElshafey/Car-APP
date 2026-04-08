@@ -61,4 +61,5 @@ export const apiRoutes = {
   contactUs: "/contact-messages",
   types: "car-types",
   favs: "favorites",
+  pop: "most-popular",
 };

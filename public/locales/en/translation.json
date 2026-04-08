@@ -388,6 +388,8 @@
       "whatsapp": "WhatsApp"
     },
     "filters": {
+      "topCities": "top Cities",
+      "subType": "sub Type",
       "brand": "Brand",
       "model": "Model",
       "fuelType": "Fuel type",
@@ -462,7 +464,7 @@
       "aria": "View company address"
     },
     "sales": {
-      "title": "Contact Sales",
+      "title": "Contact Support",
       "fallback": "Sales phone number is not available",
       "ariaWithPhone": "Contact sales via WhatsApp at {{phone}}"
     },

@@ -28,7 +28,12 @@ export default function BrowseBodyTab() {
   return (
     <GridPagesSlider
       items={items}
-      itemsPerPage={8}
+      className="grid-cols-3"
+      itemsPerPage={{
+        xs: 2,
+        md: 4,
+        lg: 8,
+      }}
       getItemId={(item) => item.id}
       getItemAriaLabel={(item) => item.label}
       renderItem={(item) => (

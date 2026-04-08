@@ -44,7 +44,12 @@ export default function BrowseByLocationSection({
         items={items}
         slideClassName="pb-1"
         dotsClassName="mt-5"
-        itemsPerPage={8}
+        className="grid-cols-3"
+        itemsPerPage={{
+          xs: 2,
+          md: 4,
+          lg: 16,
+        }}
         getItemId={(item) => item.id}
         getItemAriaLabel={(item) => item.label}
         renderItem={(item) => (
