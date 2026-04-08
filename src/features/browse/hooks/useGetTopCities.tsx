@@ -8,6 +8,7 @@ export type CityOption = {
   id: number;
   name: string;
   value: string;
+  image: string;
 };
 
 type RawCity = {
@@ -16,6 +17,7 @@ type RawCity = {
   label?: string;
   value?: string | number;
   city?: string;
+  image?: string;
 };
 
 const normalizeCityOption = (city: RawCity, index: number): CityOption => {
@@ -24,11 +26,12 @@ const normalizeCityOption = (city: RawCity, index: number): CityOption => {
   const value = String(city.value ?? city.id ?? label);
   const id =
     typeof city.id === "number" ? city.id : Number(city.id) || index + 1;
-
+  const image = city.image || "";
   return {
     id,
     name: label,
     value,
+    image,
   };
 };
 

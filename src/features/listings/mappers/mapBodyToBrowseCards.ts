@@ -5,5 +5,6 @@ export function mapBodyToBrowseCards(bodies: CarType[]): BrowseCardItem[] {
   return bodies.map((body) => ({
     id: String(body.value),
     label: body.label,
+    image: body.image,
   }));
 }

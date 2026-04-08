@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 export interface SubType {
   label: string;
   value: string;
+  image: string;
 }
 
 const useGetVehicleSubtype = (type?: string) => {

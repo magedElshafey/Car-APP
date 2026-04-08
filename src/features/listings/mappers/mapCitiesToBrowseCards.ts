@@ -5,5 +5,6 @@ export function mapCitiesToBrowseCards(cities: CityOption[]): BrowseCardItem[] {
   return cities.map((city) => ({
     id: String(city.id),
     label: city.name,
+    image: city.image,
   }));
 }

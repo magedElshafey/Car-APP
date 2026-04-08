@@ -6,6 +6,6 @@ export function mapBrandsToBrowseCards(brands: Brand[]): BrowseCardItem[] {
     id: String(brand.id),
     label: brand.name,
     // count: brand.listingsCount,
-    logo: brand.logo,
+    image: brand.image,
   }));
 }

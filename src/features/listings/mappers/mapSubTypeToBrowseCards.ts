@@ -5,5 +5,6 @@ export function mapSubTypeToBrowseCards(types: SubType[]): BrowseCardItem[] {
   return types.map((type) => ({
     id: type.value,
     label: type.label,
+    image: type.image,
   }));
 }
