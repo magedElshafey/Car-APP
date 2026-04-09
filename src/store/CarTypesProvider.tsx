@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useMemo } from "react";
 import useGetCarTypes from "@/features/car-types/useGetCarTypes";
 type CarTypesContextValue = {
-  types?: { value: string; label: string }[];
+  types?: { id: string; name: string }[];
   isLoading: boolean;
 };
 
@@ -14,7 +14,7 @@ export const CarTypesProvider: React.FC<{
 
   const value = useMemo(
     () => ({
-      types: query.data?.filter((item) => item?.value !== "car"),
+      types: query.data?.filter((item) => item?.id !== "1"),
       isLoading: query.isLoading,
     }),
     [query.data, query.isLoading],

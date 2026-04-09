@@ -16,7 +16,7 @@ export default function BrowseBodyTab() {
 
   const handleBrandClick = useCallback(
     (typeId: string) => {
-      navigate(`/car-browse?filter-car_type=${typeId}`);
+      navigate(`/car-browse?filter-vehicle_type_id=${typeId}`);
     },
     [navigate],
   );

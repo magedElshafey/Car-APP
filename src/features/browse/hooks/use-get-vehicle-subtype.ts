@@ -6,8 +6,8 @@ import { AxiosResponse } from "axios";
 import { useTranslation } from "react-i18next";
 
 export interface SubType {
-  label: string;
-  value: string;
+  name: string;
+  id: string;
   image: string;
 }
 

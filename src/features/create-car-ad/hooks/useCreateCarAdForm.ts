@@ -17,13 +17,13 @@ const useCreateCarAdForm = () => {
       trim_id: undefined,
       city_id: undefined,
 
-      sub_type: "",
-      vehicle_type: "car",
+      sub_type_id: "",
+      vehicle_type_id: "car",
 
       condition: "new",
       transmission: "automatic",
 
-      fuel_type: "",
+      fuel_type_id: "",
       city: "",
       color: "",
       mileage_km: "",

@@ -16,21 +16,21 @@ const BrandFilterMenu = () => {
 
   const { data: brands, isLoading: brandsLoading } = useGetBrands();
 
-  const activeBrand = parseInt(brand?.value || "") || undefined;
+  const activeBrand = parseInt(brand?.id || "") || undefined;
   const filteredBrands = useMemo(() => {
     if (!search) return brands;
     return brands?.filter((brand) =>
-      brand.name.toLowerCase().includes(search.toLowerCase()),
+      brand?.name?.toLowerCase()?.includes(search?.toLowerCase()),
     );
   }, [brands, search]);
 
   useEffect(() => {
-    if (brands && brand?.value && !brand.label) {
-      const active = brands.find((b) => b.id.toString() === brand.value);
+    if (brands && brand?.id && !brand.name) {
+      const active = brands.find((b) => b.id.toString() === brand.id);
       if (active) {
         handleUniqueChange("brand", {
-          label: active.name,
-          value: brand.value,
+          name: active.name,
+          id: brand.id,
         });
       }
     }
@@ -43,12 +43,12 @@ const BrandFilterMenu = () => {
       {Boolean(filteredBrands?.length) ? (
         filteredBrands?.map((brand) => (
           <button
-            className={`py-2 block w-full text-start rounded px-2 duration-75 cursor-pointer font-semibold text-sm ${activeBrand === brand.id ? "text-blue-400 bg-blue-50" : "hover:bg-slate-300"}`}
+            className={`py-2 block w-full text-start rounded px-2 duration-75 cursor-pointer font-semibold text-sm ${activeBrand == brand.id ? "text-blue-400 bg-blue-50" : "hover:bg-slate-300"}`}
             key={brand.id}
             onClick={() => {
               handleUniqueChange("brand", {
-                label: brand.name,
-                value: brand.id.toString(),
+                name: brand.name,
+                id: brand.id.toString(),
               });
               handleUniqueChange("model", undefined);
             }}

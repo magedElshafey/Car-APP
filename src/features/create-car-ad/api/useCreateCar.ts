@@ -5,8 +5,8 @@ import { useMutation } from "@tanstack/react-query";
 export type CreateCarPayload = {
   trim_id: number;
   city_id: number;
-  sub_type?: string;
-  vehicle_type?: string;
+  sub_type_id?: string;
+  vehicle_type_id?: string;
 
   contact_phone: string;
   whatsapp_allowed?: 1 | 0;
@@ -29,7 +29,7 @@ export type CreateCarPayload = {
     condition: "new" | "used";
     color: string;
     transmission: "automatic" | "manual";
-    fuel_type: string;
+    fuel_type_id: string;
 
     mileage_km?: number;
 

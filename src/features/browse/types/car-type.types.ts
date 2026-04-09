@@ -1,5 +1,5 @@
 export interface CarType {
-  value: string;
-  label: string;
+  id: string;
+  name: string;
   image: string;
 }

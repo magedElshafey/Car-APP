@@ -119,7 +119,7 @@ export function BrowseTabbedSlider<TKey extends string, TItem>({
         aria-label={sectionLabel}
         onKeyDown={onKeyDownTabs}
         className={cn(
-          "scrollbar-none mb-6 flex w-full items-center gap-6 overflow-x-auto border-b border-divider",
+          "scrollbar-none mb-6 flex w-full items-center gap-2 md:gap-3 lg:gap-6 overflow-x-auto border-b border-divider",
           tabListClassName,
         )}
       >

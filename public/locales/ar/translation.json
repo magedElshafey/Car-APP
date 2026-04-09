@@ -258,7 +258,9 @@
           "green": "أخضر",
           "gold": "ذهبي",
           "bronze": "برونزي"
-        }
+        },
+        "customPlaceholder": "ادخل لون مخصص",
+        "other": "اخرى"
       },
       "location": {
         "label": "الموقع",
@@ -345,6 +347,10 @@
       "durationMonthsRequired": "أدخل المدة بالأشهر",
       "monthlyInstallmentRequired": "أدخل القسط الشهري"
     }
+  },
+  "common": {
+    "cancel": "إلغاء",
+    "save": "حفظ"
   },
   "Home": "الرئيسية",
   "New Cars": "السيارات الجديدة",
@@ -463,12 +469,12 @@
       "search": {
         "brand": "ابحث عن الماركة",
         "model": "ابحث عن الموديل",
-        "fuel_type": "ابحث عن نوع الوقود",
+        "fuel_type_id": "ابحث عن نوع الوقود",
         "color": "ابحث عن اللون",
-        "car_type": "ابحث عن نوع السيارة",
+        "car_type_id": "ابحث عن نوع السيارة",
         "city_id": "ابحث عن مدينة",
-        "sub_type": "ابحث النوع الفرعي",
-        "vehicle_type": "ابحث نوع المركبة"
+        "sub_type_id": "ابحث النوع الفرعي",
+        "vehicle_type_id": "ابحث نوع المركبة"
       }
     }
   },

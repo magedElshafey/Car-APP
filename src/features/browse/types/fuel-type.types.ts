@@ -1,4 +1,4 @@
 export interface FuelType {
-    value: string;
-    label: string;
+  id: string;
+  name: string;
 }

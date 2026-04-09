@@ -16,7 +16,7 @@ export default function BrowseFuelTypeTab() {
 
   const handleBrandClick = useCallback(
     (value: string) => {
-      navigate(`/car-browse?filter-fuel_type=${value}`);
+      navigate(`/car-browse?filter-fuel_type_id=${value}`);
     },
     [navigate],
   );

@@ -5,8 +5,8 @@ export const createCarAdSchema = z
     trim_id: z.number().int().positive().optional(),
     city_id: z.number().int().positive(),
 
-    sub_type: z.string().trim().optional(),
-    vehicle_type: z.string().trim().optional(),
+    sub_type_id: z.string().trim().optional(),
+    vehicle_type_id: z.string().trim().optional(),
 
     condition: z.enum(["new", "used"], {
       message: "createCarAd.validation.conditionRequired",
@@ -16,7 +16,7 @@ export const createCarAdSchema = z
       message: "createCarAd.validation.carTypeRequired",
     }),
 
-    fuel_type: z
+    fuel_type_id: z
       .string()
       .trim()
       .min(1, "createCarAd.validation.fuelTypeRequired"),

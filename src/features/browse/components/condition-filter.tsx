@@ -22,14 +22,14 @@ const ConditionFilterMenu = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    if (condition?.value && !condition.label) {
+    if (condition?.id && !condition.name) {
       const active = conditionOptions.find(
-        (option) => option.value === condition.value,
+        (option) => option.value === condition.id,
       );
       if (active) {
         handleUniqueChange("condition", {
-          value: condition.value,
-          label: t(active.labelKey),
+          id: condition.id,
+          name: t(active.labelKey),
         });
       }
     }
@@ -38,7 +38,7 @@ const ConditionFilterMenu = () => {
   return (
     <div className="flex flex-wrap gap-2 py-1">
       {conditionOptions.map((option) => {
-        const isActive = condition?.value === option.value;
+        const isActive = condition?.id === option.value;
 
         return (
           <button
@@ -46,8 +46,8 @@ const ConditionFilterMenu = () => {
             className={`rounded-full border px-4 py-1 text-sm font-semibold transition-colors ${isActive ? "border-blue-400 bg-blue-50 text-blue-500" : "border-stone-300 text-stone-600 hover:border-stone-400"}`}
             onClick={() => {
               handleUniqueChange("condition", {
-                value: option.value,
-                label: t(option.labelKey),
+                id: option.value,
+                name: t(option.labelKey),
               });
             }}
           >

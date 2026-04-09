@@ -129,8 +129,8 @@ const MainSelectInner = <T extends OptionType>(props: MainSelectProps<T>) => {
     setFocusedIndex(-1);
   });
 
-  const filtered = displayedOptions.filter((o) =>
-    o.name.toLowerCase().includes(search.toLowerCase()),
+  const filtered = displayedOptions?.filter((o) =>
+    o?.name?.toLowerCase().includes(search?.toLowerCase()),
   );
 
   // keyboard handling
@@ -242,10 +242,10 @@ const MainSelectInner = <T extends OptionType>(props: MainSelectProps<T>) => {
       {label && (
         <label
           htmlFor={inputId}
-          className="text-sm md:text-base block mb-2 font-medium text-gray-700"
+          className="block mb-2 text-sm font-medium text-gray-700 md:text-base"
         >
           {t(label)}
-          {required && <span className="text-red-500 ml-1">*</span>}
+          {required && <span className="ml-1 text-red-500">*</span>}
         </label>
       )}
 
@@ -285,7 +285,7 @@ shadow-soft
           onClick={handleToggle}
         >
           {/* leading placeholder / selected text */}
-          <div className="flex min-w-0 items-center gap-2">
+          <div className="flex items-center min-w-0 gap-2">
             {Icon && <Icon size={20} aria-hidden="true" />}
             <span className="truncate">{showLabel}</span>
           </div>
@@ -295,7 +295,7 @@ shadow-soft
             <FiChevronDown
               size={18}
               aria-hidden="true"
-              className="shrink-0 self-center"
+              className="self-center shrink-0"
             />
           )}
         </div>
@@ -311,7 +311,7 @@ shadow-soft
               i18n.language === "ar" ? "right-0" : "left-0"
             }`}
           >
-            <div className="sticky top-0 z-10 border-b border-slate-200 bg-white p-2">
+            <div className="sticky top-0 z-10 p-2 bg-white border-b border-slate-200">
               <input
                 ref={inputRef}
                 type="text"
@@ -327,7 +327,7 @@ shadow-soft
             </div>
 
             {loading ? (
-              <div className="w-full flex justify-center py-3">
+              <div className="flex justify-center w-full py-3">
                 <Loader />
               </div>
             ) : filtered.length ? (
@@ -359,7 +359,7 @@ shadow-soft
                 );
               })
             ) : (
-              <div className="w-full h-full flex-center p-3">
+              <div className="w-full h-full p-3 flex-center">
                 <p className="text-center">{t("no data")}</p>
               </div>
             )}
@@ -373,7 +373,7 @@ shadow-soft
           error ? "max-h-10 opacity-100 mt-1" : "max-h-0 opacity-0"
         }`}
       >
-        <p id={errorId} className="text-red-500 text-xs" role="alert">
+        <p id={errorId} className="text-xs text-red-500" role="alert">
           {error && t(error)}
         </p>
       </div>

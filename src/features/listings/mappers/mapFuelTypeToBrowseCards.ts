@@ -3,7 +3,7 @@ import { FuelType } from "@/features/browse/types/fuel-type.types";
 
 export function mapFuelTypeToBrowseCards(types: FuelType[]): BrowseCardItem[] {
   return types.map((type) => ({
-    id: type.value,
-    label: type.label,
+    id: type.id,
+    label: type.name,
   }));
 }

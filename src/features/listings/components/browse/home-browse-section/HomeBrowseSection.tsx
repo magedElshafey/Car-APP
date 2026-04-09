@@ -7,7 +7,7 @@ import BrowseBrandsTab from "@/features/listings/components/browse/brwose-by-bra
 import BrowseFuelTypeTab from "@/features/listings/components/browse/browse-by-fuel-type/BrowseFuelTypeTab";
 import BrowseBodyTab from "@/features/listings/components/browse/browse-by-body/BrowseBodyTab";
 import BrowseByTopCities from "@/features/listings/components/browse/browse-by-top-cities/BrowseByTopCities";
-import BrowseBySubType from "@/features/listings/components/browse/browse-by-sub-type/BrowseBySubType";
+// import BrowseBySubType from "@/features/listings/components/browse/browse-by-sub-type/BrowseBySubType";
 
 function renderTabContent(activeTab: BrowseTabKey) {
   switch (activeTab) {
@@ -16,12 +16,12 @@ function renderTabContent(activeTab: BrowseTabKey) {
     case "fuel-type":
       return <BrowseFuelTypeTab />;
 
-    case "body":
+    case "sub-type":
       return <BrowseBodyTab />;
     case "top-cities":
       return <BrowseByTopCities />;
-    case "sub-type":
-      return <BrowseBySubType />;
+    // case "body":
+    //   return <BrowseBySubType />;
     default:
       return null;
   }

@@ -148,7 +148,9 @@
           "green": "Green",
           "gold": "Gold",
           "bronze": "Bronze"
-        }
+        },
+        "customPlaceholder": "select a custom color",
+        "other": "other"
       },
       "location": {
         "label": "Location",
@@ -289,6 +291,10 @@
       "monthlyInstallmentRequired": "Please enter monthly installment"
     }
   },
+  "common": {
+    "cancel": "cancel",
+    "save": "save"
+  },
   "Home": "Home",
   "New Cars": "New Cars",
   "Used Cars": "Used Cars",
@@ -406,12 +412,12 @@
       "search": {
         "brand": "Search brand",
         "model": "Search model",
-        "fuel_type": "Search fuel type",
+        "fuel_type_id": "Search fuel type",
         "color": "Search color",
-        "car_type": "Search car type",
+        "car_type_id": "Search car type",
         "city_id": "Search location",
-        "sub_type": "Search Subtype",
-        "vehicle_type": "Search Vehicle Type"
+        "sub_type_id": "Search Subtype",
+        "vehicle_type_id": "Search Vehicle Type"
       }
     }
   },

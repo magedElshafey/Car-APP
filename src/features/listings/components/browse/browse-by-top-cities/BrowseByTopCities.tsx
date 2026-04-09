@@ -17,7 +17,7 @@ export default function BrowseByTopCities() {
 
   const handleBrandClick = useCallback(
     (brandId: string) => {
-      navigate(`/car-browse?filter-brand=${brandId}`);
+      navigate(`/car-browse?filter-city_id=${brandId}`);
     },
     [navigate],
   );

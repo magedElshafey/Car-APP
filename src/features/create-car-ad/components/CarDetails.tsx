@@ -85,15 +85,17 @@ const CarDetails: React.FC<CarDetailsProps> = ({
   }, [brands, draft.brand?.id]);
 
   const filteredBrands = useMemo(() => {
-    const keyword = brandSearch.trim().toLowerCase();
+    const keyword = brandSearch?.trim().toLowerCase();
     if (!keyword) return brands;
-    return brands.filter((item) => item.name.toLowerCase().includes(keyword));
+    return brands.filter((item) => item?.name?.toLowerCase().includes(keyword));
   }, [brandSearch, brands]);
 
   const filteredModels = useMemo(() => {
-    const keyword = modelSearch.trim().toLowerCase();
+    const keyword = modelSearch?.trim().toLowerCase();
     if (!keyword) return models;
-    return models.filter((item) => item.name.toLowerCase().includes(keyword));
+    return models?.filter((item) =>
+      item?.name?.toLowerCase().includes(keyword),
+    );
   }, [modelSearch, models]);
 
   const years = useMemo(() => {
@@ -104,15 +106,15 @@ const CarDetails: React.FC<CarDetailsProps> = ({
   }, []);
 
   const filteredYears = useMemo(() => {
-    const keyword = yearSearch.trim().toLowerCase();
+    const keyword = yearSearch?.trim().toLowerCase();
     if (!keyword) return years;
-    return years.filter((item) => item.toLowerCase().includes(keyword));
+    return years?.filter((item) => item?.toLowerCase().includes(keyword));
   }, [yearSearch, years]);
 
   const filteredTrims = useMemo(() => {
-    const keyword = trimSearch.trim().toLowerCase();
+    const keyword = trimSearch?.trim().toLowerCase();
     if (!keyword) return trims;
-    return trims.filter((item) => item.name.toLowerCase().includes(keyword));
+    return trims?.filter((item) => item?.name?.toLowerCase().includes(keyword));
   }, [trimSearch, trims]);
 
   const isEmptySelection = !brand?.id && !model?.id && !year;

@@ -12,8 +12,8 @@ export type BrowseTab = {
 
 export const browseTabs: readonly BrowseTab[] = [
   { id: "brands", label: "browse.filters.brand" },
-  { id: "body", label: "browse.filters.carType" },
+  { id: "sub-type", label: "browse.filters.carType" },
   { id: "top-cities", label: "browse.filters.topCities" },
   { id: "fuel-type", label: "browse.filters.fuelType" },
-  { id: "sub-type", label: "browse.filters.subType" },
+  // { id: "body", label: "browse.filters.subType" },
 ];

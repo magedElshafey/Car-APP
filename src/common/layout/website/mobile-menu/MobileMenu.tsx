@@ -56,9 +56,9 @@ const MobileMenu: React.FC<Props> = ({
       label: t("Other Vehicles"),
       href: "", // no href
       list: types?.map((type) => ({
-        id: type.value,
-        label: type.label,
-        href: `/car-browse?filter-vehicle_type=${type.value}`,
+        id: type.id,
+        label: type.name,
+        href: `/car-browse?filter-vehicle_type_id=${type.id}`,
       })),
     };
 
@@ -130,7 +130,14 @@ const MobileMenu: React.FC<Props> = ({
                       <div className="flex items-center">
                         <NavLink
                           to={link.href}
-                          onClick={onClose}
+                          onClick={(e) => {
+                            if (link.href) {
+                              onClose();
+                            } else {
+                              e.preventDefault();
+                              onClose();
+                            }
+                          }}
                           className={({ isActive }) =>
                             [
                               "flex-1 px-2  text-sm font-medium transition",

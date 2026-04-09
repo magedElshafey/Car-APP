@@ -3,8 +3,8 @@ import { BrowseCardItem } from "@/features/listings/components/browse/browse-car
 
 export function mapBodyToBrowseCards(bodies: CarType[]): BrowseCardItem[] {
   return bodies.map((body) => ({
-    id: String(body.value),
-    label: body.label,
+    id: String(body.id),
+    label: body.name,
     image: body.image,
   }));
 }

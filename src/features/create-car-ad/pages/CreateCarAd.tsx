@@ -246,19 +246,6 @@ const CreateCarAdPage: React.FC = () => {
     setDraftAttributeIds([]);
   }, [clearUploadedImages, reset]);
 
-  // const handleCarDetailsChange = useCallback(
-  //   (value: CarDetailsValue) => {
-  //     setCarDetails(value);
-  //     if (value?.trim?.id) {
-  //       setValue("trim_id", value.trim?.id, {
-  //         shouldValidate: true,
-  //         shouldDirty: true,
-  //         shouldTouch: true,
-  //       });
-  //     }
-  //   },
-  //   [setValue],
-  // );
   const toNumberOrUndefined = (value: any) => {
     if (value === "" || value === null || value === undefined) return undefined;
 
@@ -269,7 +256,6 @@ const CreateCarAdPage: React.FC = () => {
     (value: CarDetailsValue) => {
       setCarDetails(value);
 
-      // 👇 أهم جزء
       if (value.brand?.id) {
         setValue("brand_id", value.brand.id, { shouldValidate: true });
       }
@@ -292,6 +278,7 @@ const CreateCarAdPage: React.FC = () => {
     },
     [setValue],
   );
+  console.log("errors from submit", errors);
   const onSubmit = useCallback(
     async (values: CreateCarAdSchemaType) => {
       if (!uploadedImages.length) {
@@ -320,8 +307,8 @@ const CreateCarAdPage: React.FC = () => {
       const payload: CreateCarPayload = {
         trim_id: values.trim_id!,
         city_id: cityId,
-        sub_type: values.sub_type || undefined,
-        vehicle_type: values.vehicle_type || undefined,
+        sub_type_id: values.sub_type_id || undefined,
+        vehicle_type_id: values.vehicle_type_id || undefined,
         contact_phone: values.contact_phone,
         whatsapp_allowed: values.whatsapp_allowed ? 1 : 0,
 
@@ -345,7 +332,7 @@ const CreateCarAdPage: React.FC = () => {
           condition: values.condition,
           color: values.color,
           transmission: values.transmission,
-          fuel_type: values.fuel_type,
+          fuel_type_id: values.fuel_type_id,
 
           mileage_km:
             values.condition === "used"

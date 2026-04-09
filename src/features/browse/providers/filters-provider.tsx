@@ -30,8 +30,8 @@ const FilterContextProvider: FC<PropsWithChildren> = ({ children }) => {
       const value = params.get(`filter-${key}`);
       if (value) {
         filters[key] = {
-          label: undefined,
-          value,
+          name: undefined,
+          id: value,
         };
       }
     }
@@ -49,10 +49,11 @@ const FilterContextProvider: FC<PropsWithChildren> = ({ children }) => {
       }
     }
 
-    if(isCarBrowse && !filters["vehicle_type"]) filters["vehicle_type"] = {
-      label: undefined,
-      value: "car"
-    };
+    if (isCarBrowse && !filters["vehicle_type_id"])
+      filters["vehicle_type_id"] = {
+        name: undefined,
+        id: String(1),
+      };
 
     return filters;
   }
@@ -77,10 +78,10 @@ const FilterContextProvider: FC<PropsWithChildren> = ({ children }) => {
   >(
     (key, value) => {
       const exists =
-        filters[key]?.value &&
-        filters[key]?.value === value?.value &&
-        (filters[key]?.label && value?.label
-          ? filters[key]?.label === value.label
+        filters[key]?.id &&
+        filters[key]?.id === value?.id &&
+        (filters[key]?.name && value?.name
+          ? filters[key]?.name === value.name
           : false);
       handleChange(key, exists ? undefined : value);
     },
@@ -101,7 +102,7 @@ const FilterContextProvider: FC<PropsWithChildren> = ({ children }) => {
           const nextSearchParams = new URLSearchParams(prev);
 
           for (const key of stringFilterKeys) {
-            const value = filters[key]?.value;
+            const value = filters[key]?.id;
             const searchKey = `filter-${key}`;
             if (!value) {
               nextSearchParams.delete(searchKey);
@@ -139,7 +140,7 @@ const FilterContextProvider: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     setFilters(getInitialFilters());
   }, [searchParams]);
- 
+
   return (
     <FiltersContext.Provider
       value={{

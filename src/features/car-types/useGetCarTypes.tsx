@@ -9,7 +9,7 @@ const useGetCarTypes = () => {
     queryKey: [apiRoutes?.types, i18n.language],
     queryFn: async () => {
       const { data } = await Axios.get(apiRoutes.types);
-      return data?.data as { value: string; label: string }[];
+      return data?.data as { id: string; name: string }[];
     },
     ...delayOptions,
   });

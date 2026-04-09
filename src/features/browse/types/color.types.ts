@@ -1,4 +1,5 @@
 export interface Color {
-    value: string;
-    label: string;
+  value: string;
+  label: string;
+  hexColor: string;
 }
