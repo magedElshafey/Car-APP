@@ -8,7 +8,7 @@ type CreateCarAdSidebarProps = {
   carDetailsText: string;
   condition: "new" | "used" | undefined;
   carType: "automatic" | "manual" | undefined;
-  color: string;
+  // color: string;
   price: string;
   contactPhone: string;
   isPending: boolean;
@@ -20,7 +20,7 @@ const CreateCarAdSidebar: React.FC<CreateCarAdSidebarProps> = ({
   carDetailsText,
   condition,
   carType,
-  color,
+  // color,
   price,
   contactPhone,
   isPending,
@@ -61,12 +61,10 @@ const CreateCarAdSidebar: React.FC<CreateCarAdSidebarProps> = ({
           ? t(`createCarAd.fields.carType.options.${carType}`)
           : t("createCarAd.preview.emptyValue"),
       },
-      {
-        label: t("createCarAd.preview.fields.color"),
-        value: color
-          ? t(`createCarAd.fields.color.options.${color}`)
-          : t("createCarAd.preview.emptyValue"),
-      },
+      // {
+      //   label: t("createCarAd.preview.fields.color"),
+      //   value: color ? color : t("createCarAd.preview.emptyValue"),
+      // },
       {
         label: t("createCarAd.preview.fields.price"),
         value: price || t("createCarAd.preview.emptyValue"),
@@ -76,14 +74,14 @@ const CreateCarAdSidebar: React.FC<CreateCarAdSidebarProps> = ({
         value: contactPhone || t("createCarAd.preview.emptyValue"),
       },
     ],
-    [carDetailsText, color, condition, contactPhone, price, carType, t],
+    [carDetailsText, condition, contactPhone, price, carType, t],
   );
 
   return (
     <aside className="space-y-6 xl:sticky xl:top-20 xl:self-start">
-      <section className="rounded-card rounded-2xl border border-slate-300 bg-bg-surface p-6 shadow-soft">
+      <section className="p-6 border rounded-card rounded-2xl border-slate-300 bg-bg-surface shadow-soft">
         <div className="flex items-center gap-3 text-text-main">
-          <span className="flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+          <span className="flex items-center justify-center h-11 w-11 rounded-2xl bg-primary/10 text-primary">
             <FiImage size={22} />
           </span>
           <div>
@@ -92,25 +90,30 @@ const CreateCarAdSidebar: React.FC<CreateCarAdSidebarProps> = ({
         </div>
 
         <div className="mt-5 space-y-4 text-sm text-text-muted">
-          <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50">
+          <div className="overflow-hidden border rounded-2xl border-slate-200 bg-slate-50">
             {previewUrl ? (
               <img
                 src={previewUrl}
                 alt={t("createCarAd.preview.imageAlt")}
-                className="h-44 w-full object-cover"
+                className="object-cover w-full h-44"
               />
             ) : (
-              <div className="flex h-44 items-center justify-center px-4 text-center text-sm text-text-muted">
+              <div className="flex items-center justify-center px-4 text-sm text-center h-44 text-text-muted">
                 {t("createCarAd.preview.noImage")}
               </div>
             )}
           </div>
 
-          <div className="space-y-2 rounded-2xl bg-slate-50 px-4 py-3">
+          <div className="px-4 py-3 space-y-2 rounded-2xl bg-slate-50">
             {summaryItems.map((item) => (
-              <div key={item.label} className="flex items-start justify-between gap-3">
+              <div
+                key={item.label}
+                className="flex items-start justify-between gap-3"
+              >
                 <span>{item.label}</span>
-                <strong className="max-w-[60%] text-right text-text-main">{item.value}</strong>
+                <strong className="max-w-[60%] text-right text-text-main">
+                  {item.value}
+                </strong>
               </div>
             ))}
           </div>
@@ -120,12 +123,17 @@ const CreateCarAdSidebar: React.FC<CreateCarAdSidebarProps> = ({
           <MainBtn type="submit" className="w-full" disabled={isPending}>
             {t("createCarAd.actions.submit")}
           </MainBtn>
-          <MainBtn type="button" variant="ghost" className="w-full" onClick={onReset} disabled={isPending}>
+          <MainBtn
+            type="button"
+            variant="ghost"
+            className="w-full"
+            onClick={onReset}
+            disabled={isPending}
+          >
             {t("createCarAd.actions.reset")}
           </MainBtn>
         </div>
       </section>
-
     </aside>
   );
 };

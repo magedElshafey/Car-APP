@@ -66,6 +66,7 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
   const selectedCityId = useWatch({ control, name: "city_id" });
   const selectedVehicleType = useWatch({ control, name: "vehicle_type_id" });
   const selectedColor = useWatch({ control, name: "color" });
+  console.log("selectedColor", selectedColor);
   const mileageKm = useWatch({ control, name: "mileage_km" });
   const description = useWatch({ control, name: "description" });
   const selectedSubtype = useWatch({ control, name: "sub_type_id" });
@@ -132,7 +133,7 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
                   <button
                     key={item.value}
                     type="button"
-                    className="flex min-w-[88px] flex-col items-center gap-2 text-center"
+                    className="flex min-w-[66px] flex-col items-center gap-2 text-center"
                     onClick={() => {
                       setValue("color", item.value, {
                         shouldValidate: true,

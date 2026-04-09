@@ -57,7 +57,7 @@ const CreateCarAdPage: React.FC = () => {
 
   const condition = useWatch({ control, name: "condition" });
   const carType = useWatch({ control, name: "transmission" });
-  const color = useWatch({ control, name: "color" });
+  // const color = useWatch({ control, name: "color" });
   const price = useWatch({ control, name: "price" });
   const contactPhone = useWatch({ control, name: "contact_phone" });
 
@@ -278,7 +278,6 @@ const CreateCarAdPage: React.FC = () => {
     },
     [setValue],
   );
-  console.log("errors from submit", errors);
   const onSubmit = useCallback(
     async (values: CreateCarAdSchemaType) => {
       if (!uploadedImages.length) {
@@ -483,7 +482,7 @@ const CreateCarAdPage: React.FC = () => {
             carDetailsText={carDetailsText}
             condition={condition}
             carType={carType}
-            color={color}
+            // color={color}
             price={price}
             contactPhone={contactPhone}
             isPending={isCreatingCar}
