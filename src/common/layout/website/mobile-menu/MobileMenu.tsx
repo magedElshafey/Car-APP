@@ -55,11 +55,13 @@ const MobileMenu: React.FC<Props> = ({
       id: "other-vehicles",
       label: t("Other Vehicles"),
       href: "", // no href
-      list: types?.map((type) => ({
-        id: type.id,
-        label: type.name,
-        href: `/car-browse?filter-vehicle_type_id=${type.id}`,
-      })),
+      list: types
+        ?.filter((item) => item?.id != "1")
+        .map((type) => ({
+          id: type.id,
+          label: type.name,
+          href: `/car-browse?filter-vehicle_type_id=${type.id}`,
+        })),
     };
 
     return links

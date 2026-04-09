@@ -393,7 +393,7 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
             )}
           </div>
 
-          <div>
+          <div className="col-span-2">
             <h3 className="mb-3 text-sm font-semibold text-text-main">
               {t("createCarAd.fields.fuelType.label")}
             </h3>
@@ -402,7 +402,7 @@ const CarInfoSection: React.FC<CarInfoSectionProps> = ({
                 {t("createCarAd.fields.fuelType.loading")}
               </p>
             ) : (
-              <div className="flex flex-wrap col-span-2 gap-2 py-1">
+              <div className="flex flex-wrap gap-2 py-1">
                 {fuelTypes.map((item) => {
                   const isActive = selectedFuelType == item.id;
                   return (
